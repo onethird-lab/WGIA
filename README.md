@@ -5,7 +5,7 @@ WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
 <img src="/dblogo/index/2.png" style="max-width: 70%; display: inline-block;" data-target="animated-image.originalImage">
 <strong>WGIA incorporates over 70 interaction processing functions</strong>, including correlation analysis within the same omics biomarkers (such as co-expression or differential co-expression for microarray and RNA-seq data, epigenetic interaction analysis, SNP-SNP interaction analysis) and the analysis of regulatory effects between different omics biomarkers (e.g., eQTLs, mQTLs, pQTLs).
 
-## interaction analysis for each omics
+## Interaction analysis for each omics
  - <b>Single nucleotide polymorphism (SNP)</b>
     - [LD](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_LD)
       <br>optional models: Dprime; Rsquare
@@ -91,4 +91,13 @@ WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
 - [login](http://gpu.zjwm.cc/wgia/index.php/Index/tutorial#tab9)
 - [register](http://gpu.zjwm.cc/wgia/index.php/Index/tutorial#tab10)
 - [FAQ](http://gpu.zjwm.cc/wgia/index.php/Index/tutorial#tab5)
+
+## Notice
+WGIA’s online platform allows users to perform interaction analysis without the need for a dedicated GPU, as
+it can run efficiently on standard hardware. However, considering that large data uploads may depend on user’s
+internet speed, we also offer localized software [WGIA1.0](http://gpu.zjwm.cc/wgia/index.php/Index/software). If user’s choose to use our localized software, a
+dedicated GPU was needed.
+
+## Acknowledgements
+Development of WGIA is a community effort. We would like to thank everybody who helped developing and testing.
 
