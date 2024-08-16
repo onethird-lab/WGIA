@@ -7,7 +7,7 @@ WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
 <strong>WGIA incorporates over 70 interaction processing functions</strong>, including correlation analysis within the same omics biomarkers (such as co-expression or differential co-expression for microarray and RNA-seq data, epigenetic interaction analysis, SNP-SNP interaction analysis) and the analysis of regulatory effects between different omics biomarkers (e.g., eQTLs, mQTLs, pQTLs).
 
 ## interaction analysis for each omics
- - [Single nucleotide polymorphism (SNP)]
+ - <b>Single nucleotide polymorphism (SNP)</b>
     - [LD](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_LD)
       <br>optional models: Dprime; Rsquare
     - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
@@ -17,7 +17,8 @@ WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
     - [eQTL identification (SNP×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_microRNA)
     - [eQTL identification (SNP×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_lncRNA)
     - [pQTL identification (SNP×protien)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_Protein)
- - [Copy number variation (CNV)
+ 
+ - <b>Copy number variation (CNV)</b>
     - [CoCNV](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_CNV_Cor)
     <br>Optional models: Pearson; Spearman
     - [CoCNV (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_CNV_DiffCor)
@@ -27,7 +28,8 @@ WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
     - [eQTL identification (CNV×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_microRNA)
     - [eQTL identification (CNV×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_lncRNA)
     - [pQTL identification (CNV×protien)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_Protein)
- - [DNA methylation (DNAm)
+ 
+ - <b>DNA methylation (DNAm)</b>
     - [CoMethy](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_DNAm_Cor)
     <br>Optional models: Pearson; Spearman
     - [CoMethy (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_DNAm_DiffCor)
@@ -38,7 +40,8 @@ WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
     - [eQTM identification (DNAm×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_microRNA)
     - [eQTM identification (DNAm×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_lncRNA)
     - [pQTM identification (DNAm×protein)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_Protein)
- - [mRNA expression (mRNA)
+ 
+ - <b>mRNA expression (mRNA)</b>
     - [eQTL identification (SNP×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_mRNA)
     - [eQTL identification (CNV×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_mRNA)
     - [eQTM identification (DNAm×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_mRNA)
@@ -48,7 +51,8 @@ WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
     <br>Optional models: Pearson; Spearman 
     - [Regulatory relationship identification (miRNA×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=microRNA_mRNA)
     - [Regulatory relationship identification (lncRNA×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=lncRNA_mRNA)
- - [microRNA expression (miRNA)
+
+ - <b>microRNA expression (miRNA)</b>
     - [eQTL identification (SNP×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_microRNA)
     - [eQTL identification (CNV×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_microRNA)
     - [eQTM identification (DNAm×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_microRNA)
@@ -57,8 +61,9 @@ WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
     - [CoExpression (miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=microRNA_microRNA_Cor)
     <br>Optional models: Pearson; Spearman 
     - [CoExpression (miRNA, case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=microRNA_microRNA_DiffCor)
-    <br>Optional models: Pearson; Spearman 
- - [long non-coding RNA expression (lncRNA)
+    <br>Optional models: Pearson; Spearman
+
+ - <b>long non-coding RNA expression (lncRNA)</b>
     - [eQTL identification (SNP×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_lncRNA)
     - [eQTL identification (CNV×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_lncRNA)
     - [eQTM identification (DNAm×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_lncRNA)
