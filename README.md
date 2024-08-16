@@ -19,78 +19,63 @@ WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
     - [pQTL identification (SNP×protien)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_Protein)
 - [Copy number variation (CNV)]
     - [CoCNV](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_CNV_Cor)
-    - [CoCNV](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_CNV_Cor)
+    <br>Optional models: Pearson; Spearman
     - [CoCNV (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_CNV_DiffCor)
-    - [CoCNV (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_CNV_DiffCor)
-    - [mQTL identification (CNV×DNAm)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_DNAm)
-    - [eQTL identification (CNV×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_mRNA)
-    - [eQTL identification (CNV×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_microRNA)
-    - [eQTL identification (CNV×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_lncRNA)
-    - [pQTL identification (CNV×protien)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_Protein)
+    <br>Optional models: Pearson; Spearman
     - [mQTL identification (CNV×DNAm)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_DNAm)
     - [eQTL identification (CNV×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_mRNA)
     - [eQTL identification (CNV×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_microRNA)
     - [eQTL identification (CNV×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_lncRNA)
     - [pQTL identification (CNV×protien)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_Protein)
 - [DNA methylation (DNAm)]
-    - [mQTL identification (SNP×DNAm)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_DNAm)
+    - [CoMethy](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_DNAm_Cor)
+    <br>Optional models: Pearson; Spearman
+    - [CoMethy (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_DNAm_DiffCor)
+    <br>Optional models: Pearson; Spearman
     - [mQTL identification (SNP×DNAm)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_DNAm)
     - [mQTL identification (CNV×DNAm)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_DNAm)
-    - [mQTL identification (CNV×DNAm)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_DNAm)
-    - [eQTM identification (DNAm×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_mRNA)
-    - [eQTM identification (DNAm×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_microRNA)
-    - [eQTM identification (DNAm×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_lncRNA)
-    - [pQTM identification (DNAm×protein)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_Protein)
     - [eQTM identification (DNAm×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_mRNA)
     - [eQTM identification (DNAm×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_microRNA)
     - [eQTM identification (DNAm×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_lncRNA)
     - [pQTM identification (DNAm×protein)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_Protein)
 - [mRNA expression (mRNA)]
     - [eQTL identification (SNP×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_mRNA)
-    - [eQTL identification (SNP×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_mRNA)
-    - [eQTL identification (CNV×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_mRNA)
     - [eQTL identification (CNV×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_mRNA)
     - [eQTM identification (DNAm×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_mRNA)
-    - [eQTM identification (DNAm×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_mRNA)
     - [CoExpression (mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=mRNA_mRNA_Cor)
-    - [CoExpression (mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=mRNA_mRNA_Cor)
+    <br>Optional models: Pearson; Spearman 
     - [CoExpression (mRNA, case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=mRNA_mRNA_DiffCor)
-    - [CoExpression (mRNA, case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=mRNA_mRNA_DiffCor)
-    - [Regulatory relationship identification (miRNA×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=microRNA_mRNA)
-    - [Regulatory relationship identification (lncRNA×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=lncRNA_mRNA)
+    <br>Optional models: Pearson; Spearman 
     - [Regulatory relationship identification (miRNA×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=microRNA_mRNA)
     - [Regulatory relationship identification (lncRNA×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=lncRNA_mRNA)
 - [microRNA expression (miRNA)]
     - [eQTL identification (SNP×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_microRNA)
-    - [eQTL identification (SNP×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_microRNA)
     - [eQTL identification (CNV×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_microRNA)
-    - [eQTL identification (CNV×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_microRNA)
-    - [eQTM identification (DNAm×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_microRNA)
     - [eQTM identification (DNAm×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_microRNA)
     - [Regulatory relationship identification (miRNA×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=microRNA_mRNA)
     - [Regulatory relationship identification (miRNA×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=microRNA_mRNA)
     - [CoExpression (miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=microRNA_microRNA_Cor)
-    - [CoExpression (miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=microRNA_microRNA_Cor)
+    <br>Optional models: Pearson; Spearman 
     - [CoExpression (miRNA, case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=microRNA_microRNA_DiffCor)
-    - [CoExpression (miRNA, case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=microRNA_microRNA_DiffCor)
+    <br>Optional models: Pearson; Spearman 
 - [long non-coding RNA expression (lncRNA)]
     - [eQTL identification (SNP×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_lncRNA)
-    - [eQTL identification (SNP×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_lncRNA)
-    - [eQTL identification (CNV×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_lncRNA)
     - [eQTL identification (CNV×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_lncRNA)
     - [eQTM identification (DNAm×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_lncRNA)
-    - [eQTM identification (DNAm×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_lncRNA)
-    - [Regulatory relationship identification (lncRNA×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=lncRNA_mRNA)
     - [Regulatory relationship identification (lncRNA×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=lncRNA_mRNA)
     - [CoExpression (lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=lncRNA_lncRNA_Cor)
-    - [CoExpression (lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=lncRNA_lncRNA_Cor)
+    <br>Optional models: Pearson; Spearman 
     - [CoExpression (lncRNA, case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=lncRNA_lncRNA_DiffCor)
-    - [CoExpression (lncRNA, case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=lncRNA_lncRNA_DiffCor)
+    <br>Optional models: Pearson; Spearman 
 - [protein expression (protein)]
+    - [pQTL identification (SNP×protien)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_Protein)
+    - [pQTL identification (CNV×protien)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=CNV_Protein)
+    - [pQTM identification (DNAm×protein)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=DNAm_Protein)
     - [PPI](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=Protein_Protein_Cor)
-    - [PPI](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=Protein_Protein_Cor)
+    <br>Optional models: Pearson; Spearman 
     - [PPI (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=Protein_Protein_DiffCor)
-    - [PPI (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=Protein_Protein_DiffCor)
+    <br>Optional models: Pearson; Spearman 
+
 ## Tutorials
 - [Home](http://gpu.zjwm.cc/wgia/index.php/Index/tutorial#tab2)
 - [job_center](http://gpu.zjwm.cc/wgia/index.php/Index/tutorial#tab3)
