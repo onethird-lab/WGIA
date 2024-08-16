@@ -8,13 +8,13 @@ WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
 
 ## Overview
 * Start interaction analysis for each omics
-- [Single nucleotide polymorphism (SNP)]()
-- [Copy number variation (CNV)]
-- [DNA methylation (DNAm)]
-- [mRNA expression (mRNA)]
-- [microRNA expression (miRNA)]
-- [long non-coding RNA expression (lncRNA)]
-- [protein expression (protein)]
+ - [Single nucleotide polymorphism (SNP)]()
+ - [Copy number variation (CNV)]
+ - [DNA methylation (DNAm)]
+ - [mRNA expression (mRNA)]
+ - [microRNA expression (miRNA)]
+ - [long non-coding RNA expression (lncRNA)]
+ - [protein expression (protein)]
 
 * Tutorials
 - [Home](http://gpu.zjwm.cc/wgia/index.php/Index/tutorial#tab2)
