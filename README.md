@@ -7,13 +7,36 @@ WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
 <strong>WGIA incorporates over 70 interaction processing functions</strong>, including correlation analysis within the same omics biomarkers (such as co-expression or differential co-expression for microarray and RNA-seq data, epigenetic interaction analysis, SNP-SNP interaction analysis) and the analysis of regulatory effects between different omics biomarkers (e.g., eQTLs, mQTLs, pQTLs).
 
 ## interaction analysis for each omics
- - [Single nucleotide polymorphism (SNP)]()
- - [Copy number variation (CNV)]
- - [DNA methylation (DNAm)]
- - [mRNA expression (mRNA)]
- - [microRNA expression (miRNA)]
- - [long non-coding RNA expression (lncRNA)]
- - [protein expression (protein)]
+- [Single nucleotide polymorphism (SNP)]
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
+    - [mQTL identification (SNP×DNAm)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_DNAm)
+    - [eQTL identification (SNP×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_mRNA)
+    - [eQTL identification (SNP×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_microRNA)
+    - [eQTL identification (SNP×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_lncRNA)
+    - [pQTL identification (SNP×protien)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_Protein)
+    - [mQTL identification (SNP×DNAm)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_DNAm)
+    - [eQTL identification (SNP×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_mRNA)
+    - [eQTL identification (SNP×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_microRNA)
+    - [eQTL identification (SNP×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_lncRNA)
+    - [pQTL identification (SNP×protien)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_Protein)
+- [Copy number variation (CNV)]
+- [DNA methylation (DNAm)]
+- [mRNA expression (mRNA)]
+- [microRNA expression (miRNA)]
+- [long non-coding RNA expression (lncRNA)]
+- [protein expression (protein)]
 
 ## Tutorials
 - [Home](http://gpu.zjwm.cc/wgia/index.php/Index/tutorial#tab2)
