@@ -1,4 +1,3 @@
-![image](https://github.com/user-attachments/assets/c8fbd540-09d3-4969-92d1-5cf10e43e9d0)![image](https://github.com/user-attachments/assets/118f7753-4765-48be-a235-2e916c7cc3b5)![image](https://github.com/user-attachments/assets/01ce2915-5509-42e1-b081-ce4b88138645)![image](https://github.com/user-attachments/assets/d79d857d-c741-44f8-900c-0d3ec03272a9)# WGIA
 WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
 
 ## Introduction
