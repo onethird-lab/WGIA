@@ -1,4 +1,4 @@
-# WGIA
+![image](https://github.com/user-attachments/assets/d79d857d-c741-44f8-900c-0d3ec03272a9)# WGIA
 WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
 
 ## Introduction
@@ -8,24 +8,10 @@ WGIA: GPU-accelerated whole-genome interaction analyzing for everyone
 
 ## interaction analysis for each omics
 - [Single nucleotide polymorphism (SNP)]
+    - [LD](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_LD)
+    - optional models: Dprime; Rsquare
     - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [SNP×SNP Interaction (case-control)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_SNP_Diff)
-    - [mQTL identification (SNP×DNAm)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_DNAm)
-    - [eQTL identification (SNP×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_mRNA)
-    - [eQTL identification (SNP×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_microRNA)
-    - [eQTL identification (SNP×lncRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_lncRNA)
-    - [pQTL identification (SNP×protien)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_Protein)
+    - Optional models: aa*bb_vs_other; aa*Bb_vs_other; aa*BB_vs_other; Aa*bb_vs_other; Aa*Bb_vs_other; Aa*BB_vs_other; AA*bb_vs_other; AA*Bb_vs_other; AA*BB_vs_other; (AA+Aa)*(BB+Bb)_vs_other; (AA+Aa)*(BB)_vs_other; (AA)*(BB+Bb)_vs_other; (AA)*(BB)_vs_other; 
     - [mQTL identification (SNP×DNAm)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_DNAm)
     - [eQTL identification (SNP×mRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_mRNA)
     - [eQTL identification (SNP×miRNA)](http://gpu.zjwm.cc/wgia/index.php/Index/job_center?AnalysisId=SNP_microRNA)
