@@ -1,0 +1,369 @@
+---
+title: "Report for Job [KEY:`r params$args[1]`]"
+author: "WGIA"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: true 
+    theme: cerulean #flatly #cerulean
+
+  
+  beamer_presentation: 
+    keep_tex: true
+    includes:
+      in_header: columns.tex
+params:
+    args: ''
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      fig.align = "center")
+```
+<style>
+table.display td { white-space: nowrap; }
+p {font-size:15px;color:#2c3e50;}
+</style>
+
+
+```{r Rpackages}
+library(plotly)
+# library(cowplot)
+library(tidyverse)
+library(stats)
+library(DT)
+# library(ggvenn)
+# library(ggpubr)
+# library(ggtree)
+library(dplyr)
+library(ggplot2)
+# library(igraph)
+library(knitr)
+library(kableExtra)
+library(shiny)
+# library(parallel)
+library(RColorBrewer)
+library(data.table)
+library(rmdformats)
+library(ggsci)
+library(ggthemes)
+args <-  params$args
+key <- args[1]
+rootpath <- args[2]
+info <- args[3] #Information about the analysis, such as "AnalysisType_methodType_withCovariant_withPheno"
+# key="4wh09vmjwnz9au9fze1t"
+# rootpath = 'E:/PHPCUSTOM/wwwroot/web/wgia/Public/job/'
+# info = 'Protein_Protein_1_and_Pearson_and_No_and_No_and_0.8'
+zip_path <- "D:/application/7-Zip/7Z/7z.exe"
+```
+
+**You can [bookmark this page](#) to access the results later, or <a href='http://gpu.zjwm.cc:88/wgia/public/job/`r key`/report.html' download>download the report</a> locally.**
+
+*Results will be stored for 30 days.*
+
+<hr>
+
+> WGIA is an open-access web application designed for genome-wide interaction analysis. Leveraging GPU parallel technologies, it significantly enhances computational efficiency. You can upload the SNP, DNA methylation, gene expression, or other biological data, and WGIA generates a comprehensive report within a short timeframe.
+
+# 1. Datasets information
+```{r}
+# firstly, define some variables for exhibition
+analysisId = str_split(info, "_and_")[[1]][1] #
+methodType = str_split(info, "_and_")[[1]][2]#Pearson;Spearman;Biweight
+cutoff = str_split(info, "_and_")[[1]][5]#cutoff
+# exhibit information according to the analysis and method type
+analysisType <- case_when(
+  analysisId=="CNV_CNV_DiffCor" ~ "CoCNV Diff Analysis",
+  analysisId=="DNAm_DNAm_DiffCor" ~ "CoMethy Diff Analysis",
+  analysisId=="mRNA_mRNA_DiffCor" ~ "mRNA CoExpression Diff Analysis",
+  analysisId=="microRNA_microRNA_DiffCor" ~ "microRNA CoExpression Diff Analysis",
+  analysisId=="lncRNA_lncRNA_DiffCor" ~ "lncRNA CoExpression Diff Analysis",
+  analysisId=="Protein_Protein_DiffCor" ~ "PPI Diff Analysis"
+)
+analysis_intorduction <- case_when(
+  analysisType=="CoCNV Diff Analysis" ~ "Case-Control Differential Co-Copy Number Variation (CoCNV) Analysis identifies differences in DNA copy number variations between case (disease) and control (normal) groups. CNVs can lead to gene dosage changes, impacting gene expression and contributing to disease. By comparing CNV profiles between cases and controls, researchers can pinpoint specific CNVs associated with the disease, offering insights into genetic predispositions and potential therapeutic targets.",
+  analysisType=="CoMethy Diff Analysis" ~ "Case-Control Differential Co-Methylation (CoMethy) Analysis examines variations in DNA methylation patterns between case (disease) and control (normal) groups. DNA methylation is an epigenetic modification that influences gene expression. This analysis helps identify methylation changes associated with the disease, providing insights into epigenetic mechanisms and potential biomarkers for diagnosis and treatment.",
+  analysisType=="mRNA CoExpression Diff Analysis" ~ "Case-Control Differential Co-Expression Analysis of mRNA compares mRNA expression levels between case (disease) and control (normal) groups. mRNA expression reflects gene activity, and differences in these levels can indicate regulatory changes associated with disease. This analysis identifies differentially expressed genes, shedding light on disease mechanisms and potential therapeutic targets.",
+  analysisType=="microRNA CoExpression Diff Analysis" ~ "Case-Control Differential Co-Expression Analysis of microRNA compares the expression patterns of microRNAs (microRNAs) between case (disease) and control (normal) groups. microRNAs are small non-coding RNAs that play key roles in regulating gene expression. By identifying differentially expressed microRNAs, this analysis helps to uncover microRNA-mediated regulatory changes associated with the disease, providing insights into disease mechanisms and identifying potential biomarkers and therapeutic targets.",
+  analysisType=="lncRNA CoExpression Diff Analysis" ~ "Case-Control Differential Co-Expression Analysis of lncRNA investigates the expression patterns of long non-coding RNAs (lncRNAs) between case (disease) and control (normal) groups. lncRNAs play crucial roles in gene regulation. This analysis identifies differentially expressed lncRNAs associated with disease, providing insights into their regulatory functions and potential as therapeutic targets.",
+  analysisType=="PPI Diff Analysis" ~ "Case-Control Differential Protein-Protein Interaction (PPI) Analysis examines differences in Protein-Protein interaction networks between case (disease) and control (normal) groups. Proteins interact to perform various biological functions, and alterations in these interactions can be linked to disease. This analysis identifies disrupted interactions, offering insights into disease mechanisms and potential targets for drug development."
+)
+method_intorduction <- case_when(
+  methodType=="Pearson" ~ "Pearson correlation measures the linear relationship between two continuous variables, providing a coefficient that ranges from -1 to 1.",
+  methodType=="Spearman" ~ "Spearman correlation assesses the rank-order relationship between two variables, making it suitable for non-linear associations and ordinal data.",
+  methodType=="Biweight" ~ "Biweight midcorrelation is a robust correlation measure that minimizes the influence of outliers, providing a reliable estimate of the association between two variables.",
+)
+marker_name <- case_when(
+  analysisType=="CoCNV Diff Analysis" ~ "Copy number variation",
+  analysisType=="CoMethy Diff Analysis" ~ "DNA methylation loci",
+  analysisType=="mRNA CoExpression Diff Analysis" ~ "mRNA",
+  analysisType=="microRNA CoExpression Diff Analysis" ~ "microRNA",
+  analysisType=="lncRNA CoExpression Diff Analysis" ~ "long non-coding RNA",
+  analysisType=="PPI Diff Analysis" ~ ""
+)
+marker_abb <- case_when(
+  analysisType=="CoCNV Diff Analysis" ~ "CNV",
+  analysisType=="CoMethy Diff Analysis" ~ "DMP",
+  analysisType=="mRNA CoExpression Diff Analysis" ~ "mRNA",
+  analysisType=="microRNA CoExpression Diff Analysis" ~ "microRNA",
+  analysisType=="lncRNA CoExpression Diff Analysis" ~ "lncRNA",
+  analysisType=="PPI Diff Analysis" ~ "Protein"
+)
+```
+
+
+```{r}
+matrix1_0 <- fread(str_c(rootpath, key, '/matrix1_0.txt'), data.table=FALSE) %>% as.data.frame()
+matrix1_1 <- fread(str_c(rootpath, key, '/matrix1_1.txt'), data.table=FALSE) %>% as.data.frame()
+marker1_n_0 <- nrow(matrix1_0)
+marker1_n_1 <- nrow(matrix1_1)
+sample_n_0 <- ncol(matrix1_0)-1
+sample_n_1 <- ncol(matrix1_1)-1
+```
+
+## 1.1 marker information
+
+**There are total `r marker1_n_0` `r marker_name` (`r marker_abb`) in group1 and `r marker1_n_0` `r marker_name` (`r marker_abb`) in group2 used for interaction analysis.**
+
+* In order to provide the fullest results as possible, WGIA provided interaction for all the `r marker_abb` uploaded, with out quality control for the data. 
+* Note: If needed, some basic information about `r marker_abb` can be used to perform quality control before uploaded the datasets, such as the missing rate. 
+<!-- These can be performed using Expanded Genetic and Epigenetic Association Study Software EWAS3.0, see www.bioapp.org/ewas for details. -->
+
+
+## 1.2 sample information
+
+**There are total of `r sample_n_0` samples in group1 and `r sample_n_0` samples in group2 used for interaction calculation.**
+**&nbsp; Note: There are no other sample information be used.**
+<br /><br />
+
+# 2. Interaction analysis results
+
+## 2.1 Correlation distribution
+
+**The WGIA performed a total of <mark>`r format(marker1_n_0*(marker1_n_0-1)/2, big.mark=",", scientific = FALSE)`</mark> calculations between `r marker1_n_0` `r marker_abb` respectively in group1 and group2 for this job, encompassing correlation coefficients (`r methodType`) among all possible `r marker_abb`-`r marker_abb` pairs. The results for group1 and group2 are displayed below.**
+<br />
+
+> <mark>**`r analysisType`: ** `r analysis_intorduction`
+<br /><br />
+**`r methodType`: ** `r method_intorduction`
+
+
+
+```{r distribution, fig.width = 10, fig.height = 3}
+# distribution result in group1
+dis_0_temp <- read.table(file=str_c(rootpath, key, '/Cor_distribution_0.txt'), header = TRUE, sep = "\t", fill=TRUE)
+stats_0 <- tail(dis_0_temp, 9) %>% separate(lower_interval, into = c("metrics", "value"), sep = "=") %>%
+  dplyr::select(metrics, value)
+stats_0$metrics <- str_remove_all(stats_0$metrics, "_group1")
+dist_0 <- dis_0_temp[1:(nrow(dis_0_temp) - 9), ]
+# distribution results in group2
+dis_1_temp <- read.table(file=str_c(rootpath, key, '/Cor_distribution_1.txt'), header = TRUE, sep = "\t", fill=TRUE)
+stats_1 <- tail(dis_1_temp, 9) %>% separate(lower_interval, into = c("metrics", "value"), sep = "=") %>% dplyr::select(metrics, value)
+stats_1$metrics <- str_remove_all(stats_1$metrics, "_group2")
+dist_1 <- dis_1_temp[1:(nrow(dis_1_temp) - 9), ]
+# combine results in two groups
+## frequency
+dist_0$lower_interval <- as.numeric(dist_0$lower_interval)
+dist_0$frequency <- as.numeric(dist_0$frequency)
+dist_1$lower_interval <- as.numeric(dist_1$lower_interval)
+dist_1$frequency <- as.numeric(dist_1$frequency)
+## metrics
+stats_all <- stats_0 %>% left_join(stats_1, by="metrics") %>% 
+  dplyr::select(metrics, value_group1=value.x, value_group2=value.y)
+row.names(stats_all) <- NULL
+# density plot
+p_dist_0 <- ggplot(dist_0, aes(x = lower_interval, y=frequency)) +
+  geom_area(color = "#75B0B4", fill = "#75B0B4", outline.type="upper", linewidth=1, alpha = 1) +
+  labs(x = "Correlation", y = str_c("Number of \n", marker_abb, "-", marker_abb, "pairs")) +
+  theme_bw()+
+  theme(axis.text = element_text(face = 'bold',color = 'black',size = 10, hjust = 0.5),
+        axis.title = element_text(face = 'bold',color = 'black',size = 11, hjust = 0.5))
+p_dist_1 <- ggplot(dist_1, aes(x = lower_interval, y=frequency)) +
+  geom_area(color = "#AD4641", fill = "#AD4641", outline.type="upper", linewidth=1, alpha = 1) +
+  labs(x = "Correlation", y = str_c("Number of \n", marker_abb, "-", marker_abb, "pairs")) +
+  theme_bw()+
+  theme(axis.text = element_text(face = 'bold',color = 'black',size = 10, hjust = 0.5),
+        axis.title = element_text(face = 'bold',color = 'black',size = 11, hjust = 0.5))
+p_dist <- ggpubr::ggarrange(p_dist_0, p_dist_1, labels=c("Group1", "Group2"), nrow = 2, ncol = 1, label.x = c(0.05, 0.05), label.y = c(0.95, 0.95))
+
+# Define the function to find the index of the row before and after non-zero
+trim_zeros <- function(df) {
+  first_non_zero <- which(df$frequency != 0)[1]
+  last_non_zero <- which(df$frequency != 0)[length(which(df$frequency != 0))]
+  
+  # cut the non-zero part
+  df_trimmed <- df[first_non_zero:last_non_zero, ]
+  
+  return(df_trimmed)
+}
+# group1
+dist_0$lower_interval <- as.numeric(as.character(dist_0$lower_interval))
+dist_0$upper_interval <- as.numeric(as.character(dist_0$upper_interval))
+# Define a new interval
+new_intervals <- seq(-1, 1, by=0.2)
+# Create a new table to store the grouped data
+grouped_data <- data.frame(
+  lower_interval = new_intervals[-length(new_intervals)],
+  upper_interval = new_intervals[-1],
+  frequency = rep(0, length(new_intervals) - 1)
+)
+# Group calculated frequency and cumulative frequency
+for (i in 1:nrow(grouped_data)) {
+  lower_bound <- grouped_data$lower_interval[i]
+  upper_bound <- grouped_data$upper_interval[i]
+  subset <- dist_0[dist_0$lower_interval >= lower_bound & dist_0$upper_interval <= upper_bound, ]
+  grouped_data$frequency[i] <- sum(subset$frequency)
+}
+grouped_data_trimmed_0 <- grouped_data
+# group2
+dist_1$lower_interval <- as.numeric(as.character(dist_1$lower_interval))
+dist_1$upper_interval <- as.numeric(as.character(dist_1$upper_interval))
+# Define a new interval
+new_intervals <- seq(-1, 1, by=0.2)
+# Create a new table to store the grouped data
+grouped_data <- data.frame(
+  lower_interval = new_intervals[-length(new_intervals)],
+  upper_interval = new_intervals[-1],
+  frequency = rep(0, length(new_intervals) - 1)
+)
+# Group calculated frequency and cumulative frequency
+for (i in 1:nrow(grouped_data)) {
+  lower_bound <- grouped_data$lower_interval[i]
+  upper_bound <- grouped_data$upper_interval[i]
+  subset <- dist_1[dist_1$lower_interval >= lower_bound & dist_1$upper_interval <= upper_bound, ]
+  grouped_data$frequency[i] <- sum(subset$frequency)
+}
+grouped_data_trimmed_1 <- grouped_data
+grouped_data_trimmed <- grouped_data_trimmed_0 %>% merge(grouped_data_trimmed_1, by=c("lower_interval", "upper_interval"), all = TRUE) 
+grouped_data_trimmed <- grouped_data_trimmed %>% arrange(lower_interval)
+colnames(grouped_data_trimmed)[3:4] <- c("frequent in group1", "frequent in group2")
+# # print result
+# print(grouped_data_trimmed)
+
+```
+
+```{r}
+zip(str_c(rootpath, key, '/Cor_distribution.zip'), files=c(str_c(rootpath, key, '/Cor_distribution_0.txt'), str_c(rootpath, key, '/Cor_distribution_1.txt')), flags = " a -tzip", zip=zip_path)
+```
+
+**The plot below displays the distribution of the Correlation of all the `r format(marker1_n_0*(marker1_n_0-1)/2, big.mark=",", scientific = FALSE)` `r marker_abb`-`r marker_abb` pairs (markers) separately in the group1 and group2 dataset.** 
+
+* These results can be downloaded here [Correlation distribution files](Cor_distribution.zip). 
+
+```{r, fig.width=6, fig.height=3}
+p_dist
+```
+
+* A more rough distribution of intervals is as follows:
+
+```{r}
+# Use HTML to center the table
+htmltools::tagList(
+  tags$div(
+    style = "display: flex; justify-content: center;",
+    datatable(grouped_data_trimmed, caption = "Correlation coefficient distribution", class="compact", width = "50%") %>% 
+      formatRound(columns = c("lower_interval", "upper_interval"), digits = 2)
+  )
+)
+```
+
+## 2.2 Correlation distribution metrics
+
+**Some basic information about the distribution is provided in the table below, including mean value, variance, standard deviation, skewness, kurtosis, median_value, lower quartile, upper quartile, interquartile range.**
+
+- **Mean value**: The average value of the data set.
+- **Variance**: A measure of how much the data points differ from the mean.
+- **Standard deviation**: The square root of the variance, indicating the spread of the data.
+- **Skewness**: A measure of the asymmetry of the data distribution.
+- **Kurtosis**: A measure of the "tailedness" of the data distribution.
+- **Median value**: The middle value that separates the higher half from the lower half of the data set.
+- **Lower quartile (Q1)**: The median of the lower half of the data set (25th percentile).
+- **Upper quartile (Q3)**: The median of the upper half of the data set (75th percentile).
+- **Interquartile range (IQR)**: The range between the lower quartile and the upper quartile (Q3 - Q1), measuring the spread of the middle 50% of the data. 
+
+
+* These results can be downloaded here [Correlation distribution files](Cor_distribution.zip). The last 9 line of the file are the metric values of the distribution.
+```{r}
+# Use HTML to center the table
+htmltools::tagList(
+  tags$div(
+    style = "display: flex; justify-content: center;",
+    datatable(stats_all, caption = "Summary Statistics", class="compact", width = "50%")
+  )
+)
+```
+
+
+
+## 2.2 Interaction exhibited correlationship difference under significance level of `r cutoff`
+```{r}
+#DiffCor <- fread(str_c("grep -v '^#' ",rootpath, key, '/DiffCor.txt'), data.table=TRUE,dec="#") %>% as.data.frame()
+DiffCor <- fread(str_c(rootpath, key, '/DiffCor.txt'),data.table = FALSE, dec="#") 
+if(grepl("^#", DiffCor[[1]])[1]){
+   DiffCor.colname<- c("Marker1","Marker2","group1_pearson","group1_lower","group1_upper","group1_t","group1_n","group1_se","group2_pearson","group2_lower","group2_upper")
+  DiffCor <-data.frame(matrix(ncol =length(DiffCor.colname),nrow = 0))
+  names(DiffCor) <-  DiffCor.colname
+}else{
+  DiffCor <-DiffCor 
+}
+
+# SNP ID
+Marker_info <- data.frame(Marker_No=0:(marker1_n_0-1), Marker_ID=matrix1_0$symbol)
+# data for heatmap
+dat_heat <- DiffCor %>% 
+  left_join(Marker_info, join_by(Marker1 == Marker_No)) %>% 
+  left_join(Marker_info, join_by(Marker2 == Marker_No)) %>%
+  dplyr::select(Marker1=Marker_ID.x, Marker2=Marker_ID.y, 3:ncol(DiffCor))
+sig_n <- nrow(dat_heat)
+fwrite(dat_heat, file=str_c(rootpath, key, '/DiffCor_re.txt'), sep="\t", quote=FALSE, col.names=TRUE, row.names=FALSE)
+```
+
+```{r}
+zip(str_c(rootpath, key, '/DiffCor_re.zip'), str_c(rootpath, key, '/DiffCor_re.txt'), flags = " a -tzip", zip=zip_path)
+```
+
+
+**WGIA screened regulatory relationship for all the <mark>`r format(marker1_n_0*(marker1_n_0-1)/2, big.mark=",", scientific = FALSE)`</mark> `r marker_abb`-`r marker_abb` pairs. 
+<br />There are a total of <mark>`r format(sig_n, big.mark=",", scientific = FALSE)`</mark> `r marker_abb`-`r marker_abb` pairs exhibited significant difference between two groupos (`r methodType`) under significance level of `r cutoff`.**
+
+* These results can be downloaded here [DiffCor.txt](DiffCor_re.zip).
+<br />
+<br />
+```{r}
+# Custom functions to format values
+format_number <- function(x) {
+  if (abs(x) < 0.01) {
+    return(formatC(x, format = "e", digits = 2))
+  } else {
+    return(formatC(x, format = "f", digits = 2))
+  }
+}
+
+# Apply a custom formating function to a numeric column
+dat_heat <- dat_heat %>% 
+  mutate_if(is.numeric, ~ sapply(., format_number))
+kable(head(dat_heat), caption = str_c(marker_abb, "-", marker_abb, " pairs with significant different correlationships between two groups"), format = "html") %>%
+  kable_styling(full_width = FALSE) %>%
+  scroll_box(width = "100%")
+
+```
+
+* <mark>If you need the full results, Please perform the interaction analysis with our local software [WGIA.exe]()
+
+<br />
+
+
+
+
+
+   
+
+<br /><br />

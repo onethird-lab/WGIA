@@ -1,0 +1,165 @@
+<include file="./Tpl/Index/head.html"/>
+
+<section id="Services" class="section">
+			<div class="container" style='margin-top:50px;'>
+				<!--本栏目标题-->
+					<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div style='background:black;padding:24px;'>
+							<h2 style="color:white;text-align:center">Query</h2>
+						</div>
+					</div>
+				</div>
+				<!--查询框-->
+				<div class="row">
+				<div class="col-md-3 col-sm-3 col-xs-3">
+					<div class="single-service" style='margin-top:30px;padding:20px;background:transparent;text-align:left;'>
+
+					<h5 style='text-align:center;'>Help</h5>
+					<hr>
+					<p style='color:red;'>After job submission, WGIA assigns a unique Job ID and a KEY. This KEY allows result retrieval or sharing within a 30-day period after processing.</p>
+
+					<br>
+					
+					</div>
+					</div>
+				
+				
+					<div class="col-md-9 col-sm-9 col-xs-9">
+						<div class="single-service" style='text-align:left;'>
+						
+							<div class="row">
+					
+<form class="row g-3" action='__URL__/query_report_ok' method="get" >
+
+<p></p>
+
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label"></label>
+    <div class="col-sm-8">
+      <input type="text" class="form-control" name='key' placeholder="Put the KEY here for report.">
+	  <div class="form-text">e.g., lyt6pqrq4y0lzc8gk1w1</div>
+    </div>
+  </div>
+  
+
+
+
+
+
+    <div class="mb-3 row">
+  <label class="col-sm-2 col-form-label"></label>
+  <div class="col-auto">
+	<button class="btn btn-dark" type="submit" style='border-radius:0.25rem'>Query</button>
+  </div>
+</div>
+
+
+
+
+  </form>
+							
+									</div>
+							
+						</div>
+					</div>
+					
+					
+					
+
+				</div>
+				
+	<br>			
+<!--正在排队的队列-->
+				{$found}
+					<div class="row" style="height:20px;">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div style='background:#5b5b5b;'>
+							<h2 style="color:white;text-align:center">Queue</h2>
+						</div>
+					</div>
+				</div>
+	<style>
+table tr{
+	height:45px;
+}
+
+table th{
+	text-align:center;
+	border-top:2px grey solid;
+	border-bottom:2px grey solid;
+}
+
+table td{
+	border-bottom:1px grey solid;
+
+}
+
+
+</style>			
+			<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12" >
+						<div class="single-service">
+							<div class="row">
+							<div class="col-md-12">
+
+										<table style="width:100%;">
+										<tr>
+										<th>Job ID</th>
+										<th>Date</th>
+										<th>Status</th>
+										
+										</tr>
+											<volist name="vo" id="v1">
+											
+											<tr>
+											<td>{$v1.job_id}</td>
+											<td>{$v1.submit_date}</td>
+											<td>{$v1.status}</td>
+											
+											</tr>
+											
+											</volist>
+										
+										
+										</table>
+										<br>
+										<div style="text-align:right;">{$page}</div>
+								</div>
+								</div>
+							
+						</div>
+					</div>
+					
+					
+					
+
+				</div>
+				<br>
+				<!--结束-->
+			</div>
+		</section>
+
+<!--如果查询不到这个key就弹出提示，并且在当前界面刷新-->
+	 <script type="text/javascript">
+		 var if_error="{$found}";
+		 if(if_error === 'error'){
+			   $(document).ready(function () {
+              $.confirm("<h2><strong><i class='bi bi-bell' ></i></strong></h2>", "<h4><strong>oop! Sorry</strong></h4></strong><br><p style='color: red'>The key was not found.<br>Please verify that the key is correct.</p>");
+		});
+			 $.isok = function () {
+                 window.location.href = "__URL__/query_report";
+            }
+            $.iscancel = function () {
+                 window.location.href = "__URL__/query_report";
+            }
+	
+		 
+		 }
+      		
+    </script>	
+ 
+
+
+<include file="./Tpl/Index/foot.html"/>

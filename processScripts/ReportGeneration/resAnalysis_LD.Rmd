@@ -1,0 +1,278 @@
+---
+title: "Report for Job [KEY:`r params$args[1]`]"
+author: "WGIA"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: true 
+    theme: cerulean #flatly #cerulean
+
+  
+  beamer_presentation: 
+    keep_tex: true
+    includes:
+      in_header: columns.tex
+params:
+    args: ''
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      fig.align = "center")
+```
+<style>
+table.display td { white-space: nowrap; }
+p {font-size:15px;color:#2c3e50;}
+</style>
+
+
+```{r Rpackages}
+library(plotly)
+# library(cowplot)
+library(tidyverse)
+library(stats)
+library(DT)
+# library(ggvenn)
+# library(ggpubr)
+# library(ggtree)
+library(dplyr)
+library(ggplot2)
+# library(igraph)
+library(knitr)
+library(kableExtra)
+library(shiny)
+# library(parallel)
+library(RColorBrewer)
+library(data.table)
+library(rmdformats)
+library(ggsci)
+library(ggthemes)
+args <-  params$args
+key <- args[1]
+rootpath <- args[2]
+info <- args[3] #Information about the analysis, such as "AnalysisType_methodType_withCovariant_withPheno"
+# key="a489yuv6y5froaoier3j"
+# rootpath = 'E:/PHPCUSTOM/wwwroot/web/wgia/Public/job/'
+# info = 'SNP_SNP_1_and_Dprime_and_No_and_No_and_0.8'
+zip_path <- "D:/application/7-Zip/7Z/7z.exe"
+```
+
+**You can [bookmark this page](#) to access the results later, or <a href='http://gpu.zjwm.cc:88/wgia/public/job/`r key`/report.html' download>download the report</a> locally.**
+
+*Results will be stored for 30 days.*
+
+<hr>
+
+> WGIA is an open-access web application designed for genome-wide interaction analysis. Leveraging GPU parallel technologies, it significantly enhances computational efficiency. You can upload the SNP, DNA methylation, gene expression, or other biological data, and WGIA generates a comprehensive report within a short timeframe.
+
+# 1. Datasets information
+```{r}
+# firstly, define some variables for exhibition
+analysisId = str_split(info, "_and_")[[1]][1] #
+methodType = str_split(info, "_and_")[[1]][2]#
+cutoff = str_split(info, "_and_")[[1]][5]#cutoff
+# exhibit information according to the analysis and method type
+method_intorduction <- case_when(
+  methodType=="Dprime" ~ "Dprime (D') is a measure of linkage disequilibrium that quantifies the strength and direction of association between alleles at two loci. D' ranges from 0 to 1, where 0 indicates no linkage disequilibrium (alleles are independently assorted) and 1 indicates complete linkage disequilibrium (alleles are perfectly correlated). Unlike other LD measures, D' is less affected by allele frequencies and is particularly useful in identifying historical recombination events. High D' values suggest that the loci are closely linked and that recombination between them is rare.",
+  methodType=="Rsquare" ~ "Rsquare (R²) is a statistical measure used in genetics to quantify the strength and direction of the association between two genetic markers. Specifically, it indicates how much of the variance in one marker can be explained by the variance in another marker. R² ranges from 0 to 1. An R² value of 1 indicates a perfect correlation, meaning the markers are in complete linkage disequilibrium, while an R² value of 0 indicates no correlation. Rsquare is widely used in genetic studies to assess the degree of linkage disequilibrium and to identify markers that can serve as proxies for each other in association studies."
+)
+
+```
+
+```{r}
+matrix1 <- fread(str_c(rootpath, key, '/matrix1.txt'), data.table=FALSE) %>% as.data.frame()
+marker1_n <- nrow(matrix1)
+sample_n <- ncol(matrix1)-1
+```
+
+
+## 1.1 marker information
+
+**There are total `r marker1_n` SNPs used for interaction analysis.**
+
+* In order to provide the fullest results as possible, WGIA provided interaction for all the SNPs uploaded, with out quality control for the data. 
+* Note: If needed, some basic information about SNPs can be used to perform quality control before uploaded the datasets, including minor allele frequency (MAF), minor genotype frequency, and Hardy-Weinberg Equilibrium (HWE) p-value. 
+<!-- These can be performed using Expanded Genetic and Epigenetic Association Study Software EWAS3.0, see www.bioapp.org/ewas for details. -->
+
+
+## 1.2 sample information
+
+**There are total of `r sample_n` samples used for interaction calculation.**
+**&nbsp; Note: There are no other sample information be used.**
+<br /><br />
+
+# 2. Interaction analysis results
+
+## 2.1 `r methodType` distribution
+
+**The WGIA performed a total of <mark>`r format(marker1_n*(marker1_n-1)/2, big.mark=",", scientific = FALSE)`</mark> calculations between `r marker1_n` SNPs for this job, encompassing LD coefficients (`r methodType`) among all possible SNP-SNP pairs. The results are displayed below.**
+<br />
+
+> <mark>**Linkage Disequilibrium (LD)** refers to the non-random association of alleles at different loci. In other words, LD occurs when the presence of a specific allele at one genetic locus is correlated with the presence of a specific allele at another locus. LD is a key concept in genetics and genomics because it can provide insights into the genetic structure of populations, the history of recombination events, and the identification of regions that are under selection. It is commonly used in genome-wide association studies (GWAS) to identify genetic variants that are associated with traits or diseases.
+<br /><br />
+**`r methodType`: ** `r method_intorduction`
+
+
+
+```{r distribution, fig.width = 10, fig.height = 3}
+dprime_dist_temp <- read.table(file=str_c(rootpath, key, '/LD_distribution.txt'), header = TRUE, sep = "\t", fill=TRUE)
+summary_stats <- tail(dprime_dist_temp, 9) %>% separate(lower_interval, into = c("metrics", "value"), sep = "=") %>% dplyr::select(metrics, value)
+row.names(summary_stats) <- NULL
+dprime_dist <- dprime_dist_temp[1:(nrow(dprime_dist_temp) - 9), ]
+dprime_dist$lower_interval <- as.numeric(dprime_dist$lower_interval)
+dprime_dist$frequency <- as.numeric(dprime_dist$frequency)
+# density plot
+p_dist <- ggplot(dprime_dist, aes(x = lower_interval, y=frequency)) +
+  geom_area(color = "steelblue", fill = "steelblue", outline.type="upper", linewidth=1, alpha = 1) +
+  labs(x = str_c(methodType, " Value"), y = "Number of SNP-SNP pairs") +
+  theme_bw()+
+  theme(axis.text = element_text(face = 'bold',color = 'black',size = 10, hjust = 0.5),
+        axis.title = element_text(face = 'bold',color = 'black',size = 11, hjust = 0.5))
+# Converts the lower_interval and upper_interval columns to numeric values, handling -inf and inf
+dprime_dist$lower_interval <- as.numeric(as.character(dprime_dist$lower_interval))
+dprime_dist$upper_interval <- as.numeric(as.character(dprime_dist$upper_interval))
+
+# Define the function to find the index of the row before and after non-zero
+trim_zeros <- function(df) {
+  first_non_zero <- which(df$frequency != 0)[1]
+  last_non_zero <- which(df$frequency != 0)[length(which(df$frequency != 0))]
+  
+  # cut the non-zero part
+  df_trimmed <- df[first_non_zero:last_non_zero, ]
+  
+  return(df_trimmed)
+}
+# Define a new interval
+new_intervals <- seq(0, 1, by=0.1)
+# Create a new table to store the grouped data
+grouped_data <- data.frame(
+  lower_interval = new_intervals[-length(new_intervals)],
+  upper_interval = new_intervals[-1],
+  frequency = rep(0, length(new_intervals) - 1)
+)
+# Group calculated frequency and cumulative frequency
+for (i in 1:nrow(grouped_data)) {
+  lower_bound <- grouped_data$lower_interval[i]
+  upper_bound <- grouped_data$upper_interval[i]
+  subset <- dprime_dist[dprime_dist$lower_interval >= lower_bound & dprime_dist$upper_interval <= upper_bound, ]
+  grouped_data$frequency[i] <- sum(subset$frequency)
+}
+grouped_data_trimmed <- trim_zeros(grouped_data)
+grouped_data_trimmed <- grouped_data_trimmed %>% arrange(lower_interval)
+# # print result
+# print(grouped_data_trimmed)
+
+```
+
+```{r}
+zip(str_c(rootpath, key, '/LD_distribution.zip'), str_c(rootpath, key, '/LD_distribution.txt'), flags = " a -tzip", zip=zip_path)
+```
+
+**The plot below displays the distribution for the `r methodType` of all the `r format(marker1_n*(marker1_n-1)/2, big.mark=",", scientific = FALSE)` SNP-SNP pairs (markers) in the dataset.** 
+
+* These results can be downloaded here [LD_distribution.txt](LD_distribution.zip). 
+
+```{r, fig.width=6, fig.height=3}
+p_dist
+```
+
+* A more rough distribution of intervals is as follows:
+
+```{r}
+# Use HTML to center the table
+htmltools::tagList(
+  tags$div(
+    style = "display: flex; justify-content: center;",
+    datatable(grouped_data_trimmed, caption = str_c(methodType, " distribution"), class="compact", width = "50%") %>% 
+      formatRound(columns = c("lower_interval", "upper_interval"), digits = 2)
+  )
+)
+```
+
+## 2.2 `r methodType` distribution metrics
+
+**Some basic information about the distribution is provided in the table below, including mean value, variance, standard deviation, skewness, kurtosis, median_value, lower quartile, upper quartile, interquartile range.**
+
+- **Mean value**: The average value of the data set.
+- **Variance**: A measure of how much the data points differ from the mean.
+- **Standard deviation**: The square root of the variance, indicating the spread of the data.
+- **Skewness**: A measure of the asymmetry of the data distribution.
+- **Kurtosis**: A measure of the "tailedness" of the data distribution.
+- **Median value**: The middle value that separates the higher half from the lower half of the data set.
+- **Lower quartile (Q1)**: The median of the lower half of the data set (25th percentile).
+- **Upper quartile (Q3)**: The median of the upper half of the data set (75th percentile).
+- **Interquartile range (IQR)**: The range between the lower quartile and the upper quartile (Q3 - Q1), measuring the spread of the middle 50% of the data. 
+
+
+* These results can be downloaded here [LD_distribution.txt](LD_distribution.zip). The last 9 line of the file are the metric values of the distribution.
+```{r}
+# Use HTML to center the table
+htmltools::tagList(
+  tags$div(
+    style = "display: flex; justify-content: center;",
+    datatable(summary_stats, caption = "Summary Statistics", class="compact", width = "50%")
+  )
+)
+```
+
+
+
+## 2.2 Interaction results with Dprime higher than `r cutoff`
+```{r}
+ld_dprime <- fread(str_c(rootpath, key, '/LD.txt'), data.table=TRUE) %>% as.data.frame()
+# SNP ID
+SNP_info <- data.frame(SNP_No=0:(marker1_n-1), SNP_ID=matrix1$symbol)
+# data for heatmap
+dat_heat <- ld_dprime %>% 
+  left_join(SNP_info, join_by(SNP1 == SNP_No)) %>% 
+  left_join(SNP_info, join_by(SNP2 == SNP_No)) %>%
+  dplyr::select(SNP1=SNP_ID.x, SNP2=SNP_ID.y, 3:ncol(ld_dprime))
+sig_n <- nrow(dat_heat)
+fwrite(dat_heat, file=str_c(rootpath, key, '/LD_re.txt'), sep="\t", quote=FALSE, col.names=TRUE, row.names=FALSE)
+```
+
+```{r}
+zip(str_c(rootpath, key, '/LD_re.zip'), str_c(rootpath, key, '/LD_re.txt'), flags = " a -tzip", zip=zip_path)
+```
+
+
+**WGIA performed a total of <mark>`r format(marker1_n*(marker1_n-1)/2, big.mark=",", scientific = FALSE)`</mark> calculations between `r marker1_n` SNPs for this job. 
+<br />There are a total of <mark>`r format(sig_n, big.mark=",", scientific = FALSE)`</mark> SNP-SNP pairs encompassing LD coefficients (`r methodType`) higher than `r cutoff`.**
+
+* These results can be downloaded here [LD.txt](LD_re.zip).
+<br />
+```{r}
+# Custom functions to format values
+format_number <- function(x) {
+  if (abs(x) < 0.01) {
+    return(formatC(x, format = "e", digits = 2))
+  } else {
+    return(formatC(x, format = "f", digits = 2))
+  }
+}
+
+# Apply a custom formating function to a numeric column
+dat_heat <- dat_heat %>% 
+  mutate_if(is.numeric, ~ sapply(., format_number))
+kable(head(dat_heat), caption =str_c("SNP-SNP pairs with ", methodType, ">=", cutoff), format = "html") %>%
+  kable_styling(full_width = FALSE) %>%
+  scroll_box(width = "100%")
+
+```
+
+* <mark>If you need the full results, Please perform the interaction analysis with our local software [WGIA.exe]()
+
+<br />
+
+
+
+
+<br /><br />

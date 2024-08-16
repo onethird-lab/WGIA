@@ -1,0 +1,325 @@
+<include file="./Tpl/Index/head.html"/>
+<style>
+
+	h3, h4 {
+		font-weight: 700;
+		color: #333;
+		margin: 20px 0;
+	}
+	p {
+		color: #555;
+		line-height: 1.6;
+		margin: 10px 0;
+	}
+	
+	.section-title {
+		font-size: 32px;
+		font-weight: 700;
+		text-align: center;
+		margin-bottom: 50px;
+	}
+	.category-list {
+		list-style: none;
+		padding: 0;
+	}
+	.category-list li {
+		margin: 10px 0;
+	}
+	.category-list li a {
+		text-decoration: none;
+		color: #007bff;
+		transition: color 0.3s;
+	}
+	.category-list li a:hover {
+		color: #0056b3;
+	}
+	.post-item {
+		margin-bottom: 40px;
+		padding: 20px;
+		border: 1px solid #ddd;
+		border-radius: 8px;
+		background-color: #fff;
+		overflow:hidden;
+		border-radius: 20px;
+		box-shadow: 2px 0 5px rgba(0,0,0,0.3); 
+	
+	}
+	.post-title {
+		font-size: 24px;
+		margin-bottom: 10px;
+		color: #333;
+	}
+	.post-title a {
+		text-decoration: none;
+		color: inherit;
+	}
+	.post-title a:hover {
+		text-decoration: underline;
+	}
+	.post-text{
+		font-size: 17px
+	}
+	.thm-btn {
+		display: inline-block;
+		padding: 10px 20px;
+		font-size: 16px;
+		color: #fff;
+		background-color: #007bff;
+		border-radius: 4px;
+		text-decoration: none;
+		transition: background-color 0.3s;
+	}
+	.thm-btn:hover {
+		background-color: #0056b3;
+		color: #000000;
+	}
+	.thm-btn span {
+		margin-left: 10px;
+	}
+	.thm-btn span i {
+		transition: margin-left 0.3s;
+	}
+	.thm-btn:hover span i {
+		margin-left: 15px;
+	}
+	.fixed-sidebar {
+		position: fixed;
+		top: 100px; /* Adjust this value according to your header height */
+		width: 250px; /* Set this value to the width of your sidebar */
+	}
+</style>
+<section>
+	<div class="container-md" style="padding-top: 50px">
+		<br>
+		<div style='background:black;padding-top:20px;padding-bottom: 30px;'>
+			<h2 style="color:white;text-align:center">Welcome to WGIA software</h2>
+		</div>
+		<br><br>
+		<!--<div class="row">
+			<div class="col-lg-4">
+				<div class="widget mb-40 fixed-sidebar" style="padding-top: 100px;padding-left: 150px;">
+					<div class="widget-title-box mb-30">
+						<h3 class="widget-title">Category</h3>
+					</div>
+					<ul class="category-list">
+						<li><a href="#introduction">Introduction</a></li>
+						<li><a href="#pre-installation">Pre-installation</a></li>
+						<li><a href="#download">Download</a></li>
+						<li><a href="#method-of-use">Usage Instruction</a></li>
+						<li><a href="#output-files">Output Files</a></li>
+					</ul>
+				</div>
+			</div>
+
+		</div>-->
+  <style>
+
+        .sidebar {
+            height:600px;
+            width: 250px;
+            position: fixed;
+            background-color: #343a40;
+            padding-top: 20px;
+			padding-bottom: 20px;
+            color: white;
+			border-radius: 20px;
+        }
+        .sidebar a {
+            
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            display: block;
+            border-radius: 50px;  /* 圆形按钮 */
+            margin: 30px 10px;  /* 增加间距 */
+            height: 40px;  /* 设置按钮高度 */
+            /* 调整文本间距 */
+     
+			
+            
+        }
+        .sidebar a:hover {
+            background-color: #575d63;
+        }
+        .content {
+            margin-left: 240px;
+            padding-left: 20px;
+        }
+    </style>
+		<div class="row">
+	<div class="sidebar col-md-3" style="position: fixed;z-index: 50;  top: 200px;">
+		
+			<ul class="nav flex-column" style="text-center">
+		<!--		<li data-href="#s1">栏目一</li>
+				<li data-href="#s2">栏目二</li>
+				<li data-href="#s3">栏目三</li>
+				<li data-href="#s4">栏目四</li>
+				<li data-href="#s5">栏目五</li>-->
+				<li class="nav-item"><a class="nav-link" href="#introduction">Introduction</a></li>
+						<li class="nav-item"><a class="nav-link active" href="#pre-installation">Pre-installation</a></li>
+				<li class="nav-item"><a class="nav-link" href="#support">Support</a></li>
+						<li class="nav-item"><a class="nav-link" href="#download">Download</a></li>
+						<li class="nav-item" ><a class="nav-link" href="#method-of-use">Parameters</a></li>
+						<li class="nav-item" ><a class="nav-link" href="#output-files">Usage Instruction</a></li>
+			</ul>
+		
+	</div>
+	<div class="content col-md-10">
+<!--
+		<div id="s1" class="item" style="background:#999;">一</div>
+		<div id="s2" class="item" style="background:#888;">二</div>
+		<div id="s3" class="item" style="background:#777;">三</div>
+		<div id="s4" class="item" style="background:#666;">四</div>
+		<div id="s5" class="item" style="background:#555;">五</div>
+-->
+				<div>
+				<article>
+	
+					<div class="post-item item" id="introduction">
+						<div class="post-inner">
+							<div class="post-content">
+								<h2 class="section-title">WGIA v1.0 (CUDA)</h2>
+								<h4 class="post-title"><a href="#introduction">Introduction</a></h4>
+								<div class="post-text">
+									<strong>Welcome to WGIA V1.0,</strong> a powerful platform leveraging GPU technology for rapid and comprehensive omics data interaction analysis (including single omics and across multiple omics). 
+									<p>Explore the range of analyses available below:</p>
+								
+									<p>
+										1. Perform interaction analysis for SNP data. <br>
+										2. Perform interaction analysis for CNV data. <br>
+										3. Perform interaction analysis for DNAm data. <br>
+										4. Perform interaction analysis for mRNA data. <br>
+										5. Perform interaction analysis for miRNA data. <br>
+										6. Perform interaction analysis for lncRNA data. <br>
+										7. Perform interaction analysis for protein data. <br>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="post-item item" id="pre-installation">
+						<div class="post-inner">
+							<div class="post-content">
+								<h4 class="post-title"><a href="#pre-installation">Pre-installation</a></h4>
+								<div class="post-text">
+									<p>WGIA v1.0 (CUDA) is implemented using C language and CUDA. Before using it, please make sure the GPU is installed on the computer, and install <a href="https://developer.nvidia.com/cuda-toolkit">CUDA programming environment </a> first.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+											<div class="post-item item" id="support">
+						<div class="post-inner">
+							<div class="post-content">
+								<h4 class="post-title"><a href="#support">Support</a></h4>
+								<div class="read-more mt-35">
+									<ol class="list-group list-group-numbered list-group-flush">
+
+  <li class="list-group-item">NVIDIA GeForce RTX 4090</li>
+<li class="list-group-item">NVIDIA RTX A6000</li>
+<li class="list-group-item">NVIDIA RTX A5000</li>
+  <li class="list-group-item">NVIDIA RTX A4000</li>
+<li class="list-group-item">NVIDIA  RTX 3080Ti</li>	
+  <li class="list-group-item">NVIDIA  RTX 2080Ti</li>
+								
+</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="post-item item" id="download">
+						<div class="post-inner">
+							<div class="post-content">
+								<h4 class="post-title"><a href="#download">Download</a></h4>
+								<div class="read-more mt-35">
+									<a class="thm-btn" href="__PUBLIC__/job/common_jobfile/wgia.zip">WGIA v1.0 (Java, Command-line running)<span><i class="fas fa-arrow-down"></i></span></a><br><br>
+									<a class="thm-btn" href="__PUBLIC__/example_data/exe/User Guide_1.pdf">WGIA v1.0 manual<span><i class="fas fa-arrow-down"></i></span></a>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+
+					
+					<div class="post-item item" id="method-of-use">
+						<div class="post-inner">
+							<div class="post-content">
+								<h4 class="post-title"><a href="#method-of-use">Method of use</a></h4>
+								<div class="post-text">
+									<!--<p><b>: Sample input can be found in the visual interface.</b></p>-->
+									<p><b>When using local software WGIA v1.0 (CUDA) for analysis, the input data needs to be preprocessed. Please refer to the preprocessing <a href="__PUBLIC__/example_data/preProcess_code.zip">R code download</a></b></p>
+									<p><b>WGIA v1.0 (CUDA, Command-line running):</b><br>
+										
+										Parameters:<br>
+										-h	Help information for this executable program.<br>
+-input 	The directory and name of the input file.<br>
+-input_group1	The directory and name of the input file of group1.<br>
+-input_group2	The directory and name of the input file of group2.<br>
+-input_cov	The directory and name of the input file for covariates.<br>
+-output	The directory and name of the output file.<br>
+-distribution	The directory and name of the distribution file.<br>
+-output_distribution1	The directory and name of the distribution file of group1.<br>
+-output_distribution2	The directory and name of the distribution file of group2.<br>
+-model	The model used for test.<br>
+-withCovariant 	Whether the model consider covariants.<br>
+-cutoff	LD pairs with dprime greater than cutoff will be output.<br>
+-distribution	The directory and name of LD frequency file.<br>
+<!---batch	The total batch time of calculation (default = 5).<br>-->
+-block	The number of blocks for calculation which is an integer multiple of 1024 (default = 2048).<br>
+-thread	The number of threads for calculation (default = 512).<br>
+									
+										<strong>Example:<br></strong>
+										wgia.exe -analysis SNP_SNP_LD -model Dprime -input pre_matrix1.txt -output LD.txt -distribution LD_distribution.txt </p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="post-item item" id="output-files">
+						<div class="post-inner">
+							<div class="post-content">
+								<h4 class="post-title"><a href="#output-files">Usage Instruction</a></h4>
+								<div class="post-text">
+									    <style>
+        .scrollable-div {
+           
+            height: 200px; /* 设置高度 */
+            overflow: auto; /* 内容超出时显示滚动条 */
+        }
+    </style>
+						<ul class="list-group list-group-flush scrollable-div">
+							<volist name='AnalysisId' id="typeid">
+							  <li class="list-group-item"><a href="__PUBLIC__/example_data/exe/manual_{$typeid[0]}.html" target="_blank">Manual for {$typeid[0]}: {$typeid[1]}</a></li>
+							</volist>
+</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</article>
+			</div>	
+		
+	</div>
+		<!--内容主体-->
+			</div>
+	</div>
+
+</section>
+
+
+
+<script>
+        document.querySelectorAll('.sidebar .nav-link').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                const offset = 200; // Adjust according to the height of the navbar
+//alert(targetElement.offsetTop);
+                window.scrollTo({
+                    top: targetElement.offsetTop - offset,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+<include file="./Tpl/Index/foot.html"/>

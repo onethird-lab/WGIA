@@ -1,0 +1,51 @@
+<include file="./Tpl/Index/head.html"/>
+<script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+
+<!--/ contact Area -->
+		<section id="contact" class="contact section" data-stellar-background-ratio="0.5">
+				<div class="container">
+					<div class="row">
+						<div class="contact-head">
+							<div class="col-md-4 col-sm-4 col-xs-12">
+								<div class="contact-left">
+									<h3><a href="__URL__/login">Back to login</a></h3>
+									<p class="p1">Only registered users can use our computing resources, and we need your email address to inform you when your analysis is finished.</p>
+
+									
+								</div>
+							</div>
+							<div class="col-md-8 col-sm-8 col-xs-12">
+								<div class="contact-right">
+									<div class="row">
+										<form class="form" action="__URL__/email_ok" method="post">
+											<div class="col-md-8">
+												<div class="form-group">
+													<input name="email" type="text" placeholder="Enter Your Email">
+												</div>
+												
+												<div class="button">
+													<button type="submit" class="btn primary">Send Verification Code</button>
+													
+												</div>
+											</div>
+											
+										</form>
+									</div>
+								<!--/ End Contact Form -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</section>
+		<!--/ End contact Area -->
+		<include file="./Tpl/Index/foot.html"/>

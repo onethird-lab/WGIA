@@ -1,0 +1,88 @@
+<include file="./Tpl/Index/head.html"/>
+<link rel="stylesheet" href="__PUBLIC__/chy_chajian/search_error/style_error.css">
+<br><br><br><br>
+<!--
+<iframe align="center" width="100%" height="800" src="__PUBLIC__/job/{$key}/report.html"  frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+-->
+<section id="report" class="section" style="height: 80%;z-index: 2000">
+<if condition="$status eq 0">
+    <div align="center" style="font-size: 18px; color:#cb807d">
+     <!--   This job has not started yet. There are {$queuedJobs} jobs in the queue.-->
+		       <!-- partial:index.partial.html -->
+   
+    <div class="container" style="padding-top: 5%">
+        <!--/.row-->
+        <div class="row">
+            <div class="modalbox error center animate">
+                <div class="icon">
+                    <span class="bi bi-exclamation-lg"></span>
+                </div>
+				<br>
+                <!--/.icon-->
+                <h1>This job has not started yet. Please wait.</h1>
+				<br>
+               <h4><strong>KEY: </strong>{$key}</h4>
+                <p>
+                    <br>There are {$queuedJobs} jobs in the queue.
+                </p>
+               <!-- <button type="button" class="redo btn">Try again</button>
+                <span class="change">-- 点击查看成功效果 --</span>-->
+            </div>
+            <!--/.success-->
+        </div>
+    </div> 
+<script src="__PUBLIC__/chy_chajian/search_error/script.js"></script>
+		
+    </div>
+    <elseif condition="$status neq 4" />
+    <div align="center" style="font-size: 18px; color: orange;">
+		    <div class="container" style="padding-top: 5%">
+        <div class="row">
+            <div class="modalbox success center animate" >
+                <div class="icon">
+                    <span class="bi bi-fast-forward-fill"></span>
+                </div>
+				<br>
+                <!--/.icon-->
+				
+                <h1>This job is currently running.</h1>
+				<br>
+               <h4><strong>KEY: </strong>{$key}</h4>
+                <button type="button" class="redo btn"><a href="__URL__/status?key={$key}">Check the status here</a></button>
+               
+            </div>
+            <!--/.success-->
+        </div>
+
+    </div>
+		
+       <!-- This job is currently running. <a href="__URL__/status?key={$key}">Check the status here</a>.-->
+    </div>
+    <elseif condition="$status eq 4 AND $report_status eq 1" />
+    <iframe align="center" width="100%" height="700" src="__PUBLIC__/job/{$key}/report.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+	<elseif condition="$status eq 4 AND $report_status eq 0" />
+		  <div align="center" style="font-size: 18px; color: orange;">
+		    <div class="container" style="padding-top: 5%">
+        <div class="row">
+            <div class="modalbox success center animate" >
+                <div class="icon">
+                    <span class="bi bi-fast-forward-fill"></span>
+                </div>
+				<br>
+                <!--/.icon-->
+				
+                <h1>This job is end.</h1>
+				<br>
+               <h4><strong>KEY: </strong>{$key}</h4>
+                <button type="button" class="redo btn"><a href="__URL__/status?key={$key}">Check the status here</a></button>
+               
+            </div>
+        </div>
+
+    </div>
+    </div>
+</if>
+	<include file="./Tpl/Index/foot.html"/>
+</section>
+
+

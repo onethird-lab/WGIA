@@ -1,0 +1,124 @@
+
+	
+	
+<include file="./Tpl/Index/head.html"/>
+<style>
+		#progressContainer {
+  width: 100%;
+  height: 20px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+#progressBar {
+  height: 100%;
+  background-color: #0f0;
+  width: 0%;
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+  z-index: 9999; /* 确保覆盖在其他元素上面 */
+}
+
+#overlay-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: white;
+  border-radius:10px;
+  height:200px;
+  width:500px;
+  padding:50px;
+}
+</style>
+<br><br><br><br><br><br><br><br>
+        <form id="myForm" method="post" enctype="multipart/form-data">
+  <input type="file" name="matrix">
+  <input type="file" name="design_matrix">
+  <input type="text" id="otherField" name="test_Text" placeholder="其他字段">
+  <input type="submit" id="submitButton" value="提交">
+</form>
+
+
+<br><br><br><br><br><br><br><br>
+
+
+<!-- <div class="modal" id="uploadModal" data-backdrop="static" data-keyboard="false"> -->
+  <!-- <div class="modal-dialog"> -->
+    <!-- <div class="modal-content"> -->
+      <!-- 模态框头部 -->
+      <!-- <div class="modal-header"> -->
+        <!-- <h4 class="modal-title">文件上传中</h4> -->
+      <!-- </div> -->
+      <!-- 模态框主体 -->
+      <!-- <div id='progressContainer'> -->
+<!-- <div id="progressBar" style="width: 0%; background-color: #0f0;"></div> -->
+<!-- </div> -->
+    <!-- </div> -->
+  <!-- </div> -->
+<!-- </div> -->
+
+
+
+<div id="overlay">
+  <div id="overlay-content">
+    <!-- 进度条放在这里 -->
+    <h5>Uploading...</h5>
+	<br>
+	<div id='progressContainer'>
+      <div id="progressBar" style="width: 0%; background-color: #0f0;"></div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.getElementById('myForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+	
+	document.getElementById('overlay').style.display = 'block';
+	
+    const submitButton = document.getElementById('submitButton');
+    if (!submitButton.disabled) {
+      submitButton.disabled = true;
+
+      const formData = new FormData(this);
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '__URL__/upload_test_ok');
+      xhr.upload.onprogress = function(event) {
+        const progressBar = document.getElementById('progressBar');
+        if (event.lengthComputable) {
+          const progress = (event.loaded / event.total) * 100;
+          progressBar.style.width = progress + '%';
+        }
+      };
+      xhr.onload = function() {
+			if (xhr.status === 200) {
+				const response = xhr.responseText; // 获取 PHP 返回的值
+				console.log(response);
+			
+				// 根据返回的值进行页面跳转
+				if (response) {
+					window.location.href = '__URL__/status?key='+response; // 成功时跳转的页面
+				} else {
+					window.location.href = '__URL__/error'; // 失败时跳转的页面
+				}
+			} else {
+				console.error('上传失败');
+			}
+	  };
+      xhr.send(formData);
+    }
+  });
+</script>
+<include file="./Tpl/Index/foot.html"/>
+

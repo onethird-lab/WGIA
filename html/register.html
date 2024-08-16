@@ -1,0 +1,79 @@
+<include file="./Tpl/Index/head.html"/>
+<script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+<link rel="stylesheet" href="__PUBLIC__/chy_chajian/input/style_login.css">
+<!--/ contact Area -->
+		<section id="contact" class="contact section" data-stellar-background-ratio="0.5">
+				<div class="container">
+					<div class="row">
+						<div class="contact-head">
+							<div class="col-md-4 col-sm-4 col-xs-12">
+								<div class="contact-left">
+									<h3><a href="__URL__/login">Back to login</a></h3>
+									<p class="p1">Only registered users can use our computing resources, and we need your email address to inform you when your analysis is finished.</p>
+
+									
+								</div>
+							</div>
+							<div class="col-md-8 col-sm-8 col-xs-12">
+								<div class="contact-right" style="background-color: #AEDFEB">
+									<div class="row">
+<form autocomplete="off" class="login_form" action="__URL__/register_ok" method='post'>
+  <div id="focus"></div> <h1 class="login_h1 text-center" >Register</h1>
+	<input class="login_input" name="email" type="email" placeholder="Email" autocomplete="no" required>
+<input class="login_input" name="username" type="text" placeholder="your name" autocomplete="no"> 
+<input class="login_input" name="password" type="text" placeholder="Password" autocomplete="no" required>
+	<input class="login_input" name="password_confirm" type="text" placeholder="Confirm Password" autocomplete="no" required>
+<input  name="index_page" type="text" hidden="hidden" value="index">
+  <input class="login_input" id="myInput" type="submit" value="Register">
+</form>
+										<!--旧版-->
+<!--										<form class="form" action="__URL__/register_ok" method="post">
+											<div class="col-md-6">
+												<div class="form-group">
+													<input type="text" placeholder="{$email}" disabled>
+													<input name="email" type="text" value="{$email}" hidden>
+													
+												</div>
+												<div class="form-group">
+													<input name="code" type="text" placeholder="verification code">
+												</div>
+												<div class="form-group">
+													<input name="password" type="password" placeholder="password">
+												</div>
+												<div class="form-group">
+													<input name="password_confirm" type="password" placeholder="password confirm">
+												</div>
+												<div class="button">
+													<button type="submit" class="btn primary">Register</button>
+													
+												</div>
+											</div>
+											
+											<div class="col-md-6">
+											<div class="form-group">
+													<p>Verification code has beed sent.<br>It's valid for 30 minutes.</p>
+												</div>
+											
+											</div>
+										</form>-->
+									</div>
+								<!--/ End Contact Form -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</section>
+<!--好看的样式-->
+<script src="__PUBLIC__/chy_chajian/input/script.js"></script>
+		<!--/ End contact Area -->
+		<include file="./Tpl/Index/foot.html"/>

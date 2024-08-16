@@ -1,0 +1,95 @@
+<include file="./Tpl/Index/head.html"/>
+<style>
+	h3{
+		font-size:24px;
+		font-weight:1000;
+		color:black;
+		margin:20px auto;
+	}
+	h4{
+		font-size:20px;
+		font-weight:1000;
+		color:black;
+		margin:20px auto;
+	}
+	p{
+		color:#404040!important;
+		margin:10px auto;
+	}
+</style>
+<section id="Services" class="section">
+	<div class="container" style='margin-top:50px;'>
+
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div style='background:black;padding:24px;'>
+					<h2 style="color:white;text-align:center">Welcome to WGIA webserver tutorial</h2>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-3" >
+				<ul class="list-group" style='margin-top:30px;'>
+					<li class="list-group-item"><a href='#quick-start'>Quick start</a></li>
+					<li class="list-group-item"><a href='#input'>Input</a></li>
+					<li class="list-group-item"><a href='#ouput'>Output</a></li>
+				</ul>
+
+			</div>
+			<div class="col-md-9 col-sm-12 col-xs-12" >
+				<div class="single-service">
+
+					<div class="row" style="color:blue;">
+						<div class="col-md-12" style='text-align:left;'>
+
+							<div id='quick-start'>
+								<h3>Quick start</h3>
+								<p>This quick-start tutorial aims to assist users in navigating the WGIA platform, utilizing the provided example gene expression RNAseq FPKM-UQ dataset. This dataset comprises 96 breast cancer samples and 96 normal breast samples sourced from the TCGA, encompassing 8170 genes.</p>
+
+								<p>1. Download the example files including genome_data_matrix.zip and design_matrix.zip on the 'START_ANALYSIS' page.</p>
+								<img src="__PUBLIC__/img/tutorial_example_download.png" style="width:100%;">
+								<p>2. Select the example zip files separately and click 'Submit' on the 'START_ANALYSIS' page.</p>
+								<img src="__PUBLIC__/img/tutorial_example_upload.png" style="width:100%;">
+
+								<p>3. After submitting the job, WGIA will direct you to the job status page. Each job is assigned a unique Job ID and a KEY, automatically generated. The Job ID allows for queue monitoring on the 'QUEUE' page, while the KEY permits result retrieval or sharing within a 30-day period post-processing.</p>
+
+								<p>4. The processing duration depends on the dataset's sample size and the number of markers. The status page automatically refreshes every 30 seconds, enabling users to track the progress of the interaction analysis through a process log while the data is being processed.</p>
+								<img src="__PUBLIC__/img/tutorial_status.png" style="width:100%;">
+								<p>5. After the analysis completion, you can access the report page.</p>
+							</div>
+
+							<div id='input'>
+								<h3>Input</h3>
+
+								<h4>Genome data matrix</h4>
+								<img src="__PUBLIC__/img/tutorial_genome_matrix.png" style="width:100%;">
+								<h4>Design matrix</h4>
+								<p>The first column of the design matrix contains the sample names. The second and third columns denote labels for the case and control groups. For samples in the case group, the case column carries the label '1' and the control column, '0'. Conversely, for samples in the control group, the case column holds '0' while the control column holds '1'.</p>
+								<img src="__PUBLIC__/img/tutorial_design_matrix.png" style="width:30%;">
+								<p>To expedite file uploads, WGIA exclusively accepts zip files containing the genome data matrix and design matrix, respectively.</p>
+							</div>
+
+							<div id='output'>
+								<h3>Output</h3>
+								<p>WGIA offers an example report page for users to review, providing access to all results, including visualizations, interaction tables, and download options.</p>
+								<img src="__PUBLIC__/img/tutorial_example_report.png" style="width:100%;">
+
+							</div>
+
+
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+		</div>
+	</div>
+</section>
+<include file="./Tpl/Index/foot.html"/>

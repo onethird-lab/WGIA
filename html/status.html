@@ -1,0 +1,211 @@
+<include file="./Tpl/Index/head.html"/>
+
+<section id="Services" class="section">
+	<div class="container" style='margin-top:50px;'>
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<!-- <h1>Status of Job [ID:{$job_id}] [KEY:{$key}]</h1> -->
+				<h1>Status of Job [KEY:<span id="key">{$key}</span>]
+					<span style="font-size:14px;">
+						<a href="javascript:void(0);" onclick="copyToClipboard(document.getElementById('key').innerText);">
+							Copy the KEY
+						</a>
+					</span>
+
+					<!--<br>[CMD:{$cmd}]<br>-->
+					
+				</h1>
+				<b><br>Once you leave this page, there would be no any way to get your key for the current job. Please save your job key as soon as possible, so that you can go to the report page to check the results after the analysis is completed.</b>
+				<hr>
+				<p style="margin-bottom:10px;margin-top:20px;font-size:16px;">You can <a href="#">bookmark this page</a> to access the results later.</p>
+				<div class="alert alert-warning" role="alert">
+					<b id="progress-text">{$start_text}<br></b>
+					<div class="progress" style="margin-top: 8px;margin-bottom: 0px;">
+						<div id="progress-all" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%; background-color: #4b4d36"></div>
+					</div>
+				</div>
+
+
+				<!-- Log content sections -->
+				<p style="margin-bottom:10px;margin-top:20px;font-size:16px; ">Data preprocessing log:</p>
+				<div class="alert alert-dark scrollable-content-mine" role="alert">
+					<h7><b>The input data preprocess information ...</b></h7>
+					<p>{$log_content_pre}</p>
+				</div>
+
+
+				<!-- Log content sections -->
+				<p style="margin-bottom:10px;margin-top:20px;font-size:16px;">Interaction calculation log:</p>
+				<!--
+                                <div class="progress">
+                                    <div id="progress-cuda" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;"></div>
+                                </div>
+                -->
+				<div class="alert alert-success scrollable-content-mine" role="alert">
+					<h7><b>The interaction calculation information ...</b></h7>
+					<p>{$log_content_cuda}</p>
+				</div>
+
+				<!-- Log content sections -->
+				<p style="margin-bottom:10px;margin-top:20px;font-size:16px;">Result statistic analysis log:</p>
+				<div class="alert alert-primary scrollable-content-mine" role="alert">
+					<h7><b>The result summary statistics analysis information ...</b></h7>
+					<p>{$log_content_res}</p>
+				</div>
+
+
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<style>
+	.scrollable-content-mine {
+		height: 200px; /* 固定高度 */
+		overflow: auto; /* 添加滚动条 */
+		white-space: pre-wrap; /* 保持换行 */
+		border: 1px solid #ddd; /* 添加边框使其更明显 */
+		padding-block-start: 0;
+		padding-left: 10px; /* 内边距 */
+		margin: 0; /* 去除外边距 */
+	}
+</style>
+
+
+<style>
+	.progress {
+		width: 100%; /* 调整进度条宽度 */
+		margin: 30px auto; /* 居中显示 */
+		height: 20px;
+	}
+	.progress-bar {
+		text-align: left; /* 文本左对齐 */
+		font-size: 18px; /* 文本字体大小 */
+	}
+</style>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function(event) {
+		// 获取进度条元素和初始状态
+		var progressBar = document.getElementById('progress-all');
+		var currentStatus = <?php echo $current_status; ?>; // 假设通过PHP获取当前状态值
+		var currentReport ="{$current_report}";//判断有没有report;
+		var progressText = document.getElementById('progress-text');
+		var key = "{$key}";//document.getElementById('key').innerText;
+
+		// 根据当前状态设置进度条的宽度和文本
+		switch (currentStatus) {
+			case 0:
+				progressBar.style.width = '0%';
+				progressText.innerText = "Queuing, please wait. If you provide your email address, we will send you notification emails at the start and upon completion of the job.";
+				break;
+			case 1:
+				progressBar.style.width = '25%';
+				progressText.innerText = '1. Job started';
+				break;
+			case 2:
+				progressBar.style.width = '50%';
+				progressText.innerText += '1. Job started  ---->  2. Data processed';
+				break;
+			case 3:
+				progressBar.style.width = '75%';
+				progressText.innerText += '1. Job started  ---->  2. Data processed  ---->  3. Interaction calculation completed';
+				break;
+			case 4:
+				progressBar.style.width = '100%';
+				progressText.innerText += '1. Job started  ---->  2. Data processed  ---->  3. Interaction calculation completed  ---->  4. Result summary analysis completed';
+				break;
+			default:
+				// 处理任何意外的状态值
+				break;
+		}
+		console.log(key);
+
+		if (currentStatus === 4) {
+			console.log(currentStatus);
+			//window.location.href = '__URL__/status';
+			//window.location.href = '__URL__/report?key='+key; // 成功时跳转的页面
+			console.log('qiguai');
+			if(currentReport === 'yes'){
+				 $.confirm("<h2><strong><i class='bi bi-bell'></i></strong></h2>", "<h4><strong><i class='bi bi-check2-circle'></i> Analysis Complete</strong></h4></strong><br>View Analysis Results Now");
+         
+            $.isok = function () {
+                window.location.href = '__URL__/report?key='+key+'&status='+currentStatus; // 替换为你要跳转的URL
+				//alert(currentReport);
+            }
+			}else{
+				$.alert("<h2><strong><i class='bi bi-bell' ></i></strong></h2>", "<h4><strong><i class='bi bi-check2-circle'></i> Analysis Complete</strong></h4></strong><br><p style='color: red'>The result report does not exist. Please check the uploaded file or <a href='__URL__/contact'>contact us</a>.</p>");
+			}
+			
+            
+			/* if (confirm("Analysis Complete!! View Results Report Now?")) {
+                // 如果用户选择“确定”，跳转到新的页面
+                window.location.href = '__URL__/report?key='+key; // 替换为你要跳转的URL
+            }*/
+		}
+		// 每5秒钟刷新一次页面
+		setInterval(function() {
+			location.reload();
+		}, 5000); 
+	});
+</script>
+
+<script>
+	function copyToClipboard(text) {
+		if (navigator.clipboard) {
+			navigator.clipboard.writeText(text).then(function() {
+				alert('Copied to clipboard!');
+			}, function(err) {
+				console.error('Could not copy text: ', err);
+			});
+		} else {
+			// 兼容较旧的浏览器
+			const textArea = document.createElement('textarea');
+			textArea.value = text;
+			document.body.appendChild(textArea);
+			textArea.focus();
+			textArea.select();
+			try {
+				document.execCommand('copy');
+				alert('Copied to clipboard!');
+			} catch (err) {
+				console.error('Could not copy text: ', err);
+			}
+			document.body.removeChild(textArea);
+		}
+	}
+</script>
+
+<!--
+<style>
+	.progress {
+		height: 20px; /* 设置进度条高度 */
+		margin-top: 10px; /* 设置进度条上方的间距 */
+		margin-bottom: 10px;
+	}
+	.progress-cuda {
+		width: 0%;
+		transition: width 1s; /* 添加过渡效果 */
+	}
+</style>
+-->
+
+<!--
+<script>
+	// 模拟从后台获取log_content2的最新内容
+	setInterval(function() {
+		var logContent_cuda = `{$log_content_cuda}`;
+		var progressMatches = logContent_cuda.match(/(\d+)%/g);
+		if (progressMatches) {
+			var lastProgress = progressMatches[progressMatches.length - 1];
+			var progressValue = lastProgress.replace('%', '');
+			var progressBar = document.getElementById('progress-cuda');
+			progressBar.style.width = progressValue + '%';
+			progressBar.innerText = progressValue + '%';
+		}
+	}, 1000); // 每秒更新一次
+</script>
+-->
+
+<include file="./Tpl/Index/foot.html"/>

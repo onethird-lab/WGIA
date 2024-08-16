@@ -1,0 +1,176 @@
+<include file="./Tpl/Index/head.html" xmlns="http://www.w3.org/1999/html"/>
+<section class="container-md section"> 
+	<div class="row" style="padding-top: 4%">
+	<div class="col-2"></div>
+<style>
+	.card{
+		margin-bottom: 20px;
+	}
+	.card-header{
+		background-color: #5DD3D5;
+	}
+		</style>
+  <!--第一个部分-->
+
+        <div class="card">
+            <div class="card-header">
+                <h4>Information</h4>
+            </div>
+            <div class="card-body" style="font-size:20px">
+		
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item" style="border: none;"><strong>Email: </strong>{$_SESSION['email']}</li>
+            <li class="list-group-item" style="border: none;"><strong>Number of job submitted:</strong> {$job_number}</li>
+    
+        </ul>
+    
+              <!--  <p><strong>Name:</strong> <span id="userName">{$_SESSION['email']}</span></p>
+                <p><strong>Email:</strong> <span id="userEmail">{$_SESSION['email']}</span></p>
+                <p><strong>Tasks Submitted:</strong> <span id="userTasks">{$job_number}</span></p>-->
+            </div>
+        </div>
+		
+<!--表格样式-->
+ <style>
+    /* dataTables表头居中 */
+    .table > thead:first-child > tr:first-child > th {
+        text-align: center;
+    }
+    /* dataTables列内容居中 */
+    .table > tbody > tr > td {
+        text-align: center;
+    }
+</style>
+	 <!--第二部分-->
+		    <div class="card">
+            <div class="card-header">
+                <h4>Unfinished Records</h4>
+            </div>
+            <div class="card-body">
+<table id="unfinished" class="table" style="width:100% height: 200px;">
+    <thead >
+                <tr >
+					<th>ID</th>
+					<th>Job id</th>
+                    <th>key</th>
+                    <th>submit_date</th>
+                
+					 <th>result</th>
+                </tr>
+            </thead>
+				</table>
+            </div>
+        </div>
+
+	 <!--第三部分-->
+
+<div class="card">
+            <div class="card-header">
+                <h4>History Records</h4>
+            </div>
+            <div class="card-body">
+<table id="example" class="table display" style="width:100%">
+    <thead >
+                <tr >
+					<th>ID</th>
+					<th>Job id</th>
+                    <th>key</th>
+                    <th>submit_date</th>
+                    <th>status</th>
+					 <th>result</th>
+                </tr>
+            </thead>
+				</table>
+            </div>
+        </div>
+
+	<!--结束-->
+	<div class="col-2"></div>
+		</div>
+	</section>
+
+<script>
+var tableunfinish = new DataTable('#unfinished', {
+    ajax: {
+        url: '__URL__/unfinished_fun',
+        
+    },
+    columns: [
+		{ data: null,width:"100px"},
+		{ data: 'job_id'},
+        { data: 'key'},
+        { data: 'submit_date',width:"200px"},
+        
+		//增加一列点击列
+		{
+            data: null,
+            defaultContent: '<button>status</button>',
+            targets: -1,
+			width:"100px"
+        }
+      
+    ],
+	 "createdRow": function(row, data, dataIndex) {
+                    // 添加序列号
+                    var sequence = dataIndex + 1;
+                    $('td:eq(0)', row).html(sequence);
+                },
+	 "scrollY": "300px",  // 固定表格高度为 400px
+      "scrollCollapse": true,  // 当记录不足时，允许表格缩小高度
+	language: {
+        emptyTable: "",
+        loadingRecords: ""
+    }
+
+});
+tableunfinish.on('click', 'button', function (e) {
+    let data = tableunfinish.row(e.target.closest('tr')).data();
+	window.location.href = "__URL__/query_report_ok?key="+data['key'];
+	/*alert("__URL__/report?key="+data['key']+"&status="+data['status']);*/
+});
+var table = new DataTable('#example', {
+    ajax: {
+        url: '__URL__/user_record',
+        dataSrc: 'data'
+    },
+    columns: [
+		{ "data": null,width:"100px"}, 
+		{ data: 'job_id'},
+        { data: 'key'},
+        { data: 'submit_date',width:"200px"},
+
+        { data: 'status',width:"50px"},
+		//增加一列点击列
+		{
+            data: null,
+            defaultContent: '<button>view</button>',
+            targets: -1,
+			width:"100px"
+        }
+      
+    ],
+	 "createdRow": function(row, data, dataIndex) {
+                    // 添加序列号
+                    var sequence = dataIndex + 1;
+                    $('td:eq(0)', row).html(sequence);
+                },
+	 "scrollY": "400px",  // 固定表格高度为 400px
+      "scrollCollapse": true,  // 当记录不足时，允许表格缩小高度
+	language: {
+        emptyTable: "",
+        loadingRecords: ""
+    }
+});
+
+table.on('click', 'button', function (e) {
+    let data = table.row(e.target.closest('tr')).data();
+	window.location.href = "__URL__/report?key="+data['key']+"&status="+data['status'];
+	/*alert("__URL__/report?key="+data['key']+"&status="+data['status']);*/
+});
+</script>
+
+
+<include file="./Tpl/Index/foot.html"/> 
+
+
+

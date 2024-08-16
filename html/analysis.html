@@ -1,0 +1,101 @@
+<include file="./Tpl/Index/head.html"/>
+<script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+<style>
+table tr{
+	height:45px;
+}
+
+table th{
+	text-align:center;
+	border-top:2px grey solid;
+	border-bottom:2px grey solid;
+}
+
+table td{
+	border-bottom:1px grey solid;
+
+}
+
+
+</style>
+
+<section id="Services" class="section">
+			<div class="container">
+				
+				
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12" style="text-align:right;">
+						
+							<button onclick='location.href="__URL__/analysis_new"' class = 'btn btn-default' style='background:white;border:2px solid black;height:45px'><i class = 'fa fa-plus'></i>&nbsp;&nbsp;New analysis</button>
+						
+					</div>
+				</div>
+				
+				
+				
+				
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12" >
+						<div class="single-service">
+						<div class="row">
+						<div class="col-md-12">
+						<h4 style="text-align:left;">You have {$record_count} records of interaction analysis.</h4>
+							<br>
+						</div>			
+						</div>
+							<div class="row">
+							<div class="col-md-12">
+										<table style="width:100%;">
+										<tr>
+										<th>Analysis ID</th>
+											<th>Analysis Name</th>
+											<th>Creation Time</th>
+											<th>Status</th>
+											<th>Analysis Log</th>
+										</tr>
+										
+										
+											
+											<volist name="vo" id="v1">
+											
+											<tr>
+											<td>{$v1.task_id}</td>
+											<td>{$v1.task_name}</td>
+											<td>{$v1.task_time}</td>
+											<td>{$v1.task_status}</td>
+											<td><a href='__PUBLIC__/analysis_log/{$v1.task_id}.txt'><i class = 'fa fa-link' style="font-size:14px;background:transparent;color:inherit;width:inherit;height:inherit;line-height:inherit"></i> Link</a></td>
+											<!-- <td><a href='__URL__/task_report?task_id={$v1.task_id}'><i class = 'fa fa-link' style="font-size:14px;background:transparent;color:inherit;width:inherit;height:inherit;line-height:inherit"></i> Link</a></td> -->
+											</tr>
+											
+											</volist>
+										
+										
+										</table>
+										<br>
+										<div style="text-align:right;">{$page}</div>
+								</div>
+								</div>
+							
+						</div>
+					</div>
+					
+					
+					
+
+				</div>
+				
+				
+				
+				
+			</div>
+		</section>
+		<include file="./Tpl/Index/foot.html"/>

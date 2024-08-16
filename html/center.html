@@ -1,0 +1,391 @@
+<include file="./Tpl/Index/head.html" xmlns="http://www.w3.org/1999/html"/>
+
+<!-- Slider Area -->
+<section id="slider">
+  <div class="single-slider" style="background-image:url('__PUBLIC__/img/slider1.jpg'); height: 200px;">
+    <div id="particles-js"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12" style='margin-top:50px;'>
+          <div class="text">
+            <h1 class="cd-headline clip is-full-width" style='position:relative;'> <span class="cd-words-wrapper"> <b class="is-visible" style='color: white;'>Start Interaction Analysis</b> <b style='color: white;'>Start Interaction Analysis</b> </span> </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--/ End Slider Area --> 
+
+<!-- Start Service area -->
+<section id="Services" class="section"> 
+  
+  <!--把图标库导入进来-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <div class="d-flex justify-content-between py-3 " style='padding-left:5%; padding-right:5%; padding-top: 5%; padding-bottom: 5%;'> <a target="_blank">
+    <h2 class="ui my-hover"> <i class="fas fa-comments" style='padding-right:5%;'></i> <span>Analysis Type</span> </h2>
+    </a> <br>
+  </div>
+  <div class="row py-3" style='padding-left:5%; padding-right:0px; padding-top: 15%;'>
+    <div class="col-md-2 col-sm-12"> 
+      <!--添加导航栏-->
+      <div class="nav flex-column nav-pills arrow me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="width:220px; margin-right: 10px; margin-bottom: 28px"> 
+	<!--a1-->
+                <button class="nav-link active" id="a1-tab" data-bs-toggle="pill" data-bs-target="#a1" type="button" role="tab" aria-controls="a1" aria-selected="true" tabindex="-1" style="width:220px; margin-right: 10px; margin-bottom: 28px">
+                    <h6>
+                        <span style="font-weight:700"><!--<i class="fas fa-dna" style="margin-right: 10px;" ></i>-->Genetic Variation <br>(SNP)</span>
+                    </h6>
+                </button>
+                <!--a2-->
+                <button class="nav-link" id="a2-tab" data-bs-toggle="pill" data-bs-target="#a2" type="button" role="tab" aria-controls="a2" aria-selected="false" tabindex="-1" style="width:220px; margin-right: 10px; margin-bottom: 28px">
+                    <h6>
+                        <span style="font-weight:700"><!--<i class="fas fa-align-left" style="margin-right: 10px;"></i>-->Genetic Variation <br>(CNV)</span>
+                    </h6>
+                </button>
+                <!--a3-->
+                <button class="nav-link" id="a3-tab" data-bs-toggle="pill" data-bs-target="#a3" type="button" role="tab" aria-controls="a3" aria-selected="false" tabindex="-1" style="width:220px; margin-right: 10px; margin-bottom: 28px">
+                    <h6>
+                        <span style="font-weight:700"><!--<i class="fas fa-chain-broken" style="margin-right: 10px;"></i>-->DNA methylation <br>(DNAm)</span>
+                    </h6>
+                </button>
+                <!--a4-->
+                <button class="nav-link" id="a4-tab" data-bs-toggle="pill" data-bs-target="#a4" type="button" role="tab" aria-controls="a4" aria-selected="false" tabindex="-1" style="width:220px; margin-right: 10px; margin-bottom: 28px">
+                    <h6>
+                        <span style="font-weight:700"><!--<i class="fas fa-vials" style="margin-right: 10px;"></i>-->Gene Expression <br>(mRNA)</span>
+                    </h6>
+                </button>
+                <!--a5-->
+                <button class="nav-link" id="a5-tab" data-bs-toggle="pill" data-bs-target="#a5" type="button" role="tab" aria-controls="a5" aria-selected="false" tabindex="-1" style="width:220px; margin-right: 10px; margin-bottom: 28px">
+                    <h6>
+                        <span style="font-weight:700"><!--<i class="fas fa-file-text" style="margin-right: 10px;"></i>-->Gene Expression <br>(microRNA)</span>
+                    </h6>
+                </button>
+                <!--a6-->
+                <button class="nav-link" id="a6-tab" data-bs-toggle="pill" data-bs-target="#a6" type="button" role="tab" aria-controls="a6" aria-selected="false" tabindex="-1" style="width:220px; margin-right: 10px; margin-bottom: 28px">
+                    <h6>
+                        <span style="font-weight:700"><!--<i class="fas fa-list-ol" style="margin-right: 10px;"></i>-->Gene Expression <br>(lncRNA)</span>
+                    </h6>
+                </button>
+                <!--a7-->
+                <button class="nav-link" id="a7-tab" data-bs-toggle="pill" data-bs-target="#a7" type="button" role="tab" aria-controls="a7" aria-selected="false" tabindex="-1" style="width:220px; margin-right: 10px; margin-bottom: 28px">
+                    <h6>
+                        <span style="font-weight:700"><!--<i class="fas fa-table" style="margin-right: 10px;"></i>-->Protein<br><br></span>
+                    </h6>
+                </button>
+      
+      </div>
+    </div>
+    <div class="col-md-10 col-sm-12" style='padding-right:-12px; padding-top: 1%'> 
+      <!--添加每个栏目对应的分析-->
+      <div class="tab-content" id="v-pills-tabContent" style='padding-right:0px; padding-left:25px;'> 
+        <!--第一个栏目-->
+        <div class="tab-pane fade show active" id="a1" role="tabpanel" aria-labelledby="a1-tab" style='padding-left:5%'> 
+          <!--SNP包含的分析类别-->
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"> 
+            <!--chenhaiyan:长条card--> 
+            <!--	<div class="col  d-flex justify-content-center">
+                        <div class="card mb-3 card-hover btn-light shadow-lg bg-body-tertiary rounded" style="width: 85%;">
+							<a href="__URL__/job_center?AnalysisId={$one.AnalysisId}" target="_blank"
+onmouseover="showText(this)" onmouseout="hideText(this)"
+>
+                          <div class="row g-0" style="padding-top: 10px">
+                          <div class="col-md-4"> <img src="__PUBLIC__/dblogo/{$one.AnalysisId}.png" class="img-fluid rounded-start" alt="..." style="width: 100%;height:120px;object-fit: contain"> </div>
+                          <div class="col-md-8">
+                              <div class="card-body">
+                              <h5 class="card-title">  {$one.AnalysisType}</h5>
+                               <p class="card-text">{$one.FullName}</p>
+       
+								  <p class="tooltip-text"
+style="color: #0b5ed7; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: white; border: 1px solid #ccc; padding: 10px; border-radius: 5px; transition: visibility 0s, opacity 0.5s, top 0.5s;">   {$one.FullName} </p>
+                            </div>
+                            </div>
+                        </div>
+                          </a> 
+						</div>
+                      </div>--> 
+            
+            <!--LD-->
+            <volist name="result.SNP" id="one"> <a class="btn btn-light my-l-btn mx-3 my-2"
+                           href='__URL__/job_center?AnalysisId={$one.AnalysisId}'
+                           target="_blank" onmouseover="showText(this)" onmouseout="hideText(this)"
+                        >
+              <div class="col" style="height: 150px; margin-bottom: 15px;">
+                <div class="card h-100 card-hover" style="height: 150px;">
+					<img src="__PUBLIC__/dblogo/{$one.img}.png" class="card-img-top" alt="..." style="height: 110px;width: 100%;object-fit: contain; ">
+                  <div class="card-body" style="padding-top:0px;padding-bottom: 20px">
+                    <h6 class="card-title"> {$one.AnalysisType}</h6>
+                    <p class="tooltip-text"
+                                           style="color: #0b5ed7; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: white; border: 1px solid #ccc; padding: 10px; border-radius: 5px; transition: visibility 0s, opacity 0.5s, top 0.5s;"> {$one.FullName} </p>
+                  </div>
+                </div>
+              </div>
+              </a> 
+			  </volist>
+          </div>
+        </div>
+        
+        <!--第二个-->
+        <div class="tab-pane fade" id="a2" role="tabpanel" aria-labelledby="a2-tab" style='padding-left:5%'> 
+          <!--CNV包含的分析类别-->
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+			  		    <volist name="result.CNV" id="one"> <a class="btn btn-light my-l-btn mx-3 my-2"
+                           href='__URL__/job_center?AnalysisId={$one.AnalysisId}'
+                           target="_blank" onmouseover="showText(this)" onmouseout="hideText(this)"
+                        >
+              <div class="col" style="height: 150px; margin-bottom: 15px;">
+                <div class="card h-100 card-hover" style="height: 120px;">
+					<img src="__PUBLIC__/dblogo/{$one.img}.png" class="card-img-top" alt="..." style="height: 110px;width: 100%;object-fit: contain; ">
+                   <div class="card-body" style="padding-top:0px;padding-bottom: 20px">
+                  
+                    <h6 class="card-title"> {$one.AnalysisType}</h6>
+                    <p class="tooltip-text"
+                                           style="color: #0b5ed7; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: white; border: 1px solid #ccc; padding: 10px; border-radius: 5px; transition: visibility 0s, opacity 0.5s, top 0.5s;"> {$one.FullName} </p>
+                  </div>
+                </div>
+              </div>
+              </a> 
+			  </volist>
+			</div>
+        </div>
+        
+        <!--第三个-->
+        <div class="tab-pane fade" id="a3" role="tabpanel" aria-labelledby="a3-tab" style='padding-left:5%'> 
+          <!--DNAm包含的分析类别-->
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"> 
+					    <volist name="result.DNAm" id="one"> <a class="btn btn-light my-l-btn mx-3 my-2"
+                           href='__URL__/job_center?AnalysisId={$one.AnalysisId}'
+                           target="_blank" onmouseover="showText(this)" onmouseout="hideText(this)"
+                        >
+              <div class="col" style="height: 150px; margin-bottom: 15px;">
+                <div class="card h-100 card-hover" style="height: 120px;">
+						<img src="__PUBLIC__/dblogo/{$one.img}.png" class="card-img-top" alt="..." style="height: 110px;width: 100%;object-fit: contain; ">
+                   <div class="card-body" style="padding-top:0px;padding-bottom: 20px">
+                   
+                    <h6 class="card-title"> {$one.AnalysisType}</h6>
+                    <p class="tooltip-text"
+                                           style="color: #0b5ed7; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: white; border: 1px solid #ccc; padding: 10px; border-radius: 5px; transition: visibility 0s, opacity 0.5s, top 0.5s;"> {$one.FullName} </p>
+                  </div>
+                </div>
+              </div>
+              </a> 
+			  </volist>
+			</div>
+        </div>
+        
+        <!--第四个-->
+        <div class="tab-pane fade" id="a4" role="tabpanel" aria-labelledby="a4-tab" style='padding-left:5%'> 
+          <!--mRNA包含的分析类别-->
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"> 
+			 <volist name="result.mRNA" id="one"> <a class="btn btn-light my-l-btn mx-3 my-2"
+                           href='__URL__/job_center?AnalysisId={$one.AnalysisId}'
+                           target="_blank" onmouseover="showText(this)" onmouseout="hideText(this)"
+                        >
+              <div class="col" style="height: 150px; margin-bottom: 15px;">
+                <div class="card h-100 card-hover" style="height: 120px;">
+						<img src="__PUBLIC__/dblogo/{$one.img}.png" class="card-img-top" alt="..." style="height: 110px;width: 100%;object-fit: contain; ">
+                   <div class="card-body" style="padding-top:0px;padding-bottom: 20px">
+               
+                    <h6 class="card-title"> {$one.AnalysisType}</h6>
+                    <p class="tooltip-text"
+                                           style="color: #0b5ed7; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: white; border: 1px solid #ccc; padding: 10px; border-radius: 5px; transition: visibility 0s, opacity 0.5s, top 0.5s;"> {$one.FullName} </p>
+                  </div>
+                </div>
+              </div>
+              </a> 
+			  </volist>
+			
+			</div>
+        </div>
+        
+        <!--第五个-->
+        <div class="tab-pane fade" id="a5" role="tabpanel" aria-labelledby="a5-tab" style='padding-left:5%'> 
+          <!--miRNA包含的分析类别-->
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"> 
+			 <volist name="result.microRNA" id="one"> <a class="btn btn-light my-l-btn mx-3 my-2"
+                           href='__URL__/job_center?AnalysisId={$one.AnalysisId}'
+                           target="_blank" onmouseover="showText(this)" onmouseout="hideText(this)"
+                        >
+              <div class="col" style="height: 150px; margin-bottom: 15px;">
+                <div class="card h-100 card-hover" style="height: 120px;">
+						<img src="__PUBLIC__/dblogo/{$one.img}.png" class="card-img-top" alt="..." style="height: 110px;width: 100%;object-fit: contain; ">
+                   <div class="card-body" style="padding-top:0px;padding-bottom: 20px">
+                
+                    <h6 class="card-title"> {$one.AnalysisType}</h6>
+                    <p class="tooltip-text"
+                                           style="color: #0b5ed7; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: white; border: 1px solid #ccc; padding: 10px; border-radius: 5px; transition: visibility 0s, opacity 0.5s, top 0.5s;"> {$one.FullName} </p>
+                  </div>
+                </div>
+              </div>
+              </a> 
+			  </volist>
+			</div>
+        </div>
+        
+        <!--第六个-->
+        <div class="tab-pane fade" id="a6" role="tabpanel" aria-labelledby="a6-tab" style='padding-left:5%'> 
+          <!--lncRNA包含的分析类别-->
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"> 
+			 <volist name="result.lncRNA" id="one"> <a class="btn btn-light my-l-btn mx-3 my-2"
+                           href='__URL__/job_center?AnalysisId={$one.AnalysisId}'
+                           target="_blank" onmouseover="showText(this)" onmouseout="hideText(this)"
+                        >
+              <div class="col" style="height: 150px; margin-bottom: 15px;">
+                <div class="card h-100 card-hover" style="height: 120px;">
+						<img src="__PUBLIC__/dblogo/{$one.img}.png" class="card-img-top" alt="..." style="height: 110px;width: 100%;object-fit: contain; ">
+                  <div class="card-body" style="padding-top:0px;padding-bottom: 20px">
+                   
+                    <h6 class="card-title"> {$one.AnalysisType}</h6>
+                    <p class="tooltip-text"
+                                           style="color: #0b5ed7; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: white; border: 1px solid #ccc; padding: 10px; border-radius: 5px; transition: visibility 0s, opacity 0.5s, top 0.5s;"> {$one.FullName} </p>
+                  </div>
+                </div>
+              </div>
+              </a> 
+			  </volist>
+			
+			</div>
+        </div>
+        
+        <!--第七个-->
+        <div class="tab-pane fade" id="a7" role="tabpanel" aria-labelledby="a7-tab" style='padding-left:5%'> 
+          <!--Protein包含的分析类别-->
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4"> 
+			 <volist name="result.Protein" id="one"> <a class="btn btn-light my-l-btn mx-3 my-2"
+                           href='__URL__/job_center?AnalysisId={$one.AnalysisId}'
+                           target="_blank" onmouseover="showText(this)" onmouseout="hideText(this)"
+                        >
+              <div class="col" style="height: 150px; margin-bottom: 15px;">
+                <div class="card h-100 card-hover" style="height: 120px;">
+						<img src="__PUBLIC__/dblogo/{$one.img}.png" class="card-img-top" alt="..." style="height: 110px;width: 100%;object-fit: contain; ">
+                   <div class="card-body" style="padding-top:0px;padding-bottom: 20px">
+                    <h6 class="card-title"> {$one.AnalysisType}</h6>
+                    <p class="tooltip-text"
+                                           style="color: #0b5ed7; visibility: hidden; opacity: 0; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background-color: white; border: 1px solid #ccc; padding: 10px; border-radius: 5px; transition: visibility 0s, opacity 0.5s, top 0.5s;"> {$one.FullName} </p>
+                  </div>
+                </div>
+              </div>
+              </a> 
+			  </volist>
+			
+			</div>
+        </div>
+        <!--第七个结束--> 
+      </div>
+    </div>
+  </div>
+  <script>
+        function showText(element) {
+            const textElement = element.querySelector('.tooltip-text');
+            textElement.style.visibility = 'visible';
+            textElement.style.opacity = '1';
+            textElement.style.top = '80%'; // 调整提示框位置
+            textElement.style.color = "#6c9cb4";
+            const textElement2 = element.querySelector('.card-title');
+            textElement2.style.color = "white";
+        }
+
+        function hideText(element) {
+            const textElement = element.querySelector('.tooltip-text');
+            textElement.style.visibility = 'hidden';
+            textElement.style.opacity = '0';
+            textElement.style.color = "#6c9cb4";
+            textElement.style.top = '100%'; // 重置提示框位置
+            const textElement2 = element.querySelector('.card-title');
+            textElement2.style.color = "#234e7d";/*#6c9cb4*/
+        }
+    </script>
+  <style>
+        /*
+        *
+        * ==========================================
+        * CUSTOM UTIL CLASSES
+        * ==========================================
+        */
+        .card-title {
+            color: #234e7d; /*#6c9cb4*/
+            font-weight: 700;
+        }
+
+        .my-hover {
+            --s: 3px; /* size of the underline */
+            --c: #d95c43; /* color of the underline */
+            width: 280px;
+            color: #0000 !important; /* make text transparent */
+            padding-bottom: 0.21428571rem; /* padding at the bottom */
+            font-size: 1.8rem !important; /* font size */
+            font-weight: 700; /*#234e7d*/
+            background: linear-gradient(90deg, var(--c) 50%, #447C7D 0) calc(100% - var(--_p, 0%)) / 200% 100%,
+            linear-gradient(var(--c) 0 0) 0% 100% / var(--_p, 0%) var(--s) no-repeat;
+            -webkit-background-clip: text, padding-box;
+            background-clip: text, padding-box;
+            transition: background-size 0.5s, background-position 0.5s;
+        }
+
+        .my-hover:hover {
+            --_p: 100%; /* expand the background on hover */
+        }
+
+        .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+            color: white;
+            background-color: #217C7D; /*#0CABA8;#6c9cb4*/
+        }
+
+        .nav-pills .nav-link {
+            background: 0 0;
+            border: 0;
+            border-radius: .25rem;
+        }
+
+        .nav-link {
+            display: block;
+            padding: .5rem 1rem;
+            color: #0e2e42;
+            text-decoration: none;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+        }
+
+        .nav-link:hover {
+            display: block;
+            padding: .5rem 1rem;
+            color: #0e2e42;
+            text-decoration: none;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+        }
+		.card {
+           /* background-color:#F5F5F5; */
+        }
+	.card:hover {
+            background-color:; 
+        }
+        .card-hover {
+            border-color: #558C8C; /*#6c9cb4*/
+            transition: background-color 0.3s ease;
+        }
+
+        .card-hover:hover {
+            background-color: #5E9C9C; /* 更明显的颜色变化#6c9cb4 */
+        }
+
+        .tooltip-text {
+            width: 280px;
+            color: #217C7D; /*#6c9cb4*/
+            font-weight: bold;
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            transition: visibility 0s, opacity 0.5s, top 0.5s;
+            z-index: 10; /* 确保提示框在最前面 */
+        }
+
+    </style>
+</section>
+<!-- End Service --> 
+
+<include file="./Tpl/Index/foot.html"/> 

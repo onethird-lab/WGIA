@@ -1,0 +1,298 @@
+---
+title: "Report for Job [KEY:`r params$args[1]`]"
+author: "WGIA"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: true 
+    theme: cerulean #flatly #cerulean
+
+  
+  beamer_presentation: 
+    keep_tex: true
+    includes:
+      in_header: columns.tex
+params:
+    args: ''
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      fig.align = "center")
+```
+<style>
+table.display td { white-space: nowrap; }
+p {font-size:15px;color:#2c3e50;}
+</style>
+
+
+```{r Rpackages}
+library(plotly)
+# library(cowplot)
+library(tidyverse)
+library(stats)
+library(DT)
+# library(ggvenn)
+# library(ggpubr)
+# library(ggtree)
+library(dplyr)
+library(ggplot2)
+# library(igraph)
+library(knitr)
+library(kableExtra)
+library(shiny)
+# library(parallel)
+library(RColorBrewer)
+library(data.table)
+library(rmdformats)
+library(ggsci)
+library(ggthemes)
+args <-  params$args
+key <- args[1]
+rootpath <- args[2]
+info <- args[3] #Information about the analysis, such as "AnalysisType_methodType_withCovariant_withPheno"
+# key="sw44jhlewxb7cdvhtr7b"
+# rootpath = 'E:/PHPCUSTOM/wwwroot/web/wgia/Public/job/'
+# info = 'SNP_SNP_Diff_and_aa*bb_vs_other_and_No_and_Yes_and_1e-5'
+zip_path <- "D:/application/7-Zip/7Z/7z.exe"
+```
+
+**You can [bookmark this page](#) to access the results later, or <a href='http://gpu.zjwm.cc:88/wgia/public/job/`r key`/report.html' download>download the report</a> locally.**
+
+*Results will be stored for 30 days.*
+
+<hr>
+
+> WGIA is an open-access web application designed for genome-wide interaction analysis. Leveraging GPU parallel technologies, it significantly enhances computational efficiency. You can upload the SNP, DNA methylation, gene expression, or other biological data, and WGIA generates a comprehensive report within a short timeframe.
+
+# 1. Datasets information
+```{r}
+# firstly, define some variables for exhibition
+analysisId = str_split(info, "_and_")[[1]][1] #
+methodType = str_split(info, "_and_")[[1]][2]#Pearson;Spearman;Biweight
+cutoff = str_split(info, "_and_")[[1]][5]#cutoff
+# exhibit information according to the analysis and method type
+analysisType <- "SNP×SNP Interaction (case-control)"
+analysis_intorduction <-"Case-Control SNP×SNP Interaction Differential Analysis identifies differences in SNP interactions between individuals with a particular disease (cases) and those without the disease (controls). By comparing the interactions, researchers can uncover specific SNP combinations that contribute to disease susceptibility, which may not be apparent when considering single SNP effects alone."
+method_intorduction <- "A 2x2 contingency table, along with the Odds Ratio (OR) and chi-square test, is utilized to evaluate the differences in SNP-SNP interactions between two sets of data. The OR value quantifies the strength of association or non-independence between tested genotype combinations and others, while the chi-square test assesses whether the observed differences are statistically significant."
+marker_name <- "Single Nucleotide Polymorphism"
+marker_abb <- "SNP"
+
+```
+
+
+```{r}
+matrix1_0 <- fread(str_c(rootpath, key, '/matrix1_0.txt'), data.table=FALSE) %>% as.data.frame()
+matrix1_1 <- fread(str_c(rootpath, key, '/matrix1_1.txt'), data.table=FALSE) %>% as.data.frame()
+marker1_n_0 <- nrow(matrix1_0)
+marker1_n_1 <- nrow(matrix1_1)
+sample_n_0 <- ncol(matrix1_0)-1
+sample_n_1 <- ncol(matrix1_1)-1
+```
+
+## 1.1 marker information
+
+**There are total `r marker1_n_0` `r marker_name` (`r marker_abb`) in group1 and `r marker1_n_0` `r marker_name` (`r marker_abb`) in group2 used for interaction analysis.**
+
+* In order to provide the fullest results as possible, WGIA provided interaction for all the `r marker_abb` uploaded, with out quality control for the data. 
+* Note: If needed, some basic information about `r marker_abb` can be used to perform quality control before uploaded the datasets, such as the missing rate. 
+<!-- These can be performed using Expanded Genetic and Epigenetic Association Study Software EWAS3.0, see www.bioapp.org/ewas for details. -->
+
+
+## 1.2 sample information
+
+**There are total of `r sample_n_0` samples in group1 and `r sample_n_0` samples in group2 used for interaction calculation.**
+**&nbsp; Note: There are no other sample information be used.**
+<br /><br />
+
+# 2. Interaction differential analysis results
+
+## 2.1 OR statistic distribution
+
+**The WGIA performed a total of <mark>`r format(marker1_n_0*(marker1_n_0-1)/2, big.mark=",", scientific = FALSE)`</mark> calculations between `r marker1_n_0` `r marker_abb` respectively in group1 and group2 for this job, encompassing OR and chi-square test among all possible `r marker_abb`-`r marker_abb` pairs. The resultsare displayed below.**
+<br />
+
+> <mark>**`r analysisType`: ** `r analysis_intorduction`
+<br /><br />
+**`` `r paste0(methodType, ": ")` ``** `r method_intorduction`
+<br /><br />
+The 2x2 contingency table used in this job was:
+
+```{r}
+conTable <- data.frame(c("a", "c"), c("b", "d"))
+colnames(conTable) <- str_split(methodType, "_vs_")[[1]]
+rownames(conTable) <- c("group2", "group1")
+print(conTable)
+
+```
+
+
+
+```{r distribution, fig.width = 10, fig.height = 3}
+# distribution result
+dis_temp <- read.table(file=str_c(rootpath, key, '/OR_distribution.txt'), header = TRUE, sep = "\t", fill=TRUE)
+stats <- tail(dis_temp, 9) %>% separate(lower_interval, into = c("metrics", "value"), sep = "=") %>%
+  dplyr::select(metrics, value)
+stats$metrics <- str_remove_all(stats$metrics, "_group1")
+dist <- dis_temp[1:(nrow(dis_temp) - 9), ]
+## frequency
+dist$lower_interval <- as.numeric(as.character(dist$lower_interval))
+dist$upper_interval <- as.numeric(as.character(dist$upper_interval))
+dist$frequency <- as.numeric(dist$frequency)
+## metrics
+row.names(stats) <- NULL
+#dist <- dist %>% filter(lower_interval>=0) 
+# density plot
+p_dist <- ggplot(dist, aes(x = lower_interval, y=frequency)) +
+  geom_area(color = "#75B0B4", fill = "#75B0B4", outline.type="upper", linewidth=1, alpha = 1) +
+  labs(x = "OR", y = str_c("Number of \n", marker_abb, "-", marker_abb, "pairs")) +
+  theme_bw()+
+  theme(axis.text = element_text(face = 'bold',color = 'black',size = 10, hjust = 0.5),
+        axis.title = element_text(face = 'bold',color = 'black',size = 11, hjust = 0.5))
+
+# Define the function to find the index of the row before and after non-zero
+trim_zeros <- function(df) {
+  first_non_zero <- which(df$frequency != 0)[1]
+  last_non_zero <- which(df$frequency != 0)[length(which(df$frequency != 0))]
+  
+  # cut the non-zero part
+  df_trimmed <- df[first_non_zero:last_non_zero, ]
+  
+  return(df_trimmed)
+}
+# Define a new interval
+new_intervals <- seq(-10, 10, by=1)
+# Create a new table to store the grouped data
+grouped_data <- data.frame(
+  lower_interval = new_intervals[-length(new_intervals)],
+  upper_interval = new_intervals[-1],
+  frequency = rep(0, length(new_intervals) - 1)
+)
+# Group calculated frequency and cumulative frequency
+for (i in 1:nrow(grouped_data)) {
+  lower_bound <- grouped_data$lower_interval[i]
+  upper_bound <- grouped_data$upper_interval[i]
+  subset <- dist[dist$lower_interval >= lower_bound & dist$upper_interval <= upper_bound, ]
+  grouped_data$frequency[i] <- sum(subset$frequency)
+}
+grouped_data_trimmed <- trim_zeros(grouped_data)
+grouped_data_trimmed <- grouped_data_trimmed %>% arrange(lower_interval)
+colnames(grouped_data_trimmed)[3] <- c("frequent")
+# # print result
+# print(grouped_data_trimmed)
+
+```
+
+```{r}
+zip(str_c(rootpath, key, '/OR_distribution.zip'), files=c(str_c(rootpath, key, '/OR_distribution.txt')), flags = " a -tzip", zip=zip_path)
+```
+
+**The plot below displays the distribution of the Odds Ratio(OR) value of all the `r format(marker1_n_0*(marker1_n_0-1)/2, big.mark=",", scientific = FALSE)` `r marker_abb`-`r marker_abb` pairs (markers) separately.** 
+
+* These results can be downloaded here [OR distribution files](OR_distribution.zip). 
+
+```{r, fig.width=6, fig.height=3}
+p_dist
+```
+
+* A more rough distribution of intervals is as follows:
+
+```{r}
+# Use HTML to center the table
+htmltools::tagList(
+  tags$div(
+    style = "display: flex; justify-content: center;",
+    datatable(grouped_data_trimmed, caption = "Chi-square value distribution", class="compact", width = "50%") %>% 
+      formatRound(columns = c("lower_interval", "upper_interval"), digits = 2)
+  )
+)
+```
+
+## 2.2 OR value distribution metrics
+
+**Some basic information about the distribution is provided in the table below, including mean value, variance, standard deviation, skewness, kurtosis, median_value, lower quartile, upper quartile, interquartile range.**
+
+- **Mean value**: The average value of the data set.
+- **Variance**: A measure of how much the data points differ from the mean.
+- **Standard deviation**: The square root of the variance, indicating the spread of the data.
+- **Skewness**: A measure of the asymmetry of the data distribution.
+- **Kurtosis**: A measure of the "tailedness" of the data distribution.
+- **Median value**: The middle value that separates the higher half from the lower half of the data set.
+- **Lower quartile (Q1)**: The median of the lower half of the data set (25th percentile).
+- **Upper quartile (Q3)**: The median of the upper half of the data set (75th percentile).
+- **Interquartile range (IQR)**: The range between the lower quartile and the upper quartile (Q3 - Q1), measuring the spread of the middle 50% of the data. 
+
+
+* These results can be downloaded here [OR value distribution files](OR_distribution.zip). The last 9 line of the file are the metric values of the distribution.
+```{r}
+# Use HTML to center the table
+htmltools::tagList(
+  tags$div(
+    style = "display: flex; justify-content: center;",
+    datatable(stats, caption = "Summary Statistics", class="compact", width = "50%")
+  )
+)
+```
+
+
+
+## 2.3 Interaction exhibited interaction difference under significance level of `r cutoff`
+```{r}
+DiffCor <- fread(str_c(rootpath, key, '/DiffChisq.txt'), data.table=TRUE) %>% as.data.frame()
+colnames(DiffCor)[2:3] <- c("Marker1", "Marker2")
+# SNP ID
+Marker_info <- data.frame(Marker_No=0:(marker1_n_0-1), Marker_ID=matrix1_0$symbol)
+# data for heatmap
+dat_heat <- DiffCor %>% 
+  left_join(Marker_info, join_by(Marker1 == Marker_No)) %>% 
+  left_join(Marker_info, join_by(Marker2 == Marker_No)) %>%
+  dplyr::select(Model, Marker1=Marker_ID.x, Marker2=Marker_ID.y, 4:ncol(DiffCor))
+sig_n <- nrow(dat_heat)
+fwrite(dat_heat, file=str_c(rootpath, key, '/DiffChisq_re.txt'), sep="\t", quote=FALSE, col.names=TRUE, row.names=FALSE)
+```
+
+```{r}
+zip(str_c(rootpath, key, '/DiffChisq_re.zip'), str_c(rootpath, key, '/DiffChisq_re.txt'), flags = " a -tzip", zip=zip_path)
+```
+
+
+**WGIA screened interactions for all the <mark>`r format(marker1_n_0*(marker1_n_0-1)/2, big.mark=",", scientific = FALSE)`</mark> `r marker_abb`-`r marker_abb` pairs. There are a total of <mark>`r format(sig_n, big.mark=",", scientific = FALSE)`</mark> `r marker_abb`-`r marker_abb` pairs exhibited significant interaction difference between two groupos under significance level of `r cutoff`.**
+
+* These results can be downloaded here [DiffChisq.txt](DiffChisq_re.zip).
+<br />
+<br />
+```{r}
+# Custom functions to format values
+format_number <- function(x) {
+  if (abs(x) < 0.01) {
+    return(formatC(x, format = "e", digits = 2))
+  } else {
+    return(formatC(x, format = "f", digits = 2))
+  }
+}
+
+# Apply a custom formating function to a numeric column
+dat_heat <- dat_heat %>% 
+  mutate_if(is.numeric, ~ sapply(., format_number))
+kable(head(dat_heat), caption = str_c(marker_abb, "-", marker_abb, " pairs with significant different correlationships between two groups"), format = "html") %>%
+  kable_styling(full_width = FALSE) %>%
+  scroll_box(width = "100%")
+
+```
+
+* <mark>If you need the full results, Please perform the interaction analysis with our local software [WGIA.exe]()
+
+<br />
+
+
+
+
+<br /><br />

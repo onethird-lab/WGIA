@@ -1,0 +1,162 @@
+<!Doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Home</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="__PUBLIC__/img/header-logo1.png">
+        <!-- Place favicon.ico in the root directory -->
+		
+		<!-- Google Fonts -->
+
+		<link rel="stylesheet" href="__PUBLIC__/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/css/animate-text.css">
+        <link rel="stylesheet" href="__PUBLIC__/css/style.css">
+		
+		<!-- Color CSS -->
+		<link rel="stylesheet" href="__PUBLIC__/css/color/color7.css">
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/bootstrap-icons-1.10.5/font/bootstrap-icons.css">
+		
+		<!--datatable-->
+		<link href="__PUBLIC__/chy_chajian/DataTables/datatables.min.css" rel="stylesheet">
+		
+		<!--js:如果要用到一些插件功能，js最好还是放前面好；并且这些js的顺序一定要有自己的规律，某些js是依赖上一个js来构建的-->
+		   <script src="__PUBLIC__/js/jquery.min.js"></script>
+		
+		<script src="__PUBLIC__/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+		<script src="__PUBLIC__/chy_chajian/DataTables/datatables.min.js"></script>
+		
+		<!--confirm-->
+	<link href="__PUBLIC__/chy_chajian/alert/Fytx_Tips.css" rel="stylesheet" type="text/css" />
+ 
+    <!--配置样式（也可以默认使用）-->
+    <script type="text/javascript" src="__PUBLIC__/chy_chajian/alert/Fytx_Tips_Config.js"></script>
+    <!--美化脚本程序-->
+    <script type="text/javascript" src="__PUBLIC__/chy_chajian/alert/Fytx_Tips.js"></script>
+   
+    </head>
+    <body>
+
+    <!-- Header Area -->
+    <header  id="header" class="header">
+        <!-- Header Inner -->
+        <div class="header-inner" style='width:100%;position:fixed;top:10;z-index:1000;'>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1 col-sm-1 col-xs-1">
+                        <div class="logo">
+                            <a href="index.html"><img src="__PUBLIC__/img/logo.gif" alt="logo.png"></a>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-11 col-sm-11" style="padding-left: 20px">
+
+                        <ul class="nav" id="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="__URL__/index"><i class="bi bi-house-door-fill"></i>HOME</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="__URL__/center"><i class="bi bi-tools"></i>START_ANALYSIS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="__URL__/query_report"><i class="bi bi-search"></i>QUERY_REPORT</a>
+                            </li>
+                          <!--  <li class="nav-item">
+                                <a class="nav-link" href="__URL__/queue"><i class="bi bi-list-task"></i>QUEUE</a>
+                            </li>-->
+                            <li class="nav-item">
+                                <a class="nav-link" href="__URL__/tutorial"><i class="bi bi-question-circle-fill"></i> TUTORIAL</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="__URL__/software">SOFTWARE</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="__URL__/contact"><i class="bi bi-telephone-fill"></i>CONTACT_US</a>
+                            </li>
+						<?php 
+if(!$_SESSION['email']){
+echo "<div style='display: block'>";
+}else{
+echo "<div style='display: none'>";
+}
+?>			
+<li class="dropdown d-flex text-end">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle"></i> Login/Register
+          </a>
+          <ul class="dropdown-menu text-lg" >
+
+			  	<li><a class="dropdown-item" href="__URL__/login" target="_blank">&nbsp;&nbsp;login</a></li>
+            	<li><a class="dropdown-item" href="__URL__/register" >&nbsp;&nbsp;Register</a></li>
+
+		<div>
+		
+		</div>
+            
+          </ul>
+        </li>
+</div>
+		<?php 
+if($_SESSION['email']){
+echo "<div style='display: block'>";
+}else{
+echo "<div style='display: none'>";
+}
+?>						
+	<li class="dropdown d-flex text-end">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle"></i> {$_SESSION['email']}
+          </a>
+          <ul class="dropdown-menu text-lg" >
+
+			  	<li><a class="dropdown-item" href="__URL__/user_center" target="_blank"><i class="bi bi-list-ul"></i>&nbsp;&nbsp;Job List</a></li>
+            	<li><a class="dropdown-item" href="#" id="logoutLink"><i class="bi bi-x-octagon"></i>&nbsp;&nbsp;Logout</a></li>
+
+		<div>
+		
+		</div>
+            
+          </ul>
+        </li>
+</div>	
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+
+    <script>
+        $(document).ready(function() {
+            $('#logoutLink').click(function(e) {
+                e.preventDefault();  // 阻止默认链接跳转行为
+                // 发起 AJAX 请求
+                $.ajax({
+                    url: '__URL__/logout',  // PHP 处理退出逻辑的脚本
+                    type: 'POST',       // 使用 POST 方法发送请求
+                    dataType: 'json',   // 期望返回 JSON 格式的数据
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            alert(response.message);  // 提示退出成功
+                            // 可以选择刷新当前页面或者做其他处理
+                            location.reload();  // 刷新当前页面
+                        } else {
+                            alert('Failed, please try again later');  // 提示退出失败
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX error: ' + status + ', ' + error);  // 输出错误信息到控制台
+                        alert('Failed, please try again later');  // 提示退出失败
+                    }
+                });
+            });
+        });
+    </script>
+    </header>
+    <!--/ End Header Area -->
+		

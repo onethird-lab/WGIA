@@ -1,0 +1,228 @@
+<include file="./Tpl/Index/head.html"/>
+<style>
+		#progressContainer {
+  width: 100%;
+  height: 20px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+#progressBar {
+  height: 100%;
+  background-color: #0f0;
+  width: 0%;
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+  z-index: 9999; /* 确保覆盖在其他元素上面 */
+}
+
+#overlay-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: white;
+  border-radius:10px;
+  height:200px;
+  width:500px;
+  padding:50px;
+}
+</style>
+<section id="Services" class="section">
+			<div class="container" style='margin-top:50px;'>
+				<div class="row">
+				<div class="col-md-3 col-sm-3 col-xs-3">
+					<div class="single-service" style='margin-top:30px;padding:20px;background:transparent;text-align:left;'>
+
+					<h5 style='text-align:center;'>Help</h5>
+					<hr>
+					<p style='color:red;'>E-mail: If e-mail address is given, the server sends notifications automatically. If not, the user has to bookmark the report page.</p>
+
+					<br><br>
+					<h5 style='text-align:center;'>Example</h5>
+					<hr>
+					<p>Genome data matrix: <br/><a href='__PUBLIC__/genome_data_matrix.zip'>genome_data_matrix.zip</a></p>
+					<p>Design matrix: <br/><a href='__PUBLIC__/design_matrix.zip'>design_matrix.zip</a></p><br/>
+					<p>Report: <a href='__URL__/report?key=sb1to0v982f7iqqehg8a'>[View]</a></p><!--原来的job编号是这个：o2bgipwkozrdj1y1ldiq-->
+					</div>
+					</div>
+				
+				
+					<div class="col-md-9 col-sm-9 col-xs-9">
+						<div class="single-service" style='text-align:left;'>
+						
+							<div class="row">
+							
+<form class="row g-3" id="myForm" method="post" enctype="multipart/form-data">
+
+<div class="alert alert-dark" role="alert" style='text-align:center;color:black;font-size:16px;font-weight:1000;'>
+  User information
+</div>
+
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">E-mail address (Optional)</label>
+    <div class="col-sm-8">
+      <input type="email" class="form-control" name='email'>
+    </div>
+  </div>
+  
+<div class="alert alert-dark" role="alert" style='text-align:center;color:black;font-size:16px;font-weight:1000;'>
+  Analysis information
+</div>
+
+  
+  
+  
+  <!-- <div class="mb-3 row"> -->
+    <!-- <label class="col-sm-3 col-form-label">Method</label> -->
+    <!-- <div class="col-sm-8"> -->
+      <!-- <select class="form-select" name='method'> -->
+  <!-- <option value="1">Spearman correlation</option> -->
+<!-- </select> -->
+    <!-- </div> -->
+  <!-- </div> -->
+  
+
+  
+  <div class="mb-3 row">
+  <h5 style='margin-bottom:15px;'>Omics data</h5>
+  <label class="col-sm-3 col-form-label">Omics data matrix</label>
+  <div class="col-sm-8">
+	<input class="form-control" type="file" value='File' required name='matrix'>
+	<!-- <div id="emailHelp" class="form-text">.tsv, .txt, .csv or the zipped file.</div> -->
+  </div>
+</div>
+
+
+<div class="mb-3 row">
+  <label class="col-sm-3 col-form-label">Design matrix</label>
+  <div class="col-sm-8">
+	<input class="form-control" type="file" value='File' required name='design_matrix' lang="en">
+	<!-- <div id="emailHelp" class="form-text">.tsv, .txt, .csv or the zipped file.</div> -->
+  </div>
+</div>
+
+<div class="mb-3 row">
+    <h5 style='margin-bottom:15px;'>Differential interaction analysis</h5>
+	<label class="col-sm-3 col-form-label">Interaction method</label>
+    <div class="col-sm-8">
+	  <select class="form-select" name='enrichment'>
+  <option value="1">Biweight midcorrelation</option>
+  <option value="2">Mutual information</option>
+</select>
+    </div>
+  </div>
+  
+
+  
+  <!-- <div class="mb-3 row"> -->
+    <!-- <label class="col-sm-3 col-form-label">Number of bins</label> -->
+    <!-- <div class="col-sm-8"> -->
+	  <!-- <select class="form-select" name='enrichment'> -->
+  <!-- <option value="1">Default (the square root of sample size)</option> -->
+<!-- </select> -->
+    <!-- </div> -->
+  <!-- </div> -->
+
+  
+<div class="mb-3 row">
+<h5 style='margin-bottom:15px;'>Regulatory network analysis</h5>
+    <label class="col-sm-3 col-form-label">Network analysis</label>
+    <div class="col-sm-8">
+	  <select class="form-select" name='enrichment'>
+  <option value="1">YES</option>
+  <option value="2">NO</option>
+</select>
+    </div>
+  </div>
+
+
+
+
+    <div class="mb-3 row">
+  <label class="col-sm-3 col-form-label"></label>
+  <div class="col-auto">
+	<button id='submitButton' class="btn btn-dark" type="submit" style='border-radius:0.25rem'>Example</button>&nbsp;&nbsp;&nbsp;&nbsp;
+	<button id='submitButton' class="btn btn-dark" type="submit" style='border-radius:0.25rem'>Submit</button>
+	
+  </div>
+</div>
+
+
+
+
+  </form>
+							
+									</div>
+							
+						</div>
+					</div>
+					
+					
+					
+
+				</div>
+			</div>
+		</section>
+		
+
+<div id="overlay">
+  <div id="overlay-content">
+    <!-- 进度条放在这里 -->
+    <h5>Uploading...</h5>
+	<br>
+	<div id='progressContainer'>
+      <div id="progressBar" style="width: 0%; background-color: #0f0;"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('myForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+	
+	document.getElementById('overlay').style.display = 'block';
+	
+    const submitButton = document.getElementById('submitButton');
+    if (!submitButton.disabled) {
+      submitButton.disabled = true;
+
+      const formData = new FormData(this);
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '__URL__/job_submit');
+      xhr.upload.onprogress = function(event) {
+        const progressBar = document.getElementById('progressBar');
+        if (event.lengthComputable) {
+          const progress = (event.loaded / event.total) * 100;
+          progressBar.style.width = progress + '%';
+        }
+      };
+      xhr.onload = function() {
+			if (xhr.status === 200) {
+				const response = xhr.responseText; // 获取 PHP 返回的值
+				console.log(response);
+			
+				// 根据返回的值进行页面跳转
+				if (response) {
+					window.location.href = '__URL__/status?key='+response.split("_")[0]+"&cmd="+response.split("_")[1]; // 成功时跳转的页面
+				} else {
+					window.location.href = '__URL__/error'; // 失败时跳转的页面
+				}
+			} else {
+				console.error('上传失败');
+			}
+	  };
+      xhr.send(formData);
+    }
+  });
+</script>
+<include file="./Tpl/Index/foot.html"/>

@@ -1,0 +1,42 @@
+﻿<include file="./Tpl/Index/head.html"/>
+
+       <!-- partial:index.partial.html -->
+   
+    <div class="container" style="padding-top: 10%">
+        <div class="row">
+            <div class="modalbox success col-sm-8 col-md-6 col-lg-5 center animate"  style="display: none;">
+                <div class="icon">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </div>
+                <!--/.icon-->
+                <h1>成功!</h1>
+                <p>
+                    We've sent a confirmation to your e-mail
+                    <br>for verification.
+                </p>
+                <button type="button" class="redo btn">Ok</button>
+                <span class="change">-- 点击查看警告效果 --</span>
+            </div>
+            <!--/.success-->
+        </div>
+        <!--/.row-->
+        <div class="row">
+            <div class="modalbox error col-sm-8 col-md-6 col-lg-5 center animate">
+                <div class="icon">
+                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                </div>
+                <!--/.icon-->
+                <h1>Oh no!</h1>
+                <p>
+                    Oops! This job has not started yet. 
+                    <br>There are {$queuedJobs} jobs in the queue.
+                </p>
+                <button type="button" class="redo btn">Try again</button>
+                <span class="change">-- 点击查看成功效果 --</span>
+            </div>
+            <!--/.success-->
+        </div>
+        <!--/.row-->
+    </div> 
+<script src="__PUBLIC__/chy_chajian/search_error/script.js"></script>
+<include file="./Tpl/Index/foot.html"/>

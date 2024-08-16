@@ -1,0 +1,224 @@
+<include file="./Tpl/Index/head.html"/>
+<script src="__PUBLIC__/chy_chajian/help/js/jquery-latest.js"></script>
+
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/chy_chajian/help/css/stylepc.css">
+<style>
+	.footer{
+		position:fixed;
+	}
+</style>
+<section id="help">
+<div class="container help_cont" style="padding-top: 50px; padding-bottom: 60px;"> <br>
+<!--  <div style='background:black;padding-top:20px;padding-bottom: 30px;'>
+    <h2 style="color:white;text-align:center">WGIA User Manual</h2>
+  </div>-->
+  <br>
+  <br>
+<div class=" row">
+  <div class="menu col-2" style="padding-top: 100px;padding-bottom: 100px">
+	  <h2><i class="bi bi-book-fill"></i> Catalog</h2>
+	 <br>
+    <h3><!--<i class="bi bi-lightbulb positionIicon"></i>--><i class="bi bi-compass"></i> Overviwe</h3>
+    <ul class="ulmenu1">
+      <li><a class="selected" href="#tab1">WGIA</a></li>
+      <volist name="manual_info_overviwe" id="info" key="index">
+        <li><a href="#tab{$index+1}">{$info.title}</a></li>
+      </volist>
+    </ul>
+    <h3><!--<i class="bi bi-journal-check positionIicon"></i>--><i class="bi bi-compass"></i> Quick start</h3>
+    <ul class="ulmenu2">
+      <li><a href="#" class="selected">Basic Processes</a></li>
+    </ul>
+    <h3><!--<i class="bi bi-patch-question-fill positionIicon"></i>--><i class="bi bi-compass"></i> FAQ</h3>
+    <ul class="ulmenu3">
+      <li><a class="selected" href="#tab1">Input & output data </a></li>
+		<li><a href="#tab2">Supported GPU</a></li>
+		<li><a href="#tab3">Upload Issues</a></li>
+		<li><a href="#tab4">No report generated</a></li>
+		<li><a href="#tab5">Need to log in?</a></li>
+		
+    </ul>
+  </div>
+  <div class="content col" style="padding-bottom: 100px;"> 
+    <!--*****************************-->
+    <div class="menu1 menu_tab">
+      <div id="tab1" class="tab active">
+        <h5><strong>WGIA is an open-access web application developed for genome-wide interaction analysis</strong>. WGIA leverages GPU parallel technologies to significantly enhance computational efficiency. Its framework facilitates high-speed pairwise interaction analysis, enabling extensive exploration of genome-wide interactions in the era of big data in molecular biology.</h5>
+		  <div id="carouselExampleDark" class="carousel carousel-dark"  data-bs-ride="carousel">
+  <div class="carousel-indicators" style="margin-bottom: -1rem">
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+	  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="20000">
+      <img src="__PUBLIC__/dblogo/index/home-1.png" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+       <!-- <h5>First slide label</h5>-->
+        <!--<p>Some representative placeholder content for the first slide.</p>-->
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="20000">
+      <img src="__PUBLIC__/dblogo/index/home-2.png" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+       <!-- <h5>Second slide label</h5>-->
+       <!-- <p>Some representative placeholder content for the second slide.</p>-->
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="20000">
+      <img src="__PUBLIC__/dblogo/index/home-3.png" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+       <!-- <h5>Third slide label</h5>-->
+        <!--<p>Some representative placeholder content for the third slide.</p>-->
+      </div>
+    </div>
+	     <div class="carousel-item" data-bs-interval="20000">
+			 <br><br>
+     <script type="text/javascript" src="//rf.revolvermaps.com/0/0/7.js?i=5dh9wypwj8p&amp;m=0&amp;c=ff0000&amp;cr1=ffffff&amp;sx=0" async="async"></script>
+      <div class="carousel-caption d-none d-md-block">
+       <!-- <h5>Third slide label</h5>-->
+        <!--<p>Some representative placeholder content for the third slide.</p>-->
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+   <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next" >
+      <!--<span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+      </div>
+      <volist name="manual_info_overviwe" id="info" key="index">
+        <div  class="tab">
+          <div class="card" > <img src="__PUBLIC__/files/wgia_manual/{$info.image}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text" >
+                <?php
+for ($i = 1; $i <= 12; $i++){
+if($info["text$i"]){
+echo ("<p style='font-size: 15px'>".$info["text$i"]."</p><br>");
+}
+}
+?>
+              </p>
+            </div>
+          </div>
+        </div>
+      </volist>
+    </div>
+    <!--****************************************-->
+    <div class="menu2 menu_tab">
+      <div id="tab1" class="tab">
+		            <div class="card" > <img src="__PUBLIC__/files/wgia_manual/quick_start.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text" style="font-size: 18px;color: red">
+              </p>
+				  
+            </div>
+          </div>
+		
+<!--        <volist name="manual_info_Processes" id="Processes" key="index">
+          <div class="card" > <img src="__PUBLIC__/files/wgia_manual/{$Processes.image}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text" style="font-size: 18px;color: red">
+				  <strong>
+                <?php
+for ($i = 1; $i <= 10; $i++){
+if($Processes["text$i"]){
+echo ($Processes["text$i"]."<br>");
+}
+}
+?></strong>
+              </p>
+				  
+            </div>
+          </div>
+          <br>
+        </volist>-->
+      </div>
+    </div>
+    <!--********************第三个menu**************************-->
+    <div class="menu3 menu_tab">
+      <div id="tab-3-1" class="tab">
+    		<div class="col-md-12 col-sm-12 col-xs-12" >
+				<div class="single-service">
+					<div class="row" style="color:blue;">
+						<div class="col-md-12" style='text-align:left;'>
+
+							<div id='input'>
+								
+								<h3>Supported file types</h3>
+			<p>Support text files: .txt, .csv, .tsv. If the file is too large (>10M), please upload a compressed file.(.rar, .zip)</p>
+<h3>Input</h3>
+								<h4>data matrix</h4>
+								<img src="__PUBLIC__/img/tutorial_genome_matrix.png" style="width:100%;">
+								<h4>Design matrix</h4>
+								<p>The first column of the design matrix contains the sample names. The second and third columns denote labels for the case and control groups. For samples in the case group, the case column carries the label '1' and the control column, '0'. Conversely, for samples in the control group, the case column holds '0' while the control column holds '1'.</p>
+								<img src="__PUBLIC__/img/tutorial_design_matrix.png" style="width:30%;">
+								<p>To expedite file uploads, WGIA exclusively accepts zip files containing the genome data matrix and design matrix, respectively.</p>
+							</div>
+
+							<div id='output'>
+								<h3>Output</h3>
+								<p>WGIA offers an example report page for users to review, providing access to all results, including visualizations, interaction tables, and download options.</p>
+								<img src="__PUBLIC__/img/tutorial_example_report.png" style="width:100%;">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+      </div>
+		
+		<div id="tab-3-2" class="tab">
+			<h4 align="center"><strong>Which GPUs are supported by WGIA v1.0 software?</strong></h4>
+			<br><br>
+<p style="font-size: 19px">WGIA was successfully tested on a variety of Nvidia GPUs. See the full list of tested GPU</p>
+			<br><br>
+<ol class="list-group list-group-numbered list-group-flush">
+
+  <li class="list-group-item">NVIDIA GeForce RTX 4090</li>
+<li class="list-group-item">NVIDIA RTX A6000</li>
+<li class="list-group-item">NVIDIA RTX A5000</li>
+  <li class="list-group-item">NVIDIA RTX A4000</li>
+<li class="list-group-item">NVIDIA  RTX 3080Ti</li>	
+  <li class="list-group-item">NVIDIA  RTX 2080Ti</li>
+								
+</ol>
+		</div>
+		
+				<div id="tab-3-3" class="tab">
+			<h4 align="center"><strong>Why can't I upload my file?</strong></h4>
+<br><br>
+<p style="font-size: 19px">File upload issues may be related to the user's internet speed or file size. The WGIA online interface only supports .txt files separated by tabs or .csv files separated by commas. If the file size is too large, please compress the single text file into a separate archive before uploading.</p>
+
+		</div>
+		
+<div id="tab-3-4" class="tab">
+			<h4 align="center"><strong>Why is there no report after the analysis?</strong></h4>
+<br><br>
+<p style="font-size: 19px">In that case, it may be due to the following reasons: First, the data uploaded by the user did not meet the required criteria, preventing the analysis from running correctly and resulting in no output files. Second, there may have been an unexpected interruption in the network server during the analysis. In the event of missing reports, verifying the uploaded files and carefully reviewing the user manual for proper procedure is advisable. Additionally, please contact the website administrators for further assistance.</p>
+
+		</div>
+		
+ <div id="tab-3-5" class="tab">
+<h4 align="center"><strong>Do I need to log in to the analysis?</strong></h4>
+<br><br>
+<p style="font-size: 19px">WGIA does not require users to log in to perform analyses; however, each analysis job generates a unique key, which users must retain to access their historical analysis records. To better manage and view submitted analysis records, avoid losing keys, and receive email notifications at the start and end of tasks, we recommend users register and log in before using the platform.</p>
+
+		</div>
+		
+		
+</div>
+	  <!--****************第三个结束*******************-->
+  
+</div>
+</div>
+</div>
+	</section>
+<script type="text/javascript" src="__PUBLIC__/chy_chajian/help/js/pc.js"></script> 
+<include file="./Tpl/Index/foot.html"/>

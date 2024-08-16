@@ -1,0 +1,81 @@
+<include file="./Tpl/Index/head.html"/>
+
+<style>
+table tr{
+	height:45px;
+}
+
+table th{
+	text-align:center;
+	border-top:2px grey solid;
+	border-bottom:2px grey solid;
+}
+
+table td{
+	border-bottom:1px grey solid;
+
+}
+
+
+</style>
+
+<section id="Services" class="section">
+			<div class="container" style='margin-top:50px;'>
+			
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div style='background:black;padding:24px;'>
+							<h2 style="color:white;text-align:center">Queue</h2>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12" >
+						<div class="single-service">
+							<div class="row">
+							<div class="col-md-12">
+										
+										
+										<table style="width:100%;">
+										<tr>
+										<th>Job ID</th>
+										<th>Date</th>
+										<th>Status</th>
+										
+										</tr>
+										
+										
+											
+											<volist name="vo" id="v1">
+											
+											<tr>
+											<td>{$v1.job_id}</td>
+											<td>{$v1.submit_date}</td>
+											<td>{$v1.status}</td>
+											
+											</tr>
+											
+											</volist>
+										
+										
+										</table>
+										<br>
+										<div style="text-align:right;">{$page}</div>
+								</div>
+								</div>
+							
+						</div>
+					</div>
+					
+					
+					
+
+				</div>
+				
+				
+				
+				
+			</div>
+		</section>
+		<include file="./Tpl/Index/foot.html"/>

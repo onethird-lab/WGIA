@@ -1,0 +1,436 @@
+---
+title: "Report for Job [KEY:`r params$args[1]`]"
+author: "WGIA"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: true 
+    theme: cerulean #flatly #cerulean
+
+  
+  beamer_presentation: 
+    keep_tex: true
+    includes:
+      in_header: columns.tex
+params:
+    args: ''
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      fig.align = "center")
+```
+
+<style>
+table.display td { white-space: nowrap; }
+p {font-size:15px;color:#2c3e50;}
+</style>
+
+
+```{r Rpackages}
+library(plotly)
+# library(cowplot)
+library(tidyverse)
+library(stats)
+library(DT)
+# library(ggvenn)
+# library(ggpubr)
+# library(ggtree)
+library(dplyr)
+library(ggplot2)
+# library(igraph)
+library(knitr)
+library(kableExtra)
+library(shiny)
+# library(parallel)
+library(RColorBrewer)
+library(data.table)
+library(rmdformats)
+library(ggsci)
+library(ggthemes)
+args <-  params$args
+key <- args[1]
+rootpath <- args[2]
+info <- args[3] #Information about the analysis, such as "AnalysisType_methodType_withCovariant_withPheno"
+# key="ziw0mz6rsnlzaqi6nvbk"
+# rootpath = 'E:/PHPCUSTOM/wwwroot/web/wgia/Public/job/'
+# info = 'DNAm_lncRNA_and_Linear_and_No_and_No_and_1e-5'
+zip_path <- "D:/application/7-Zip/7Z/7z.exe"
+#zip_path <- "D:/software/7-Zip/7Z/7z.exe"#
+```
+
+**You can [bookmark this page](#) to access the results later, or <a href='http://gpu.zjwm.cc:88/wgia/public/job/`r key`/report.html' download>download the report</a> locally.**
+
+*Results will be stored for 30 days.*
+
+<hr>
+
+> WGIA is an open-access web application designed for genome-wide interaction analysis. Leveraging GPU parallel technologies, it significantly enhances computational efficiency. You can upload the SNP, DNA methylation, gene expression, or other biological data, and WGIA generates a comprehensive report within a short timeframe.
+
+# 1. Datasets information
+```{r}
+# firstly, define some variables for exhibition
+analysisId = str_split(info, "_and_")[[1]][1] #
+methodType = str_split(info, "_and_")[[1]][2]#
+withCovariant = str_split(info, "_and_")[[1]][3]#
+cutoff = str_split(info, "_and_")[[1]][5]#cutoff
+# exhibit information according to the analysis and method type
+analysisType <- case_when(
+  analysisId=="SNP_DNAm" ~ "mQTL identification (SNP×DNAm)",
+  analysisId=="SNP_mRNA" ~ "eQTL identification (SNP×mRNA)",
+  analysisId=="SNP_microRNA" ~ "eQTL identification (SNP×microRNA)",
+  analysisId=="SNP_lncRNA" ~ "eQTL identification (SNP×lncRNA)",
+  analysisId=="SNP_Protein" ~ "pQTL identification (SNP×Protein)",
+  analysisId=="CNV_DNAm" ~ "mQTL identification (CNV×DNAm)",
+  analysisId=="CNV_mRNA" ~ "eQTL identification (CNV×mRNA)",
+  analysisId=="CNV_microRNA" ~ "eQTL identification (CNV×miRNA)",
+  analysisId=="CNV_lncRNA" ~ "eQTL identification (CNV×lncRNA)",
+  analysisId=="CNV_Protein" ~ "pQTL identification (CNV×Protein)",
+  analysisId=="DNAm_mRNA" ~ "eQTM identification (DNAm×mRNA)",
+  analysisId=="DNAm_microRNA" ~ "eQTM identification (DNAm×microRNA)",
+  analysisId=="DNAm_lncRNA" ~ "eQTM identification (DNAm×lncRNA)",
+  analysisId=="DNAm_Protein" ~ "pQTM identification (DNAm×Protein)",
+  analysisId=="microRNA_mRNA" ~ "Regulatory relationship identification (microRNA×mRNA)",
+  analysisId=="lncRNA_mRNA" ~ "Regulatory relationship identification (lncRNA×mRNA)"
+  
+)
+analysis_intorduction <- case_when(
+  analysisType=="mQTL identification (SNP×DNAm)" ~ "mQTL (methylation Quantitative Trait Loci) identification refers to the process of discovering associations between genetic variants, specifically single nucleotide polymorphisms (SNPs), and DNA methylation (DNAm) levels at specific loci in the genome.",
+  analysisType=="eQTL identification (SNP×mRNA)" ~ "Expression Quantitative Trait Loci (eQTL) Identification (SNP vs. mRNA) aims to find associations between single nucleotide polymorphisms (SNPs) and mRNA expression levels. This analysis helps in understanding how genetic variants influence gene expression, revealing regulatory mechanisms that can affect cellular function and phenotype.",
+  analysisType=="eQTL identification (SNP×microRNA)" ~ "Expression Quantitative Trait Loci (eQTL) Identification (SNP vs. microRNA) identifies SNPs that affect microRNA (microRNA) expression levels. MicroRNAs play crucial roles in post-transcriptional regulation of gene expression, and this analysis helps to understand how genetic variations can impact these regulatory processes.",
+  analysisType=="eQTL identification (SNP×lncRNA)" ~ "Expression Quantitative Trait Loci (eQTL) Identification (SNP vs. lncRNA) explores the relationship between SNPs and long non-coding RNA (lncRNA) expression levels. LncRNAs are involved in various regulatory functions within the cell, and this analysis helps to uncover genetic factors that influence their expression.",
+  analysisType=="pQTL identification (SNP×Protein)" ~ "Protein Quantitative Trait Loci (pQTL) Identification (SNP vs. Protein) seeks to find SNPs associated with Protein expression levels. Proteins are the functional molecules within cells, and understanding how genetic variants affect their abundance and activity is crucial for understanding biological processes and disease mechanisms.",
+  analysisType=="mQTL identification (CNV×DNAm)" ~ "Methylation Quantitative Trait Loci (mQTL) Identification (CNV vs. DNA Methylation) investigates how CNVs influence DNA methylation patterns. DNA methylation is an epigenetic modification that regulates gene expression, and understanding its relationship with CNVs can reveal epigenetic effects of structural variations.",
+  analysisType=="eQTL identification (CNV×mRNA)" ~ "Expression Quantitative Trait Loci (eQTL) Identification (CNV vs. mRNA) identifies CNVs that affect mRNA expression levels. This analysis explores the genetic basis of transcriptional regulation mediated by CNVs, revealing how structural variations influence gene expression.",
+  analysisType=="eQTL identification (CNV×miRNA)" ~ "Expression Quantitative Trait Loci (eQTL) Identification (CNV vs. microRNA) finds associations between CNVs and microRNA (miRNA) expression. MicroRNAs regulate gene expression post-transcriptionally, and understanding how CNVs affect their expression can reveal genetic influences on miRNA-mediated regulation.",
+  analysisType=="eQTL identification (CNV×lncRNA)" ~ "Expression Quantitative Trait Loci (eQTL) Identification (CNV vs. lncRNA) looks for CNVs that influence long non-coding RNA (lncRNA) expression levels. LncRNAs play important roles in gene regulation, and this analysis helps to uncover genetic factors affecting their expression.",
+  analysisType=="pQTL identification (CNV×Protein)" ~ "Protein Quantitative Trait Loci (pQTL) Identification (CNV vs. protein) identifies CNVs associated with protein expression levels. Proteins are crucial for cellular function, and understanding how CNVs affect their abundance and activity is important for understanding biological processes and disease mechanisms.",
+  analysisType=="eQTM identification (DNAm×mRNA)" ~ "Expression Quantitative Trait Methylation (eQTM) Identification (DNAm vs. mRNA) investigates how DNA methylation affects mRNA expression levels. DNA methylation is a key epigenetic modification that regulates gene expression, and understanding its impact on mRNA levels can reveal regulatory mechanisms.",
+  analysisType=="eQTM identification (DNAm×microRNA)" ~ "Expression Quantitative Trait Methylation (eQTM) Identification (DNAm vs. microRNA) identifies associations between DNA methylation and microRNA (microRNA) expression. This analysis explores how epigenetic modifications influence microRNA-mediated gene regulation.",
+  analysisType=="eQTM identification (DNAm×lncRNA)" ~ "Expression Quantitative Trait Methylation (eQTM) Identification (DNAm vs. lncRNA) examines how DNA methylation influences long non-coding RNA (lncRNA) expression levels. LncRNAs are crucial regulators of gene expression, and understanding their epigenetic regulation provides insights into complex regulatory networks.",
+  analysisType=="pQTM identification (DNAm×Protein)" ~ "Protein Quantitative Trait Methylation (pQTM) Identification (DNAm vs. Protein) investigates how DNA methylation affects Protein expression levels. Proteins are the primary functional molecules in cells, and understanding their regulation by epigenetic modifications is essential for comprehending cellular functions.",
+  analysisType=="Regulatory relationship identification (microRNA×mRNA)" ~ "Regulatory Relationship Analysis between microRNA and mRNA investigates how microRNAs regulate mRNA expression. MicroRNAs are key post-transcriptional regulators, and understanding their interactions with mRNAs is crucial for comprehending gene regulation.",
+  analysisType=="Regulatory relationship identification (lncRNA×mRNA)" ~ "Regulatory Relationship Analysis between lncRNA and mRNA explores the regulatory effects of long non-coding RNAs (lncRNAs) on mRNA expression. LncRNAs can modulate gene expression through various mechanisms, and understanding these interactions is important for decoding complex regulatory networks."
+)
+# method_intorduction <- case_when(
+#   methodType=="Pearson" ~ "",
+#   methodType=="Spearman" ~ "",
+#   methodType=="Biweight" ~ ""
+# )
+covariate_intorduction <- case_when(
+  withCovariant=="Yes" ~ "In the linear regression analysis, considering covariates helps control for confounding factors, improving the accuracy and interpretability of the association between two markers.",
+  withCovariant=="No" ~ ""
+
+)
+marker1_name <- case_when(
+  analysisType=="mQTL identification (SNP×DNAm)" ~ "Single Neucleotide Polymorphism",
+  analysisType=="eQTL identification (SNP×mRNA)" ~ "Single Neucleotide Polymorphism",
+  analysisType=="eQTL identification (SNP×microRNA)" ~ "Single Neucleotide Polymorphism",
+  analysisType=="eQTL identification (SNP×lncRNA)" ~ "Single Neucleotide Polymorphism",
+  analysisType=="pQTL identification (SNP×Protein)" ~ "Single Neucleotide Polymorphism",
+  analysisType=="mQTL identification (CNV×DNAm)" ~ "Copy Number Variation",
+  analysisType=="eQTL identification (CNV×mRNA)" ~ "Copy Number Variation",
+  analysisType=="eQTL identification (CNV×miRNA)" ~ "Copy Number Variation",
+  analysisType=="eQTL identification (CNV×lncRNA)" ~ "Copy Number Variation",
+  analysisType=="pQTL identification (CNV×Protein)" ~ "Copy Number Variation",
+  analysisType=="eQTM identification (DNAm×mRNA)" ~ "DNA methylation loci",
+  analysisType=="eQTM identification (DNAm×microRNA)" ~ "DNA methylation loci",
+  analysisType=="eQTM identification (DNAm×lncRNA)" ~ "DNA methylation loci",
+  analysisType=="pQTM identification (DNAm×Protein)" ~ "DNA methylation loci",
+  analysisType=="Regulatory relationship identification (microRNA×mRNA)" ~ "microRNA",
+  analysisType=="Regulatory relationship identification (lncRNA×mRNA)" ~ "long non-coding RNA"
+)
+marker1_abb <- case_when(
+  analysisType=="mQTL identification (SNP×DNAm)" ~ "SNP",
+  analysisType=="eQTL identification (SNP×mRNA)" ~ "SNP",
+  analysisType=="eQTL identification (SNP×microRNA)" ~ "SNP",
+  analysisType=="eQTL identification (SNP×lncRNA)" ~ "SNP",
+  analysisType=="pQTL identification (SNP×Protein)" ~ "SNP",
+  analysisType=="mQTL identification (CNV×DNAm)" ~ "CNV",
+  analysisType=="eQTL identification (CNV×mRNA)" ~ "CNV",
+  analysisType=="eQTL identification (CNV×miRNA)" ~ "CNV",
+  analysisType=="eQTL identification (CNV×lncRNA)" ~ "CNV",
+  analysisType=="pQTL identification (CNV×Protein)" ~ "CNV",
+  analysisType=="eQTM identification (DNAm×mRNA)" ~ "DNAm",
+  analysisType=="eQTM identification (DNAm×microRNA)" ~ "DNAm",
+  analysisType=="eQTM identification (DNAm×lncRNA)" ~ "DNAm",
+  analysisType=="pQTM identification (DNAm×Protein)" ~ "DNAm",
+  analysisType=="Regulatory relationship identification (microRNA×mRNA)" ~ "microRNA",
+  analysisType=="Regulatory relationship identification (lncRNA×mRNA)" ~ "lncRNA"
+)
+marker2_name <- case_when(
+  analysisType=="mQTL identification (SNP×DNAm)" ~ "DNA methylation loci",
+  analysisType=="eQTL identification (SNP×mRNA)" ~ "Messenger RNA",
+  analysisType=="eQTL identification (SNP×microRNA)" ~ "microRNA",
+  analysisType=="eQTL identification (SNP×lncRNA)" ~ "long non-coding RNA",
+  analysisType=="pQTL identification (SNP×Protein)" ~ "",
+  analysisType=="mQTL identification (CNV×DNAm)" ~ "DNA methylation loci",
+  analysisType=="eQTL identification (CNV×mRNA)" ~ "Messenger RNA",
+  analysisType=="eQTL identification (CNV×miRNA)" ~ "microRNA",
+  analysisType=="eQTL identification (CNV×lncRNA)" ~ "long non-coding RNA",
+  analysisType=="pQTL identification (CNV×Protein)" ~ "",
+  analysisType=="eQTM identification (DNAm×mRNA)" ~ "Messenger RNA",
+  analysisType=="eQTM identification (DNAm×microRNA)" ~ "microRNA",
+  analysisType=="eQTM identification (DNAm×lncRNA)" ~ "long non-coding RNA",
+  analysisType=="pQTM identification (DNAm×Protein)" ~ "",
+  analysisType=="Regulatory relationship identification (microRNA×mRNA)" ~ "Messenger RNA",
+  analysisType=="Regulatory relationship identification (lncRNA×mRNA)" ~ "Messenger RNA"
+)
+marker2_abb <- case_when(
+  analysisType=="mQTL identification (SNP×DNAm)" ~ "DNAm",
+  analysisType=="eQTL identification (SNP×mRNA)" ~ "mRNA",
+  analysisType=="eQTL identification (SNP×microRNA)" ~ "microRNA",
+  analysisType=="eQTL identification (SNP×lncRNA)" ~ "lncRNA",
+  analysisType=="pQTL identification (SNP×Protein)" ~ "Protein",
+    analysisType=="mQTL identification (CNV×DNAm)" ~ "DNAm",
+  analysisType=="eQTL identification (CNV×mRNA)" ~ "mRNA",
+  analysisType=="eQTL identification (CNV×miRNA)" ~ "microRNA",
+  analysisType=="eQTL identification (CNV×lncRNA)" ~ "lncRNA",
+  analysisType=="pQTL identification (CNV×Protein)" ~ "Protein",
+  analysisType=="eQTM identification (DNAm×mRNA)" ~ "mRNA",
+  analysisType=="eQTM identification (DNAm×microRNA)" ~ "microRNA",
+  analysisType=="eQTM identification (DNAm×lncRNA)" ~ "lncRNA",
+  analysisType=="pQTM identification (DNAm×Protein)" ~ "Protein",
+  analysisType=="Regulatory relationship identification (microRNA×mRNA)" ~ "mRNA",
+  analysisType=="Regulatory relationship identification (lncRNA×mRNA)" ~ "mRNA"
+)
+```
+
+
+```{r}
+matrix1 <- fread(str_c(rootpath, key, '/matrix1.txt'), data.table=FALSE) %>% as.data.frame()
+marker1_n <- nrow(matrix1)
+sample1_n <- ncol(matrix1)-1
+matrix2 <- fread(str_c(rootpath, key, '/matrix2.txt'), data.table=FALSE) %>% as.data.frame()
+marker2_n <- nrow(matrix2)
+sample2_n <- ncol(matrix2)-1
+if(withCovariant=="Yes"){
+  matrix_cov <- fread(str_c(rootpath, key, '/matrix_cov.txt'), data.table=FALSE) %>% as.data.frame()
+  marker_cov_n <- ncol(matrix_cov)-1
+  sample_cov_n <- nrow(matrix_cov)-1
+  covariate_name <- paste(colnames(matrix_cov)[-1], collapse = ", ")
+}
+```
+
+## 1.1 marker information
+
+**There are total `r marker1_n` `r marker1_name` (`r marker1_abb`) and `r marker2_n` `r marker2_name` (`r marker2_abb`) used for interaction analysis.**
+
+* In order to provide the fullest results as possible, WGIA provided interaction for all the `r marker1_abb` and `r marker2_abb` uploaded, without quality control for the data. 
+* Note: If needed, some basic information about `r marker1_abb` and `r marker2_abb` can be used to perform quality control before uploaded the datasets, such as the missing rate. 
+<!-- These can be performed using Expanded Genetic and Epigenetic Association Study Software EWAS3.0, see www.bioapp.org/ewas for details. -->
+
+
+## 1.2 sample information
+```{r}
+if(withCovariant=="Yes"){
+  covariate_info0 <- paste0("There are ", marker_cov_n, " other sample information be used as covariates, respectively are ", covariate_name, ".") 
+}else{
+  covariate_info0 <- paste0("There are no other sample information be used as covariates.") 
+}
+```
+
+**There are total of `r sample1_n` samples used for interaction calculation.**
+**&nbsp; Note: `r covariate_info0`.**
+<br /><br />
+
+# 2. Interaction analysis results
+
+## 2.1 Regulatory effect (regression coefficient) distribution
+```{r}
+if(withCovariant=="Yes"){
+  covariate_info1 <- paste0(covariate_name, " were considered as covariates in the regression model.") 
+}else{
+  covariate_info1 <- paste0("No covariants were considered in the regression model.") 
+}
+```
+**WGIA performed a total of <mark>`r format(marker1_n*marker2_n, big.mark=",", scientific = FALSE)`</mark> calculations between `r marker1_n` `r marker1_abb` and `r marker2_n` `r marker2_abb` for this job, encompassing linear regression among all possible `r marker1_abb`-`r marker2_abb` pairs. `r covariate_info1` The results are displayed below.**
+<br />
+
+> <mark>**`r analysisType`: ** `r analysis_intorduction`
+<br /><br />
+**Linear regression **is a statistical method used to identify the relationship between two variables. For `r analysisType`, the linear regression model typically includes the genetic marker information of `r marker1_abb` as predictor variables and the quantitative trait measurements of `r marker2_abb` as the response variable. `r covariate_intorduction`
+
+
+
+```{r distribution, fig.width = 10, fig.height = 3}
+dprime_dist_temp <- read.table(file=str_c(rootpath, key, '/LR_distribution.txt'), header = TRUE, sep = "\t", fill=TRUE)
+summary_stats <- tail(dprime_dist_temp, 9) %>% separate(lower_interval, into = c("metrics", "value"), sep = "=") %>% dplyr::select(metrics, value)
+row.names(summary_stats) <- NULL
+dprime_dist <- dprime_dist_temp[1:(nrow(dprime_dist_temp) - 9), ]
+dprime_dist$lower_interval <- as.numeric(dprime_dist$lower_interval)
+dprime_dist$frequency <- as.numeric(dprime_dist$frequency)
+# Define the function to find the index of the row before and after non-zero
+trim_zeros <- function(df) {
+  first_non_zero <- which(df$frequency != 0)[1]
+  last_non_zero <- which(df$frequency != 0)[length(which(df$frequency != 0))]
+  
+  # cut the non-zero part
+  df_trimmed <- df[first_non_zero:last_non_zero, ]
+  
+  return(df_trimmed)
+}
+dprime_dist_trimmed <- trim_zeros(dprime_dist)
+# density plot
+p_dist <- ggplot(dprime_dist_trimmed, aes(x = lower_interval, y=frequency)) +
+  geom_area(color = "steelblue", fill = "steelblue", outline.type="upper", linewidth=1, alpha = 1) +
+  labs(x = "Regression coefficient", y = str_c("Number of ", marker1_abb, "-", marker2_abb, "pairs")) +
+  theme_bw()+
+  theme(axis.text = element_text(face = 'bold', color = 'black', size = 10, hjust = 0.5),
+        axis.title = element_text(face = 'bold', color = 'black', size = 11, hjust = 0.5))
+
+# Converts the lower_interval and upper_interval columns to numeric values, handling -inf and inf
+dprime_dist$lower_interval <- as.numeric(as.character(dprime_dist$lower_interval))
+dprime_dist$upper_interval <- as.numeric(as.character(dprime_dist$upper_interval))
+# Converts -inf and inf to usable values
+dprime_dist$lower_interval[is.infinite(dprime_dist$lower_interval)] <- -10.000
+dprime_dist$upper_interval[is.infinite(dprime_dist$upper_interval)] <- 10.000
+# Define a new interval
+new_intervals <- c(-10, -5, -2, seq(-1, 1, by=0.1), 2, 5, 10)
+# Create a new table to store the grouped data
+grouped_data <- data.frame(
+  lower_interval = new_intervals[-length(new_intervals)],
+  upper_interval = new_intervals[-1],
+  frequency = rep(0, length(new_intervals) - 1)
+)
+# Group calculated frequency and cumulative frequency
+for (i in 1:nrow(grouped_data)) {
+  lower_bound <- grouped_data$lower_interval[i]
+  upper_bound <- grouped_data$upper_interval[i]
+  subset <- dprime_dist[dprime_dist$lower_interval >= lower_bound & dprime_dist$upper_interval <= upper_bound, ]
+  grouped_data$frequency[i] <- sum(subset$frequency)
+}
+grouped_data_trimmed <- trim_zeros(grouped_data)
+grouped_data_trimmed <- grouped_data_trimmed %>% arrange(lower_interval)
+# # print result
+# print(grouped_data_trimmed)
+
+```
+
+```{r}
+zip(str_c(rootpath, key, '/LR_distribution.zip'), str_c(rootpath, key, '/LR_distribution.txt'), flags = " a -tzip", zip=zip_path)
+```
+
+**The plot below displays the distribution of the Regression coefficient of `r marker1_abb` for all the `r format(marker1_n*(marker1_n-1)/2, big.mark=",", scientific = FALSE)` `r marker1_abb`-`r marker2_abb` pairs in the dataset.** 
+
+* These results can be downloaded here [LR_distribution.txt](LR_distribution.zip). 
+
+```{r, fig.width=6, fig.height=3}
+p_dist
+```
+
+* A more rough distribution of intervals is as follows:
+
+```{r}
+# Use HTML to center the table
+htmltools::tagList(
+  tags$div(
+    style = "display: flex; justify-content: center;",
+    datatable(grouped_data_trimmed, caption = "Regression coefficient distribution", class="compact", width = "50%") %>% 
+      formatRound(columns = c("lower_interval", "upper_interval"), digits = 2)
+  )
+)
+```
+
+## 2.2 Regulatory effect (regression coefficient) distribution metrics
+
+**Some basic information about the distribution is provided in the table below, including mean value, variance, standard deviation, skewness, kurtosis, median_value, lower quartile, upper quartile, interquartile range.**
+
+- **Mean value**: The average value of the data set.
+- **Variance**: A measure of how much the data points differ from the mean.
+- **Standard deviation**: The square root of the variance, indicating the spread of the data.
+- **Skewness**: A measure of the asymmetry of the data distribution.
+- **Kurtosis**: A measure of the "tailedness" of the data distribution.
+- **Median value**: The middle value that separates the higher half from the lower half of the data set.
+- **Lower quartile (Q1)**: The median of the lower half of the data set (25th percentile).
+- **Upper quartile (Q3)**: The median of the upper half of the data set (75th percentile).
+- **Interquartile range (IQR)**: The range between the lower quartile and the upper quartile (Q3 - Q1), measuring the spread of the middle 50% of the data. 
+
+
+* These results can be downloaded here [LR_distribution.txt](LR_distribution.zip). The last 9 line of the file are the metric values of the distribution.
+```{r}
+# Use HTML to center the table
+htmltools::tagList(
+  tags$div(
+    style = "display: flex; justify-content: center;",
+    datatable(summary_stats, caption = "Summary Statistics", class="compact", width = "50%")
+  )
+)
+```
+
+
+
+## 2.2 Signigicant regulatory relationships under significance level of `r cutoff`
+```{r}
+ld_dprime <- fread(str_c(rootpath, key, '/LR.txt'), data.table=TRUE) %>% as.data.frame()
+# SNP ID
+SNP1_info <- data.frame(SNP_No=0:(marker1_n-1), SNP_ID=matrix1$symbol)
+SNP2_info <- data.frame(SNP_No=0:(marker2_n-1), SNP_ID=matrix2$symbol)
+# data for heatmap
+dat_heat <- ld_dprime %>% 
+  left_join(SNP1_info, join_by(Marker1 == SNP_No)) %>% 
+  left_join(SNP2_info, join_by(Marker2 == SNP_No)) %>%
+  dplyr::select(Marker1=SNP_ID.x, Marker2=SNP_ID.y, 3:ncol(ld_dprime))
+sig_n <- nrow(dat_heat)
+fwrite(dat_heat, file=str_c(rootpath, key, '/LR_re.txt'), sep="\t", quote=FALSE, col.names=TRUE, row.names=FALSE)
+```
+
+```{r}
+zip(str_c(rootpath, key, '/LR_re.zip'), str_c(rootpath, key, '/LR_re.txt'), flags = " a -tzip", zip=zip_path)
+```
+
+
+**WGIA screened regulatory relationship for all the <mark>`r format(marker1_n*(marker1_n-1)/2, big.mark=",", scientific = FALSE)`</mark> `r marker1_abb`-`r marker2_abb` pairs. 
+<br />There are a total of <mark>`r format(sig_n, big.mark=",", scientific = FALSE)`</mark> `r marker1_abb`-`r marker2_abb` pairs encompassing significant regulatory relationships under significant level of `r cutoff`.**
+
+```{r}
+if(withCovariant=="Yes"){
+  covariate_info2 <- paste0("The subsequent pairs of columns each represent the regression coefficient and T-statistic for the corresponding covariate ", covariate_name, ".") 
+}else{
+  covariate_info2 <- paste0("") 
+}
+```
+
+* These results can be downloaded here [LR.txt](LR_re.zip).
+* Columns 6, 7 and 8 represent the intercept term's coefficient, T-statistic, and P-value respectively. Columns 9, 10 and 11 correspond to the regression coefficient, T-statistic, and P-value for the independent variable (`r marker1_abb`). `r covariate_info2`
+<br />
+<br />
+
+```{r}
+# Custom functions to format values
+format_number <- function(x) {
+  if (abs(x) < 0.01) {
+    return(formatC(x, format = "e", digits = 2))
+  } else {
+    return(formatC(x, format = "f", digits = 2))
+  }
+}
+
+# Apply a custom formating function to a numeric column
+dat_heat <- dat_heat %>% 
+  mutate_if(is.numeric, ~ sapply(., format_number))
+kable(head(dat_heat), caption = str_c(marker1_abb, "-", marker2_abb, " pairs with significant regulatory relationships"), format = "html") %>%
+  kable_styling(full_width = FALSE) %>%
+  scroll_box(width = "100%")
+
+```
+
+* <mark>If you need the full results, Please perform the interaction analysis with our local software [WGIA.exe]()
+
+<br />
+
+
+
+
+
+   
+
+<br /><br />

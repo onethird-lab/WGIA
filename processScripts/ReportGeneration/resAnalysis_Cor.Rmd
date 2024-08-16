@@ -1,0 +1,315 @@
+---
+title: "Report for Job [KEY:`r params$args[1]`]"
+author: "WGIA"
+date: "`r Sys.time()`"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float:
+      collapsed: false
+      smooth_scroll: true 
+    theme: cerulean #flatly #cerulean
+
+  
+  beamer_presentation: 
+    keep_tex: true
+    includes:
+      in_header: columns.tex
+params:
+    args: ''
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE,
+                      fig.align = "center")
+```
+<style>
+table.display td { white-space: nowrap; }
+p {font-size:15px;color:#2c3e50;}
+</style>
+
+
+```{r Rpackages}
+library(plotly)
+# library(cowplot)
+library(tidyverse)
+library(stats)
+library(DT)
+# library(ggvenn)
+# library(ggpubr)
+# library(ggtree)
+library(dplyr)
+library(ggplot2)
+# library(igraph)
+library(knitr)
+library(kableExtra)
+library(shiny)
+# library(parallel)
+library(RColorBrewer)
+library(data.table)
+library(rmdformats)
+library(ggsci)
+library(ggthemes)
+args <-  params$args
+key <- args[1]
+rootpath <- args[2]
+info <- args[3] #Information about the analysis, such as "AnalysisType_methodType_withCovariant_withPheno"
+# key="4wh09vmjwnz9au9fze1t"
+# rootpath = 'E:/PHPCUSTOM/wwwroot/web/wgia/Public/job/'
+# info="Protein_Protein_1_and_Pearson_and_No_and_No_and_0.8"
+zip_path <- "D:/application/7-Zip/7Z/7z.exe"
+```
+
+**You can [bookmark this page](#) to access the results later, or <a href='http://gpu.zjwm.cc:88/wgia/public/job/`r key`/report.html' download>download the report</a> locally.**
+
+*Results will be stored for 30 days.*
+
+<hr>
+
+> WGIA is an open-access web application designed for genome-wide interaction analysis. Leveraging GPU parallel technologies, it significantly enhances computational efficiency. You can upload the SNP, DNA methylation, gene expression, or other biological data, and WGIA generates a comprehensive report within a short timeframe.
+
+# 1. Datasets information
+```{r}
+# firstly, define some variables for exhibition
+analysisId = str_split(info, "_and_")[[1]][1] #CoCNV,CoMethy,CoExpression (mRNA),CoExpression (microRNA),CoExpression (lncRNA),PPI
+methodType = str_split(info, "_and_")[[1]][2]#Pearson;Spearman;Biweight
+cutoff = str_split(info, "_and_")[[1]][5]#cutoff
+# exhibit information according to the analysis and method type
+analysisType <- case_when(
+  analysisId=="CNV_CNV_Cor" ~ "CoCNV",
+  analysisId=="DNAm_DNAm_Cor" ~ "CoMethy",
+  analysisId=="mRNA_mRNA_Cor" ~ "mRNA CoExpression",
+  analysisId=="microRNA_microRNA_Cor" ~ "microRNA CoExpression",
+  analysisId=="lncRNA_lncRNA_Cor" ~ "lncRNA CoExpression",
+  analysisId=="Protein_Protein_Cor" ~ "PPI"
+)
+analysis_intorduction <- case_when(
+  analysisType=="CoCNV" ~ "CoCNV analysis examines the co-occurrence of copy number variations across different genomic regions to identify potential functional interactions.",
+  analysisType=="CoMethy" ~ "CoMethy analysis investigates the correlation of DNA methylation levels at different CpG sites to uncover epigenetic interactions.",
+  analysisType=="mRNA CoExpression" ~ "mRNA CoExpression analysis assesses the correlation of mRNA expression levels between different genes to identify co-regulated genes.",
+  analysisType=="microRNA CoExpression" ~ "microRNA CoExpression analysis examines the correlation of microRNA expression levels to identify microRNAs that may co-regulate target genes.",
+  analysisType=="lncRNA CoExpression" ~ "lncRNA CoExpression analysis evaluates the correlation of lncRNA expression levels with other genes to explore their potential regulatory roles.",
+  analysisType=="PPI" ~ "PPI (Protein-Protein Interaction) analysis studies the interactions between different Proteins to understand the functional networks within the cell."
+)
+method_intorduction <- case_when(
+  methodType=="Pearson" ~ "Pearson correlation measures the linear relationship between two continuous variables, providing a coefficient that ranges from -1 to 1.",
+  methodType=="Spearman" ~ "Spearman correlation assesses the rank-order relationship between two variables, making it suitable for non-linear associations and ordinal data.",
+  methodType=="Biweight" ~ "Biweight midcorrelation is a robust correlation measure that minimizes the influence of outliers, providing a reliable estimate of the association between two variables.",
+)
+marker_name <- case_when(
+  analysisType=="CoCNV" ~ "Copy number variation",
+  analysisType=="CoMethy" ~ "DNA methylation loci",
+  analysisType=="mRNA CoExpression" ~ "",
+  analysisType=="microRNA CoExpression" ~ "microRNA",
+  analysisType=="lncRNA CoExpression" ~ "long non-coding RNA",
+  analysisType=="PPI" ~ ""
+)
+marker_abb <- case_when(
+  analysisType=="CoCNV" ~ "CNV",
+  analysisType=="CoMethy" ~ "DMP",
+  analysisType=="mRNA CoExpression" ~ "mRNA",
+  analysisType=="microRNA CoExpression" ~ "microRNA",
+  analysisType=="lncRNA CoExpression" ~ "lncRNA",
+  analysisType=="PPI" ~ "Protein"
+)
+```
+
+
+```{r}
+matrix1 <- fread(str_c(rootpath, key, '/matrix1.txt'), data.table=FALSE) %>% as.data.frame()
+marker1_n <- nrow(matrix1)
+sample_n <- ncol(matrix1)-1
+```
+
+## 1.1 marker information
+
+**There are total `r marker1_n` `r marker_name` (`r marker_abb`) used for interaction analysis.**
+
+* In order to provide the fullest results as possible, WGIA provided interaction for all the `r marker_abb` uploaded, with out quality control for the data. 
+* Note: If needed, some basic information about `r marker_abb` can be used to perform quality control before uploaded the datasets, such as the missing rate. 
+<!-- These can be performed using Expanded Genetic and Epigenetic Association Study Software EWAS3.0, see www.bioapp.org/ewas for details. -->
+
+
+## 1.2 sample information
+
+**There are total of `r sample_n` samples used for interaction calculation.**
+**&nbsp; Note: There are no other sample information be used.**
+<br /><br />
+
+# 2. Interaction analysis results
+
+## 2.1 Correlation distribution
+
+**The WGIA performed a total of <mark>`r format(marker1_n*(marker1_n-1)/2, big.mark=",", scientific = FALSE)`</mark> calculations between `r marker1_n` `r marker_abb` for this job, encompassing correlation coefficients (`r methodType`) among all possible `r marker_abb`-`r marker_abb` pairs. The results are displayed below.**
+<br />
+
+> <mark>**`r analysisType`: ** `r analysis_intorduction`
+<br /><br />
+**`r methodType`: ** `r method_intorduction`
+
+
+
+```{r distribution, fig.width = 10, fig.height = 3}
+dprime_dist_temp <- read.table(file=str_c(rootpath, key, '/Cor_distribution.txt'), header = TRUE, sep = "\t", fill=TRUE)
+summary_stats <- tail(dprime_dist_temp, 9) %>% separate(lower_interval, into = c("metrics", "value"), sep = "=") %>% dplyr::select(metrics, value)
+row.names(summary_stats) <- NULL
+dprime_dist <- dprime_dist_temp[1:(nrow(dprime_dist_temp) - 9), ]
+dprime_dist$lower_interval <- as.numeric(dprime_dist$lower_interval)
+dprime_dist$frequency <- as.numeric(dprime_dist$frequency)
+# density plot
+p_dist <- ggplot(dprime_dist, aes(x = lower_interval, y=frequency)) +
+  geom_area(color = "steelblue", fill = "steelblue", outline.type="upper", linewidth=1, alpha = 1) +
+  labs(x = "Correlation", y = str_c("Number of ", marker_abb)) +
+  theme_bw()+
+  theme(axis.text = element_text(face = 'bold',color = 'black',size = 10, hjust = 0.5),
+        axis.title = element_text(face = 'bold',color = 'black',size = 11, hjust = 0.5))
+
+# Define the function to find the index of the row before and after non-zero
+trim_zeros <- function(df) {
+  first_non_zero <- which(df$frequency != 0)[1]
+  last_non_zero <- which(df$frequency != 0)[length(which(df$frequency != 0))]
+  
+  # cut the non-zero part
+  df_trimmed <- df[first_non_zero:last_non_zero, ]
+  
+  return(df_trimmed)
+}
+# Converts the lower_interval and upper_interval columns to numeric values, handling -inf and inf
+dprime_dist$lower_interval <- as.numeric(as.character(dprime_dist$lower_interval))
+dprime_dist$upper_interval <- as.numeric(as.character(dprime_dist$upper_interval))
+# Define a new interval
+new_intervals <- seq(-1, 1, by=0.2)
+# Create a new table to store the grouped data
+grouped_data <- data.frame(
+  lower_interval = new_intervals[-length(new_intervals)],
+  upper_interval = new_intervals[-1],
+  frequency = rep(0, length(new_intervals) - 1)
+)
+# Group calculated frequency and cumulative frequency
+for (i in 1:nrow(grouped_data)) {
+  lower_bound <- grouped_data$lower_interval[i]
+  upper_bound <- grouped_data$upper_interval[i]
+  subset <- dprime_dist[dprime_dist$lower_interval >= lower_bound & dprime_dist$upper_interval <= upper_bound, ]
+  grouped_data$frequency[i] <- sum(subset$frequency)
+}
+grouped_data_trimmed <- trim_zeros(grouped_data)
+grouped_data_trimmed <- grouped_data_trimmed %>% arrange(lower_interval)
+# # print result
+# print(grouped_data_trimmed)
+
+```
+
+```{r}
+zip(str_c(rootpath, key, '/Cor_distribution.zip'), str_c(rootpath, key, '/Cor_distribution.txt'), flags = " a -tzip", zip=zip_path)
+```
+
+**The plot below displays the distribution of the Correlation of all the `r format(marker1_n*(marker1_n-1)/2, big.mark=",", scientific = FALSE)` `r marker_abb`-`r marker_abb` pairs (markers) in the dataset.** 
+
+* These results can be downloaded here [Cor_distribution.txt](Cor_distribution.zip). 
+
+```{r, fig.width=6, fig.height=3}
+p_dist
+```
+
+* A more rough distribution of intervals is as follows:
+
+```{r}
+# Use HTML to center the table
+htmltools::tagList(
+  tags$div(
+    style = "display: flex; justify-content: center;",
+    datatable(grouped_data_trimmed, caption = "Correlation coefficient distribution", class="compact", width = "50%") %>% 
+      formatRound(columns = c("lower_interval", "upper_interval"), digits = 2)
+  )
+)
+```
+
+## 2.2 Correlation distribution metrics
+
+**Some basic information about the distribution is provided in the table below, including mean value, variance, standard deviation, skewness, kurtosis, median_value, lower quartile, upper quartile, interquartile range.**
+
+- **Mean value**: The average value of the data set.
+- **Variance**: A measure of how much the data points differ from the mean.
+- **Standard deviation**: The square root of the variance, indicating the spread of the data.
+- **Skewness**: A measure of the asymmetry of the data distribution.
+- **Kurtosis**: A measure of the "tailedness" of the data distribution.
+- **Median value**: The middle value that separates the higher half from the lower half of the data set.
+- **Lower quartile (Q1)**: The median of the lower half of the data set (25th percentile).
+- **Upper quartile (Q3)**: The median of the upper half of the data set (75th percentile).
+- **Interquartile range (IQR)**: The range between the lower quartile and the upper quartile (Q3 - Q1), measuring the spread of the middle 50% of the data. 
+
+
+* These results can be downloaded here [Cor_distribution.txt](Cor_distribution.zip). The last 9 line of the file are the metric values of the distribution.
+```{r}
+# Use HTML to center the table
+htmltools::tagList(
+  tags$div(
+    style = "display: flex; justify-content: center;",
+    datatable(summary_stats, caption = "Summary Statistics", class="compact", width = "50%")
+  )
+)
+```
+
+
+
+## 2.3 Interaction results with correlation higher than `r cutoff`
+```{r}
+ld_dprime <- fread(str_c(rootpath, key, '/Cor.txt'),data.table = FALSE, dec="#") 
+if(grepl("^#", names(ld_dprime)[1])){
+  ld_dprime <- fread(str_c(rootpath, key, '/Cor.txt'),data.table = FALSE, skip=1)
+}else{
+  ld_dprime <-ld_dprime
+}
+# SNP ID
+SNP_info <- data.frame(SNP_No=0:(marker1_n-1), SNP_ID=matrix1$symbol)
+# data for heatmap
+dat_heat <- ld_dprime %>% 
+  left_join(SNP_info, join_by(Marker1 == SNP_No)) %>% 
+  left_join(SNP_info, join_by(Marker2 == SNP_No)) %>%
+  dplyr::select(Marker1=SNP_ID.x, Marker2=SNP_ID.y, Correlation, Lower, Upper, `t-statistic`)
+sig_n <- nrow(dat_heat)
+fwrite(dat_heat, file=str_c(rootpath, key, '/Cor_re.txt'), sep="\t", quote=FALSE, col.names=TRUE, row.names=FALSE)
+```
+
+```{r}
+zip(str_c(rootpath, key, '/Cor_re.zip'), str_c(rootpath, key, '/Cor_re.txt'), flags = " a -tzip", zip=zip_path)
+```
+
+
+**WGIA screened regulatory relationship for all the <mark>`r format(marker1_n*(marker1_n-1)/2, big.mark=",", scientific = FALSE)`</mark> `r marker_abb`-`r marker_abb` pairs. 
+<br />There are a total of <mark>`r format(sig_n, big.mark=",", scientific = FALSE)`</mark> `r marker_abb`-`r marker_abb` pairs encompassing correlation coefficients (`r methodType`) higher than `r cutoff`.**
+
+* These results can be downloaded here [Cor.txt](Cor_re.zip).
+<br />
+<br />
+```{r}
+# Custom functions to format values
+format_number <- function(x) {
+  if (abs(x) < 0.01) {
+    return(formatC(x, format = "e", digits = 2))
+  } else {
+    return(formatC(x, format = "f", digits = 2))
+  }
+}
+
+# Apply a custom formating function to a numeric column
+dat_heat <- dat_heat %>% 
+  mutate_if(is.numeric, ~ sapply(., format_number))
+kable(head(dat_heat), caption =str_c(marker_abb, "-", marker_abb, " pairs with correlation>=",cutoff), format = "html") %>%
+  kable_styling(full_width = FALSE) %>%
+  scroll_box(width = "100%")
+
+```
+
+* <mark>If you need the full results, Please perform the interaction analysis with our local software [WGIA.exe]()
+
+<br />
+
+
+
+<br /><br />

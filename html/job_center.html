@@ -1,0 +1,746 @@
+<include file="./Tpl/Index/head.html"/>
+<style>
+    #progressContainer {
+        width: 100%;
+        height: 20px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+    }
+
+    #progressBar {
+        height: 100%;
+        background-color: #0f0;
+        width: 0%;
+    }
+
+    #overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+        z-index: 9999; /* 确保覆盖在其他元素上面 */
+    }
+
+    #overlay-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        background-color: white;
+        border-radius:10px;
+        height:200px;
+        width:500px;
+        padding:50px;
+    }
+</style>
+
+<style>
+    .form-section-mine {
+        margin-bottom: 30px;
+    }
+    .form-label-mine {
+        font-weight: bold;
+        color: #343a40;
+    }
+    .form-text-mine {
+        font-style: italic;
+        color: #6c757d;
+    }
+    .alert-dark-mine {
+        background-color: #343a40;
+        color: #fff;
+    }
+    .form-control-mine {
+        border-radius: 0.25rem;
+    }
+    .btn-dark-mine {
+        background-color: #343a40;
+        border-color: #343a40;
+    }
+    .img-fluid-mine {
+        margin: auto;
+    }
+</style>
+
+<!--加上登录注册-->
+<!--注册-->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title text-center" id="offcanvasExampleLabel">Register</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+ <form class="form" action="__URL__/register_ok" method="post">
+      <div class="mb-3">
+        <label  class="form-label">Name</label>
+        <input type="text" name="username" class="form-control" id="registerName" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" id="registerEmail" placeholder="email" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" id="registerPassword" name="password" placeholder="password" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" name="password_confirm" class="form-control" id="registerConfirmPassword" required>
+      </div>
+	 <input type="text" name="AnalysisId" class="form-control" hidden="hidden" value={$AnalysisId}>
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+
+  </div>
+</div>
+<!--登录-->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvaslogin" aria-labelledby="offcanvasloginLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title text-center" id="offcanvasloginLabel">Login</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+ <form class="form" action="__URL__/login_ok" method="post">
+    
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" id="registerEmail" placeholder="Enter Your Email" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" id="registerPassword" name="password" placeholder="Password" required>
+      </div>
+	 <input type="text" name="AnalysisId" class="form-control" hidden="hidden" value={$AnalysisId}>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+  </div>
+</div>
+
+<section id="Services" class="section">
+    <!--
+        &lt;!&ndash;把图标库导入进来&ndash;&gt;
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    -->
+    <div class="container" style='margin-top:30px;'>
+        <div class="row">
+            <form class="row g-3" id="myForm" method="post" enctype="multipart/form-data">
+
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <div class="single-service" style='margin-top:30px;padding:20px;background:transparent;text-align:left;'>
+						<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+						<div id='Suggestion' style="display:{$display_value['suggestion']}">
+						<h6 style='text-align:center;'>Suggestion</h6>
+						<hr>
+						<p style="font-family: Josefin Sans, sans-serif; font-size:15px ">
+    <strong>WGIA is an open-access web application. While all functionalities are accessible without logging in, we highly recommend
+							<a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"> registering</a> and 
+							
+							<a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvaslogin" aria-controls="offcanvaslogin"> logging in</a> to your account to enhance the tracking of your job progress and historical record.</strong></p>
+						<br>
+						</div>
+						<div id="welcome"  style="display:{$display_value['welcome']}">
+									<h6 style='text-align:center;'>{$_SESSION['email']}</h6>
+						<hr>
+						<p style="font-family: Josefin Sans, sans-serif;">
+							Welcome to WGIA. Jump to view <a href="__URL__/user_center">historical record.</a> 
+    </p>
+						<br>
+						
+						</div>
+						
+                        <h6 style='text-align:center;'>Help</h6>
+                        <hr>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label">E-mail address (Optional)</label>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control" name='email' value={$_SESSION['email']}>
+                            </div>
+                        </div>
+                        <p style='color:red;'>E-mail: If e-mail address is given, the server sends notifications automatically. If not, the user has to bookmark the report page.</p>
+
+                        <br><br>
+                        <h6 style='text-align:center;'>Example for <strong><em style="color: #0bd4e3">{$AnalysisType}</em></strong></h6>
+                        <hr>
+                        <p>Example data: <br/>
+                            <a href='__PUBLIC__/example_data/html/{$AnalysisId}/{$AnalysisId}.zip'>example_data_matrix.zip</a>
+                        </p>
+						<br/>
+						<!--<p style="color: firebrick">--Example files must be extracted before use. Please unzip the example files before using them.--</p>-->
+                        <br/>
+                        <p>Report:
+                            <a href='__PUBLIC__/example_data/html/{$AnalysisId}/output/report.html' target="_blank">[View]</a>
+                        </p><!--原来的job编号是这个：o2bgipwkozrdj1y1ldiq-->
+
+                        <!-- Hidden input to pass AnalysisType -->
+                        <input type="hidden" name="AnalysisId" value="{$AnalysisId}">
+                        <input type="hidden" name="AnalysisType" value="{$AnalysisType}">
+                        <input type="hidden" name="include_pheno" value="{$withPheno}">
+
+                    </div>
+                </div>
+
+
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <div class="single-service" style='text-align:left;'>
+
+                        <div class="row">
+
+                            <div class="alert alert-dark" role="alert" style='text-align:center;color:black;font-size:16px;font-weight:1000;'>
+                                <strong>{$FullName}</strong>
+                            </div>
+
+                            <div class="col-sm-auto" style="margin-bottom: 15px;">
+                                <div class="row">
+                                    <div class="col-sm-auto mb-4" style="margin-bottom: 15px; text-align: justify;">
+                                        <p class="form-control" name='introduction' style="font-size: 14px; font-family: Arial; background-color: #faf9f9;">
+                                            {$Introduction}
+                                        </p>
+                                    </div>
+                                   <!-- <div class="col-sm-8 mb-4" style="margin-bottom: 15px;">
+                                        <img src="__PUBLIC__/dblogo/{$AnalysisId}.png" class="img-fluid" alt="Description of image" style="width: 30%; margin-left: 50%">
+                                    </div>-->
+                                    <div class="col-sm-auto" style="margin-bottom: 15px; text-align: justify">
+                                        <p class="form-control" name='maintext' style="font-size: 14px; font-family: Arial; background-color: #faf9f9;">
+                                            {$MainText}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-dark" role="alert" style='text-align:center;color:black;font-size:16px;font-weight:1000;'>
+                                Start the interaction analysis ...
+                            </div>
+
+                            <!-- Omics Data Upload Section -->
+                            <div class="mb-3 row">
+                                <h5 style='margin-bottom:15px;color:black;font-size:16px;font-weight:1000;'>Omics data</h5>
+                                <div class="mb-3 row" id="omicsData1Row">
+                                    <label class="col-sm-3 col-form-label">Data matrix <br> for {$Omics1}</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="file" required name='matrix1' id="matrixOne" accept=".txt, .csv, .tsv, .zip, .rar, .tar, .7z"> 
+                                        <div class="form-text">Upload the {$Omics1} data file (.tsv, .txt, .csv, .zip, .rar, .tar, .7z file).
+                                            <a href='__PUBLIC__/example_data/html/{$AnalysisId}/{$AnalysisId}.zip'>[view the example]</a>
+											
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row" id="omicsData1Row_divide">
+                                    <label class="col-sm-3 col-form-label">Data matrix <br> for {$Omics1} in group1</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="file" name='matrix1_0' id="matrixOne_0" accept=".txt, .csv, .tsv, .zip, .rar, .tar, .7z">
+                                        <div class="form-text">Upload the {$Omics1} data file (.tsv, .txt, .csv, .zip, .rar, .tar, .7z file) in group1.
+                                            <a href='__PUBLIC__/example_data/html/{$AnalysisId}/{$AnalysisId}.zip'>[view the example]</a>
+										
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-3 col-form-label">Data matrix <br> for {$Omics1} in group2</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="file" name='matrix1_1' id="matrixOne_1" accept=".txt, .csv, .tsv, .zip, .rar, .tar, .7z">
+                                        <div class="form-text">Upload the {$Omics1} data file (.tsv, .txt, .csv, .zip, .rar file) in group2.
+                                            <a href='__PUBLIC__/example_data/{$Omics1}.zip'>[view the example]</a>
+										
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row" id="omicsData2Row">
+                                    <label class="col-sm-3 col-form-label">
+                                        Data matrix <br> for {$Omics2}
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="file" name='matrix2' id="matrixTwo" accept=".txt, .csv, .tsv, .zip, .rar, .tar, .7z">
+                                        <div class="form-text">Upload the {$Omics2} data file (.tsv, .txt, .csv, .zip, .rar, .tar, .7z file).
+                                            <a href='__PUBLIC__/example_data/{$Omics2}.zip'>[view the example]</a>
+											<!--<p><strong style="color:red">note：</strong>If the file is too large, please upload a <strong>compress file</strong> containing only a single file.</p>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row" id="omicsData2Row_divide">
+                                    <label class="col-sm-3 col-form-label">
+                                        Data matrix <br> for {$Omics2} in group1
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="file" name='matrix2_0' id="matrixTwo_0" accept=".txt, .csv, .tsv, .zip, .rar, .tar, .7z">
+                                        <div class="form-text">Upload the {$Omics2} data file (.tsv, .txt, .csv, .zip, .rar, .tar, .7z file) in group1.
+                                            <a href='__PUBLIC__/example_data/{$Omics2}.zip'>[view the example]</a>
+											<!--<p><strong style="color:red">note：</strong>If the file is too large, please upload a <strong>compress file</strong> containing only a single file.</p>-->
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-3 col-form-label">
+                                        Data matrix <br> for {$Omics2} in group2
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="file" name='matrix2_1' id="matrixTwo_1" accept=".txt, .csv, .tsv, .zip, .rar, .tar, .7z">
+                                        <div class="form-text">Upload the {$Omics2} data file (.tsv, .txt, .csv, .zip, .rar, .tar, .7z file) in group2.
+                                            <a href='__PUBLIC__/example_data/{$Omics2}.zip'>[view the example]</a>
+											<!--<p><strong style="color:red">note：</strong>If the file is too large, please upload a <strong>compress file</strong> containing only a single file.</p>-->
+                                        </div>
+                                    </div>
+                                </div>
+								<div class="mb-3 row">
+									<label class="col-sm-3" ></label>
+								<p class="col-sm-9"><strong style="color:red">note：</strong>If the file is too large(>100M), please upload a <strong>compress file</strong> containing only a single file.</p>
+								</div>
+                            </div>
+
+
+                            <!-- Optional file Upload Section -->
+                            <div class="mb-3 row">
+                                <h5 style='margin-bottom:15px;color:black;font-size:16px;font-weight:1000;'>Optional data</h5>
+                                <!-- Covariant Matrix Row -->
+                                <div class="mb-3 row" id="covariantRow" style="display: none;">
+                                    <label class="col-sm-3 col-form-label">Covariant matrix</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="file" name="matrix_cov"  id='matrixCov' lang="en" accept=".txt, .csv, .tsv, .zip, .rar, .tar, .7z">
+                                        <div class="form-text">Upload the covariate data file (.tsv, .txt, .csv, .zip, .rar, .tar, .7z file).
+                                            <a href='__PUBLIC__/example_data/matrix_cov.zip'>[view the example]</a>
+											
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row" id="covariantRow_divide" style="display: none;">
+                                    <label class="col-sm-3 col-form-label">Covariant matrix</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="file" name="matrix_cov_0"  id='matrixCov_0' lang="en" accept=".txt, .csv, .tsv, .zip, .rar, .tar, .7z">
+                                        <div class="form-text">Upload the covariate data file (.tsv, .txt, .csv, .tar, .7z file).
+                                            <a href='__PUBLIC__/example_data/matrix_cov.zip'>[view the example]</a>
+											
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-3 col-form-label">Covariant matrix</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" type="file" name="matrix_cov_1"  id='matrixCov_1' lang="en" accept=".txt, .csv, .tsv, .zip, .rar, .tar, .7z">
+                                        <div class="form-text">Upload the covariate data file (.tsv, .txt, .csv, .zip, .rar, .tar, .7z file).
+                                            <a href='__PUBLIC__/example_data/matrix_cov.zip'>[view the example]</a>
+										
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Covariant Select Row -->
+                                <div class="mb-3 row" id="covariantSelectRow" style="display: none;">
+                                    <label class="col-sm-3 col-form-label">Covariant correction</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-select" id="covariantSelect" name="covariant_correction">
+                                            <option value="No">No</option>
+                                            <option value="Yes">Yes</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Method Type Select Row -->
+                                <div class="mb-3 row" id="methodTypeRow" style="display: none;">
+                                    <label class="col-sm-3 col-form-label">Method type</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-select" id="methodTypeSelect" name="method_type">
+                                            <!-- Options will be populated by JavaScript -->
+                                        </select>
+                                    </div>
+                                </div>
+								
+								<!--Threshold selection-->
+								<div class="mb-3 row" id="ThresholdRow" style="display: none;">
+                                    <label class="col-sm-3 col-form-label">Threshold</label>
+                                    <div class="col-sm-8">
+<!--                                        <select class="form-select" id="ThresholdSelect" name="threshold">
+											-->
+                                            <!-- Options will be populated by JavaScript -->
+                                     <!--   </select>-->
+ <div id="form-check-container" class="d-flex flex-wrap"></div>
+                                    </div>
+                                </div>
+								<!--end-->
+                            </div>
+
+
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label"></label>
+                                <div class="col-auto">
+                                    <button id='submitButton' class="btn btn-dark" type="submit" style='border-radius:0.25rem'>Submit</button>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info mt-4" role="alert" style="font-size: 12px;">
+                                <strong><span style="color: #FF5733; font-style: italic;">Note:</span></strong>
+                                In order to provide the fullest results as possible, WGIA provided interaction calculation for all markers uploaded, without quality control for the data.
+                                If necessary, it is recommended that you <span style="color: #FF5733;">upload the data after performing quality controls</span>, such as missing rate control, according to your research needs.
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+</section>
+
+
+<div id="overlay">
+    <div id="overlay-content">
+        <!-- 进度条放在这里 -->
+        <h5>Uploading...</h5>
+        <br>
+        <div id='progressContainer'>
+            <div id="progressBar" style="width: 0%; background-color: #0f0;"></div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+      
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var omics1 = "{$Omics1}";
+        var omics2 = "{$Omics2}";
+        var withPheno = "{$withPheno}";
+
+        console.log("omics1:", omics1);
+        console.log("omics2:", omics2);
+        console.log("withPheno:", withPheno);
+
+        // ====== omics1 total ======
+        var omicsData1Row = document.getElementById('omicsData1Row');
+        var matrixOne = document.getElementById('matrixOne');
+        // ====== Omics1 divide ======
+        var omicsData1Row_divide = document.getElementById('omicsData1Row_divide');
+        var matrixOne_0 = document.getElementById('matrixOne_0');
+        var matrixOne_1 = document.getElementById('matrixOne_1');
+
+        // ====== omics2 total ======
+        var omicsData2Row = document.getElementById('omicsData2Row');
+        var matrixTwo = document.getElementById('matrixTwo');
+        // ====== Omics2 divide ======
+        var omicsData2Row_divide = document.getElementById('omicsData2Row_divide');
+        var matrixTwo_0 = document.getElementById('matrixTwo_0');
+        var matrixTwo_1 = document.getElementById('matrixTwo_1');
+
+        // Handle omics file display logic
+        if (omics1 === omics2) {
+            if(withPheno === 'Yes'){
+                //omics1 total not display
+                omicsData1Row.style.display = 'none';
+                matrixOne.removeAttribute('required');
+                //omics1 divide display
+                omicsData1Row_divide.style.display = 'flex';
+                matrixOne_0.setAttribute('required', '');
+                matrixOne_1.setAttribute('required', '');
+            }else{
+                //omics1 total display
+                omicsData1Row.style.display = 'flex';
+                matrixOne.setAttribute('required', '');
+                //omics1 divide not display
+                omicsData1Row_divide.style.display = 'none';
+                matrixOne_0.removeAttribute('required');
+                matrixOne_1.removeAttribute('required');
+            }
+            //omics2 total not display
+            omicsData2Row.style.display = 'none';
+            matrixTwo.removeAttribute('required');
+            //omics2 divide not display
+            omicsData2Row_divide.style.display = 'none';
+            matrixTwo_0.removeAttribute('required');
+            matrixTwo_1.removeAttribute('required');
+        } else {
+            if(withPheno === 'Yes'){
+                //omics1 total not display
+                omicsData1Row.style.display = 'none';
+                matrixOne.removeAttribute('required');
+                //omics1 divide display
+                omicsData1Row_divide.style.display = 'flex';
+                matrixOne_0.setAttribute('required', '');
+                matrixOne_1.setAttribute('required', '');
+
+                //omics2 total not display
+                omicsData2Row.style.display = 'none';
+                matrixTwo.removeAttribute('required');
+                //omics2 divide display
+                omicsData2Row_divide.style.display = 'flex';
+                matrixTwo_0.setAttribute('required', '');
+                matrixTwo_1.setAttribute('required', '');
+            }else{
+                //omics1 total display
+                omicsData1Row.style.display = 'flex';
+                matrixOne.setAttribute('required', '');
+                //omics1 divide not display
+                omicsData1Row_divide.style.display = 'none';
+                matrixOne_0.removeAttribute('required');
+                matrixOne_1.removeAttribute('required');
+
+                //omics2 total display
+                omicsData2Row.style.display = 'flex';
+                matrixTwo.setAttribute('required', '');
+                //omics2 divide not display
+                omicsData2Row_divide.style.display = 'none';
+                matrixTwo_0.removeAttribute('required');
+                matrixTwo_1.removeAttribute('required');
+            }
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var withPheno = "{$withPheno}";
+        console.log("withPheno:", withPheno);
+
+        var withCovariant = "{$withCovariant}".split(';');
+        console.log("withCovariant:", withCovariant);
+
+        var covariantSelectRow = document.getElementById('covariantSelectRow');
+        var covariantSelect = document.getElementById('covariantSelect');
+        //covariant total
+        var covariantRow = document.getElementById('covariantRow');
+        var matrixCov = document.getElementById('matrixCov');
+        //covariant divide
+        var covariantRow_divide = document.getElementById('covariantRow_divide');
+        var matrixCov_0 = document.getElementById('matrixCov_0');
+        var matrixCov_1 = document.getElementById('matrixCov_1');
+
+        // Function to update covariant fields
+        function updateCovariantFields() {
+            if (covariantSelect.value === 'Yes') {
+                if (withPheno === 'Yes') {
+                    //covariant total not display
+                    covariantRow.style.display = 'none';
+                    matrixCov.removeAttribute('required');
+                    //covariant divide diaplay
+                    covariantRow_divide.style.display = 'flex';
+                    matrixCov_0.setAttribute('required', 'required');
+                    matrixCov_1.setAttribute('required', 'required');
+                } else {
+                    //covariant total display
+                    covariantRow.style.display = 'flex';
+                    matrixCov.setAttribute('required', 'required');
+                    //covariant divide not diaplay
+                    covariantRow_divide.style.display = 'none';
+                    matrixCov_0.removeAttribute('required');
+                    matrixCov_1.removeAttribute('required');
+                }
+            } else {
+                //covariant total not display
+                covariantRow.style.display = 'none';
+                matrixCov.removeAttribute('required');
+                //covariant divide not diaplay
+                covariantRow_divide.style.display = 'none';
+                matrixCov_0.removeAttribute('required');
+                matrixCov_1.removeAttribute('required');
+            }
+        }
+
+        // Handle Covariant display logic on page load
+        if (withCovariant.length === 1) {
+            if (withCovariant[0] === 'Yes') {
+                covariantSelectRow.style.display = 'none';
+                covariantSelect.value = 'Yes';  // Set the default value
+                updateCovariantFields();
+            } else {
+                covariantSelectRow.style.display = 'none';
+                covariantSelect.value = 'No';  // Set the default value
+                updateCovariantFields();
+            }
+        } else {
+            covariantRow.style.display = 'none';
+            covariantSelectRow.style.display = 'flex';
+            covariantSelect.value = 'No';  // Set a default value
+            updateCovariantFields();
+        }
+
+        // Update covariant fields on change
+        covariantSelect.addEventListener('change', updateCovariantFields);
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var methodType = "{$methodType}".split(';');
+        console.log("methodType:", methodType);
+
+        var methodTypeRow = document.getElementById('methodTypeRow');
+        var methodTypeSelect = document.getElementById('methodTypeSelect');
+
+        // Handle Method Type display logic
+        if (methodType.length > 0 && methodType[0] !== "") {
+            methodTypeRow.style.display = 'flex';
+            methodType.forEach(function (method, index) {
+                var option = document.createElement('option');
+                option.value = method;
+                option.textContent = method;
+                methodTypeSelect.appendChild(option);
+
+                // Set the first method as the default selected option
+                if (index === 0) {
+                    methodTypeSelect.value = method;
+                }
+            });
+        } else {
+            methodTypeRow.style.display = 'none';
+        }
+    });
+</script>
+
+<!--阈值是单选框或者下拉选择-->
+ <script>
+document.addEventListener('DOMContentLoaded', (event) => {
+
+    // 将字符串按分号分割成数组
+    const options = "{$Threshold}".split(';');
+
+     // 获取容器
+    const container = document.getElementById('form-check-container');
+
+    // 遍历数组，创建form-check form-check-inline元素
+    options.forEach((option, index) => {
+        // 创建form-check div
+        const formCheckDiv = document.createElement('div');
+        formCheckDiv.className = 'form-check form-check-inline';
+
+        // 创建input元素
+        const input = document.createElement('input');
+        input.className = 'form-check-input';
+        input.type = 'radio';
+        input.name = 'threshold'; // 确保所有单选框共享相同的name属性
+        input.value = option;
+
+        // 创建label元素
+        const label = document.createElement('label');
+        label.className = 'form-check-label';
+        label.htmlFor = `option${index + 1}`;
+        label.textContent = option;
+
+        // 将input和label添加到form-check div
+        formCheckDiv.appendChild(input);
+        formCheckDiv.appendChild(label);
+
+        // 将form-check div添加到容器
+        container.appendChild(formCheckDiv);
+    });
+});
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var threshold = "{$Threshold}".split(';');
+        console.log("threshold:", threshold);
+
+        var ThresholdRow = document.getElementById('ThresholdRow');
+        var ThresholdSelect = document.getElementById('ThresholdSelect');
+
+        // Handle Method Type display logic
+        if (threshold.length > 0 && threshold[0] !== "") {
+            ThresholdRow.style.display = 'flex';
+            threshold.forEach(function (method, index) {
+                var option = document.createElement('option');
+                option.value = method;
+                option.textContent = method;
+                ThresholdSelect.appendChild(option);
+
+                // Set the first method as the default selected option
+                if (index === 0) {
+                    ThresholdSelect.value = method;
+                }
+            });
+        } else {
+            ThresholdRow.style.display = 'none';
+        }
+    });
+</script>
+
+
+
+<script>
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        //verify whether the file type meets requirements first
+        const fileInputs = document.querySelectorAll('input[type="file"]');
+        const allowedExtensions = ['txt', 'csv', 'tsv','zip','rar', 'tar', '7z'];
+		const maxFileSize = 10 * 1024 * 1024; // 10MB
+        for (const input of fileInputs) {
+            if (input.files.length > 0) {
+                const file = input.files[0];
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                if (!allowedExtensions.includes(fileExtension)) {
+                    $.alert('Invalid file type.',' Only .txt, .csv, .tsv, .rar, .tar, .7z files are allowed.');
+                    return;
+                }
+				/* ********提示文件大小********* */
+	/*			if (file.size > maxFileSize) {
+            alert('The file size exceeds the 10MB limit.');
+				return;
+        } */
+				/*******************************/
+            }
+			
+        }
+		
+
+		
+
+        document.getElementById('overlay').style.display = 'block';
+        const submitButton = document.getElementById('submitButton');
+        console.log("submitButton:", submitButton);
+
+        if (!submitButton.disabled) {
+            submitButton.disabled = true;
+
+            const formData = new FormData(this);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '__URL__/job_submit');
+            xhr.upload.onprogress = function (event) {
+                const progressBar = document.getElementById('progressBar');
+                if (event.lengthComputable) {
+                    const progress = (event.loaded / event.total) * 100;
+                    progressBar.style.width = progress + '%';
+                }
+            };
+         xhr.onload = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    const response = xhr.responseText; // 获取 PHP 返回的值
+					//alert(response);
+                    console.log(response);
+                    // 根据返回的值进行页面跳转
+                    if (response) {
+						//返回状态，判断状态=4的时候调用popen才跳转,不然就直接跳转
+						if(response.split("__")[2]==='status=4'){
+							window.location.href = '__URL__/status?key='+response.split("__")[0];
+							$.ajax({
+								url: '__URL__/batcode?key='+response.split("__")[0]+'&cmd='+response.split("__")[1],
+								type: 'GET',
+								success: function(response2) {
+									//window.location.href = '__URL__/status?key=oid1xsg7j2gfwc786yrm';
+									//window.location.href = '__URL__/status?key='+response.split("__")[0];
+									console.log(response2.message); // 输出 response 变量到控制台
+									//alert(response2.message);
+								},
+								error: function(error) {
+									//alert('我是错误');
+									console.log('Error:', error); // 输出错误信息
+								}
+							});
+							//alert('__URL__/status?key='+response.split("__")[0]);
+						   }else{
+							   window.location.href = '__URL__/status?key='+response.split("__")[0]+'&run=no'; 
+						   }
+                        
+                    } else {
+                        window.location.href = '__URL__/error'; // 失败时跳转的页面
+                    }
+                } else {
+                    console.error('上传失败');
+                }
+            };
+            xhr.send(formData);
+        }
+    });
+
+</script>
+<include file="./Tpl/Index/foot.html"/>
